@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ayuda - Edupets</title>
+  <style>
+    body {
+      font-family: 'Comic Sans MS', cursive, sans-serif;
+      margin: 0;
+      background-color: #ffffff;
+    }
+
+    .container {
+      border: 2px solid #000;
+      border-radius: 15px;
+      margin: 20px;
+      padding: 10px;
+      height: 95vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+    }
+
+    .top-bar {
+      background-color: #bfffcf;
+      border-radius: 15px 15px 0 0;
+      display: flex;
+      justify-content: space-around;
+      padding: 20px 0;
+    }
+
+    .top-bar a {
+      background-color: #add8f5;
+      border: 2px solid #000;
+      border-radius: 10px;
+      padding: 10px 20px;
+      font-size: 1em;
+      text-decoration: none;
+      color: black;
+      text-align: center;
+      width: 180px;
+    }
+
+    .content {
+      display: flex;
+      justify-content: space-around;
+      align-items: flex-start;
+      padding: 30px;
+      flex: 1;
+    }
+
+    .texto {
+      background-color: #add8f5;
+      border-radius: 15px;
+      padding: 20px;
+      width: 40%;
+      font-size: 1.6em;
+    }
+
+    .imagen {
+      width: 35%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .imagen img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 10px;
+    }
+
+    .volver {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      width: 60px;
+      height: 60px;
+      background-color: #f8bcbc;
+      border: 2px solid #000;
+      border-radius: 50%;
+      text-align: center;
+      line-height: 55px;
+      font-size: 0.9em;
+      font-weight: bold;
+      cursor: pointer;
+      text-decoration: none;
+      color: black;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="top-bar">
+      <a href="que es.html">¿Qué es edupets?</a>
+      <a href="equipo.html">El equipo</a>
+      <a href="por que.html">¿Por qué lo hicimos?</a>
+    </div>
+
+    <div class="content">
+      <div class="texto">
+        queremos brindar apoyo a los niños y estudiantes que presenten dificultades para...<br>
+        
+      </div>
+      <div class="imagen">
+        <img src="imagenes/pet.jpeg" alt="Pingüino" style="max-height: 320px;" />
+      </div>
+    </div>
+
+    <a class="volver" href="javascript:history.back()">Volver</a>
+  </div>
+</body>
+</html>

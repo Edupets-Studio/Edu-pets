@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Pagina Mascota</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      margin: 0;
+      background-color: #f3f6f7;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      height: 100vh;
+      padding: 20px;
+    }
+
+    .container {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      background-color: #ffffff;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+      width: 100%;
+      max-width: 1200px;
+    }
+
+    .left-section {
+      flex: 1;
+      margin-right: 20px;
+    }
+
+    .right-section {
+      flex: 1;
+      text-align: center;
+    }
+
+    .right-section img {
+      width: 150px;
+      height: auto;
+    }
+
+    .task-list {
+      background-color: #e2f5e0;
+      padding: 15px;
+      border-radius: 10px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      margin-bottom: 20px;
+    }
+
+    .task-list h2 {
+      text-align: center;
+      color: #4b8f29;
+    }
+
+    .task-list ul {
+      list-style-type: none;
+      padding: 0;
+    }
+
+    .task-list li {
+      padding: 8px 0;
+      font-size: 1.2em;
+      line-height: 1.5;
+      color: #333;
+    }
+
+    .needs {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin-top: 30px;
+    }
+
+    .needs img {
+      width: 40px;
+      height: 40px;
+    }
+
+    .math-buttons {
+      background-color: #e6f4ff;
+      padding: 15px;
+      border-radius: 10px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .math-buttons h3 {
+      color: #3792f1;
+    }
+
+    .math-buttons button {
+      background-color: #a5d8ff;
+      border: none;
+      padding: 10px;
+      font-size: 1.5em;
+      border-radius: 5px;
+      cursor: pointer;
+      margin: 5px;
+      width: 50px;
+      transition: background-color 0.3s;
+    }
+
+    .math-buttons button:hover {
+      background-color: #88c8ff;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+
+    <!-- Left Section: Task List -->
+    <div class="left-section">
+      <div class="task-list">
+        <h2>Lista de tareas</h2>
+        <ul>
+          <li>Realiza una tarea de Matemáticas</li>
+          <li>Para darle a tu mascota de comer</li>
+        </ul>
+      </div>
+
+      <div class="needs">
+        <div>
+          <img src="https://upload.wikimedia.org/wikipedia/commons/e/ec/Chicken_leg_emoji_2.png" alt="Comida">
+        </div>
+        <div>
+          <img src="https://upload.wikimedia.org/wikipedia/commons/f/f9/Moon_emoji.png" alt="Descanso">
+        </div>
+        <div>
+          <img src="https://upload.wikimedia.org/wikipedia/commons/a/a2/Emoji_smiling_face_with_eyes_closed_2f60.png" alt="Feliz">
+        </div>
+      </div>
+    </div>
+
+    <!-- Right Section: Mascota Image and Math Buttons -->
+    <div class="right-section">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/5/5e/Penguin_icon.svg" alt="Mascota">
+
+      <div class="math-buttons">
+        <h3>Tareas</h3>
+        <button>+</button>
+        <button>-</button>
+        <button>×</button>
+        <button>÷</button>
+      </div>
+    </div>
+
+  </div>
+
+</body>
+</html>

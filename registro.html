@@ -1,0 +1,196 @@
+<!DOCTYPE html>   
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Registro</title>
+  <script src="https://apis.google.com/js/api.js"></script>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      margin: 0;
+      background-color: #fff1cc;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      flex-direction: column;
+      padding: 0 10px;
+      position: relative;
+    }
+
+    .container {
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 400px;
+    }
+
+    .header {
+      background-color: #bfffcf;
+      padding: 20px;
+      text-align: center;
+      border-radius: 8px;
+    }
+
+    .header h1 {
+      font-size: 1.8em;
+      margin: 0;
+    }
+
+    .input-container {
+      margin-top: 20px;
+    }
+
+    input {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      border-radius: 7px;
+      border: 1px solid #ccc;
+      font-family: 'Arial', sans-serif;
+      font-size: 1em;
+      color: #333;
+      text-align: center;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      background-color: #bfffcf;
+      color: #333;
+      border: none;
+      border-radius: 7px;
+      font-size: 1.2em;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    button:hover {
+      background-color: #a0f1c3;
+    }
+
+    .volver-button {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      width: 60px;
+      height: 60px;
+      background-color: #f8bcbc;
+      border-radius: 50%;
+      border: 2px solid #000;
+      font-size: 1.2em;
+      font-weight: bold;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      user-select: none;
+      z-index: 3;
+    }
+
+    /* Media Queries */
+    @media (max-width: 480px) {
+      .container {
+        width: 100%;
+        padding: 15px;
+      }
+
+      button {
+        font-size: 1em;
+        padding: 10px;
+      }
+
+      input {
+        font-size: 1em;
+        padding: 10px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <div class="header">
+      <h1>Crea tu cuenta</h1>
+    </div>
+
+    <div class="input-container">
+      <input type="text" id="usuario" placeholder="Usuario" />
+      <input type="password" id="password" placeholder="Contraseña" />
+      <button onclick="registrar()">Registrarse</button>
+    </div>
+  </div>
+
+  <div class="volver-button" onclick="history.back()">Volver</div>
+
+  <script>
+    // Inicializa la API de Google
+    function initApi() {
+      gapi.client.init({
+        'apiKey': '917160925676-ng88s2acmk4ue0mue79s863qqqba2g1a.apps.googleusercontent.com',  // Tu clave de API
+      }).then(function () {
+        console.log('API Inicializada');
+        // Ahora cargamos la API de Sheets después de la inicialización
+        return gapi.client.load('sheets', 'v4');  // Cargar API de Sheets
+      }).then(function() {
+        console.log('API de Sheets cargada correctamente');
+      }).catch(function (error) {
+        console.error('Error al inicializar la API:', error);
+      });
+    }
+
+    // Cargar la API de Google
+    function loadClient() {
+      gapi.load('client', initApi);
+    }
+
+    // Función de registro
+    function registrar() {
+      const usuario = document.getElementById('usuario').value;
+      const password = document.getElementById('password').value;
+      
+      if (usuario && password) {
+        agregarUsuario(usuario, password);
+      } else {
+        alert('Por favor, ingrese todos los campos.');
+      }
+    }
+
+    // Función para agregar el usuario a Google Sheets
+    function agregarUsuario(usuario, password) {
+      const spreadsheetId = '1pxl9BOGw10L5ZD_wdcX_wNO6Fv-KyukjEpv7XpaluZE';  // El ID de tu hoja de cálculo
+      const range = 'Hoja1!A:B';  // El rango donde se agregan los usuarios
+
+      const values = [
+        [usuario, password]
+      ];
+
+      const body = {
+        values: values
+      };
+
+      // Esperar a que la API de Sheets esté lista
+      gapi.client.sheets.spreadsheets.values.append({
+        spreadsheetId: spreadsheetId,
+        range: range,
+        valueInputOption: 'RAW',
+        resource: body
+      }).then((response) => {
+        console.log(response);
+        alert('¡Usuario registrado correctamente!');
+      }, (error) => {
+        console.error(error);
+        alert('Hubo un error al registrar el usuario.');
+      });
+    }
+
+    // Cargar el cliente de Google Sheets al cargar la página
+    window.onload = loadClient;
+  </script>
+
+</body>
+</html>
+

@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Edupets - Inicio</title>
+  <style>
+    body {
+      font-family: 'Comic Sans MS', cursive, sans-serif;
+      margin: 0;
+    }
+    .container {
+      display: flex;
+      flex-direction: row;
+      height: 100vh;
+      width: 100%;
+      border: 2px solid #ccc;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+    .sidebar {
+      width: 35%;
+      background-color: #add8f5;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      box-sizing: border-box;
+    }
+    .sidebar h1 {
+      font-size: 4.8em;
+      margin-bottom: 40px;
+      text-align: center;
+    }
+    .start-button {
+      background-color: #bfffcf;
+      border: 2px solid #000;
+      border-radius: 10px;
+      padding: 20px 30px;
+      font-size: 2em;
+      cursor: pointer;
+      text-decoration: none;
+      color: black;
+      text-align: center;
+    }
+    .main-content {
+      width: 65%;
+      background-color: #fff1cc;
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      box-sizing: border-box;
+    }
+    .main-content img {
+      max-width: 100%;
+      height: auto;
+      max-height: 500px;
+    }
+    .help-button {
+      position: absolute;
+      bottom: 20px;
+      right: 20px;
+      width: 80px;
+      height: 80px;
+      background-color: #bfffcf;
+      border: 2px solid #000;
+      border-radius: 50%;
+      font-size: 2em;
+      text-align: center;
+      line-height: 80px;
+      cursor: pointer;
+      text-decoration: none;
+      color: black;
+      font-weight: bold;
+    }
+
+    
+    @media (max-width: 768px) {
+      .container {
+        flex-direction: column;
+        height: auto;
+      }
+      .sidebar, .main-content {
+        width: 100%;
+        padding: 30px 20px;
+      }
+      .sidebar h1 {
+        font-size: 3em;
+      }
+      .start-button {
+        font-size: 1.5em;
+        padding: 15px 20px;
+      }
+      .help-button {
+        width: 60px;
+        height: 60px;
+        font-size: 1.5em;
+        line-height: 60px;
+        bottom: 10px;
+        right: 10px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="sidebar">
+      <h1>Edupets</h1>
+      <a href="login.html" class="start-button">Inicio</a>
+    </div>
+    <div class="main-content">
+      <img src="imagenes/pet.jpeg" alt="Pingüino" />
+      <a href="que es.html" class="help-button">?</a>
+    </div>
+  </div>
+</body>
+</html>
