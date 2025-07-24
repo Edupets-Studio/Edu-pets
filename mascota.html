@@ -2,154 +2,252 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Pagina Mascota</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pinguino Interactivo</title>
   <style>
-    body {
-      font-family: 'Arial', sans-serif;
+    * {
+      box-sizing: border-box;
       margin: 0;
-      background-color: #f3f6f7;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      flex-direction: column;
-      height: 100vh;
-      padding: 20px;
-    }
-
-    .container {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      background-color: #ffffff;
-      border-radius: 10px;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-      padding: 20px;
-      width: 100%;
-      max-width: 1200px;
-    }
-
-    .left-section {
-      flex: 1;
-      margin-right: 20px;
-    }
-
-    .right-section {
-      flex: 1;
-      text-align: center;
-    }
-
-    .right-section img {
-      width: 150px;
-      height: auto;
-    }
-
-    .task-list {
-      background-color: #e2f5e0;
-      padding: 15px;
-      border-radius: 10px;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-      margin-bottom: 20px;
-    }
-
-    .task-list h2 {
-      text-align: center;
-      color: #4b8f29;
-    }
-
-    .task-list ul {
-      list-style-type: none;
       padding: 0;
     }
 
-    .task-list li {
-      padding: 8px 0;
-      font-size: 1.2em;
-      line-height: 1.5;
-      color: #333;
+    body {
+      font-family: 'Comic Sans MS', cursive, sans-serif;
+      background-color: #f2f2f2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
     }
 
-    .needs {
+    .contenedor {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      width: 100%;
+      max-width: 1400px;
+      padding: 20px;
+      position: relative;
+    }
+
+    .panel {
+      background-color: #b5e2c1;
+      border-radius: 10px;
+      padding: 20px;
+      min-width: 250px;
+      max-height: 90vh;
+      overflow-y: auto;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 1s ease;
+      position: absolute;
+      top: 80px;
+      z-index: 5;
+    }
+
+    .panel.izquierda {
+      left: 30px;
+    }
+
+    .panel.derecha {
+      right: 30px;
+      background-color: #b3d9ff;
+    }
+
+    .panel.activa {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .toggle {
+      font-size: 2.5em;
+      cursor: pointer;
+      padding: 20px;
+      z-index: 10;
+      background-color: #fff;
+      border: 2px solid #ccc;
+      border-radius: 10px;
+    }
+
+    #toggle-izquierda {
+      position: absolute;
+      left: 20px;
+      top: 10px;
+    }
+
+    #toggle-derecha {
+      position: absolute;
+      right: 20px;
+      top: 10px;
+    }
+
+    .pinguino {
+      width: 380px;
+      animation: flotar 4s ease-in-out infinite;
+    }
+
+    @keyframes flotar {
+      0% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+      100% { transform: translateY(0); }
+    }
+
+    .necesidades {
       display: flex;
       justify-content: center;
-      gap: 15px;
-      margin-top: 30px;
+      gap: 30px;
+      margin: 30px 0;
     }
 
-    .needs img {
-      width: 40px;
-      height: 40px;
+    .necesidad {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      background-size: 60%;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-color: green;
+      transition: background-color 1s ease;
     }
 
-    .math-buttons {
-      background-color: #e6f4ff;
-      padding: 15px;
-      border-radius: 10px;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    .botones {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 30px;
     }
 
-    .math-buttons h3 {
-      color: #3792f1;
-    }
-
-    .math-buttons button {
-      background-color: #a5d8ff;
-      border: none;
-      padding: 10px;
-      font-size: 1.5em;
-      border-radius: 5px;
-      cursor: pointer;
-      margin: 5px;
-      width: 50px;
+    .botones a {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background-color: #c6f5d9;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      font-size: 2.2em;
+      color: black;
       transition: background-color 0.3s;
     }
 
-    .math-buttons button:hover {
-      background-color: #88c8ff;
+    .botones a:hover {
+      background-color: #a2e0be;
+    }
+
+    .lista-tareas h3 {
+      margin-bottom: 10px;
+    }
+
+    .lista-tareas p {
+      font-size: 1.2em;
+      padding: 10px;
+    }
+
+    .contenido {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      flex: 1;
+    }
+
+    @media screen and (max-width: 768px) {
+      .contenedor {
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+      }
+
+      .panel {
+        position: static;
+        opacity: 1;
+        visibility: visible;
+      }
+
+      .toggle {
+        display: none;
+      }
+
+      .pinguino {
+        width: 250px;
+      }
+
+      .necesidad {
+        width: 80px;
+        height: 80px;
+      }
+
+      .botones a {
+        width: 60px;
+        height: 60px;
+        font-size: 1.8em;
+      }
     }
   </style>
 </head>
 <body>
+  <div id="toggle-izquierda" class="toggle">📘</div>
+  <div id="toggle-derecha" class="toggle">📐</div>
 
-  <div class="container">
-
-    <!-- Left Section: Task List -->
-    <div class="left-section">
-      <div class="task-list">
-        <h2>Lista de tareas</h2>
-        <ul>
-          <li>Realiza una tarea de Matemáticas</li>
-          <li>Para darle a tu mascota de comer</li>
-        </ul>
-      </div>
-
-      <div class="needs">
-        <div>
-          <img src="https://upload.wikimedia.org/wikipedia/commons/e/ec/Chicken_leg_emoji_2.png" alt="Comida">
-        </div>
-        <div>
-          <img src="https://upload.wikimedia.org/wikipedia/commons/f/f9/Moon_emoji.png" alt="Descanso">
-        </div>
-        <div>
-          <img src="https://upload.wikimedia.org/wikipedia/commons/a/a2/Emoji_smiling_face_with_eyes_closed_2f60.png" alt="Feliz">
-        </div>
-      </div>
+  <div class="contenedor">
+    <div class="panel izquierda lista-tareas" id="panel-izquierda">
+      <h3>Lista de tareas</h3>
+      <p>Realiza una tarea de suma para darle a tu mascota de comer</p>
     </div>
 
-    <!-- Right Section: Mascota Image and Math Buttons -->
-    <div class="right-section">
-      <img src="https://upload.wikimedia.org/wikipedia/commons/5/5e/Penguin_icon.svg" alt="Mascota">
-
-      <div class="math-buttons">
-        <h3>Tareas</h3>
-        <button>+</button>
-        <button>-</button>
-        <button>×</button>
-        <button>÷</button>
+    <div class="contenido">
+      <div class="necesidades">
+        <div class="necesidad" id="comida" style="background-image: url('imagenes/comida.png');"></div>
+        <div class="necesidad" id="sueño" style="background-image: url('imagenes/sueño.png');"></div>
+        <div class="necesidad" id="felicidad" style="background-image: url('imagenes/felicidad.png');"></div>
       </div>
+      <img src="imagenes/pet.jpeg" alt="Pinguino" class="pinguino">
     </div>
 
+    <div class="panel derecha" id="panel-derecha">
+      <h3>Tareas</h3>
+      <div class="botones">
+        <a href="ejercicio1.html">+</a>
+        <a href="ejercicio2.html">-</a>
+        <a href="ejercicio3.html">×</a>
+      </div>
+    </div>
   </div>
 
+  <script>
+    // Mostrar y ocultar paneles con fade
+    document.getElementById('toggle-izquierda').addEventListener('click', () => {
+      document.getElementById('panel-izquierda').classList.toggle('activa');
+    });
+
+    document.getElementById('toggle-derecha').addEventListener('click', () => {
+      document.getElementById('panel-derecha').classList.toggle('activa');
+    });
+
+    // Cambio de fondo cada 5 minutos (verde → amarillo → rojo)
+    const colores = ['green', 'yellow', 'red'];
+    const tiempoCambio = 5 * 60 * 1000; // 5 minutos
+    let paso = 0;
+
+    const necesidades = ['comida', 'sueño', 'felicidad'];
+
+    const cambiarColorFondo = () => {
+      if (paso < colores.length) {
+        const color = colores[paso];
+        necesidades.forEach(id => {
+          const elem = document.getElementById(id);
+          elem.style.backgroundColor = color;
+        });
+        paso++;
+      }
+    };
+
+    cambiarColorFondo(); // primer color inmediato
+    const intervalo = setInterval(() => {
+      cambiarColorFondo();
+      if (paso >= colores.length) clearInterval(intervalo); // Detener al llegar a rojo
+    }, tiempoCambio);
+  </script>
 </body>
 </html>
