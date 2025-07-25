@@ -117,7 +117,7 @@
   <script>
     let vidas = 3;
     let preguntas = 0;
-    const totalPreguntas = 5;
+    const totalPreguntas = 10;
 
     function aumentarOrbe(orbe) {
       const niveles = JSON.parse(localStorage.getItem('niveles')) || {
@@ -136,7 +136,7 @@
       const tiempoEspera = 60 * 1000; // 1 minuto
 
       if (ahora - timestamps[orbe] > tiempoEspera) {
-        niveles[orbe] = Math.min(100, niveles[orbe] + 40);
+        niveles[orbe] = Math.min(100, niveles[orbe] + 20);
         timestamps[orbe] = ahora;
 
         localStorage.setItem('niveles', JSON.stringify(niveles));
