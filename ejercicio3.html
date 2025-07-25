@@ -3,183 +3,228 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Ejercicio Multiplicación</title>
+  <title>Multiplicación - Juego</title>
   <style>
     body {
-      font-family: 'Comic Sans MS', cursive, sans-serif;
       margin: 0;
-      padding: 0;
-      background-color: #f9f9f9;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: space-between;
-      height: 100vh;
-      box-sizing: border-box;
+      font-family: 'Comic Sans MS', cursive, sans-serif;
+      background-color: #ffffff;
     }
 
     .header {
-      width: 100%;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 10px 20px;
-      box-sizing: border-box;
+      background-color: #c8f5c1;
+      padding: 25px;
+      font-size: 3em;
+      border-radius: 0 0 20px 20px;
     }
 
-    .titulo {
-      background-color: #c0ebc9;
-      padding: 10px 20px;
+    .container {
+      text-align: center;
+      padding: 30px;
+      position: relative;
+    }
+
+    .hearts {
+      position: absolute;
+      right: 20px;
+      top: 20px;
+    }
+
+    .hearts img {
+      width: 70px;
+      height: 70px;
+      margin-left: 10px;
+    }
+
+    .question {
+      background-color: #add8f5;
+      display: inline-block;
+      padding: 20px 50px;
+      margin: 40px 0;
       border-radius: 15px;
-      font-size: 1.5em;
+      font-size: 3em;
     }
 
-    .vidas img {
-      height: 40px;
-      margin-left: 5px;
+    .options button {
+      background-color: #add8f5;
+      border: none;
+      border-radius: 50%;
+      margin: 25px;
+      width: 140px;
+      height: 140px;
+      font-size: 2.5em;
+      cursor: pointer;
     }
 
-    .pinguino {
-      animation: flotar 4s ease-in-out infinite;
-      max-width: 200px;
-      margin: 20px 0;
+    .arrow {
+      position: absolute;
+      bottom: 30px;
+      left: 30px;
+      background-color: #fbc9cc;
+      color: #000;
+      font-size: 2em;
+      border: none;
+      border-radius: 50px;
+      padding: 15px 30px;
+      cursor: pointer;
     }
 
-    @keyframes flotar {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-5px); }
+    .message {
+      font-size: 2.5em;
+      padding: 25px;
+      margin: 30px auto;
+      width: 80%;
+      border-radius: 15px;
     }
 
-    .pregunta {
-      background-color: #a3d4f7;
-      padding: 10px 20px;
-      border-radius: 10px;
-      font-size: 1.5em;
+    .success {
+      background-color: #c8f5c1;
+      color: #000;
+    }
+
+    .fail {
+      background-color: #fbc9cc;
+      color: #000;
+    }
+
+    .penguin {
+      animation: float 2s ease-in-out infinite;
+      width: 280px;
+      display: block;
+      margin: 0 auto;
+    }
+
+    @keyframes float {
+      0% { transform: translateY(0); }
+      50% { transform: translateY(-20px); }
+      100% { transform: translateY(0); }
+    }
+
+    #confirmExit {
+      position: fixed;
+      top: 30%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: white;
+      border-radius: 15px;
+      padding: 30px;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+      display: none;
+      z-index: 1000;
+      text-align: center;
+    }
+
+    #confirmExit p {
+      font-size: 1.8em;
       margin-bottom: 20px;
     }
 
-    .opciones {
-      display: flex;
-      gap: 15px;
-    }
-
-    .opcion {
-      background-color: #add8f7;
-      border-radius: 50%;
-      width: 60px;
-      height: 60px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.2em;
-      cursor: pointer;
-      transition: transform 0.2s;
-    }
-
-    .opcion:hover {
-      transform: scale(1.1);
-    }
-
-    .navegacion {
-      width: 100%;
-      display: flex;
-      justify-content: space-between;
-      padding: 20px;
-    }
-
-    .boton-nav {
-      width: 60px;
-      height: 60px;
-      border-radius: 50%;
+    #confirmExit button {
+      font-size: 1.5em;
+      padding: 10px 25px;
+      margin: 0 10px;
       border: none;
-      background-color: #fcc;
-      font-size: 2em;
+      border-radius: 10px;
       cursor: pointer;
     }
 
-    .boton-nav.der {
-      background-color: #c0ebc9;
+    .btn-no {
+      background-color: #c8f5c1;
     }
 
-    @media (max-width: 600px) {
-      .opciones {
-        flex-direction: column;
-        align-items: center;
-      }
+    .btn-yes {
+      background-color: #fbc9cc;
     }
   </style>
 </head>
 <body>
-  <div class="header">
-    <div class="titulo" id="titulo">Multiplicación: Tabla del 5</div>
-    <div class="vidas" id="vidas">
-      <img src="imagenes/Vida.png" id="vida1">
-      <img src="imagenes/Vida.png" id="vida2">
-      <img src="imagenes/Vida.png" id="vida3">
-    </div>
+  <div class="header" id="titulo">Multiplicación: Tabla del ?</div>
+  <div class="hearts">
+    <img src="imagenes/Vida.png" id="vida1">
+    <img src="imagenes/Vida.png" id="vida2">
+    <img src="imagenes/Vida.png" id="vida3">
   </div>
 
-  <img src="imagenes/pet.jpeg" alt="Pinguino" class="pinguino">
-  <div class="pregunta" id="pregunta">¿Cuánto es 5 x 7?</div>
-  <div class="opciones" id="opciones">
-    
+  <div class="container">
+    <img src="imagenes/pet.jpeg" alt="Pingüino" class="penguin">
+    <div class="question" id="pregunta">¿Cuánto es ?</div>
+    <div class="options" id="opciones"></div>
+    <div id="mensaje"></div>
   </div>
 
-  <div class="navegacion">
-    <button class="boton-nav izq" onclick="window.location.href='Mascota.html'">←</button>
-    <button class="boton-nav der">→</button>
+  <button class="arrow left" onclick="mostrarConfirmacion()">Volver</button>
+
+  <div id="confirmExit">
+    <p>¿Estás seguro de que quieres salir de la prueba?</p>
+    <button class="btn-yes" onclick="window.location.href='mascota.html'">Sí, volver</button>
+    <button class="btn-no" onclick="ocultarConfirmacion()">No, me quiero quedar</button>
   </div>
 
   <script>
-    const pregunta = document.getElementById('pregunta');
-    const opciones = document.getElementById('opciones');
-    const titulo = document.getElementById('titulo');
-    const vidas = [
-      document.getElementById('vida1'),
-      document.getElementById('vida2'),
-      document.getElementById('vida3')
-    ];
-    let vidasRestantes = 3;
+    let vidas = 3;
+    let preguntas = 0;
+    const totalPreguntas = 5;
 
-    function nuevaPregunta() {
-      opciones.innerHTML = "";
-      const num1 = Math.floor(Math.random() * 10 + 1);
-      const num2 = Math.floor(Math.random() * 10 + 1);
-      const resultado = num1 * num2;
-      pregunta.textContent = `¿Cuánto es ${num1} x ${num2}?`;
-      titulo.textContent = `Multiplicación: Tabla del ${num1}`;
-
-      const respuestas = new Set();
-      respuestas.add(resultado);
-      while (respuestas.size < 3) {
-        respuestas.add(Math.floor(Math.random() * 100));
+    function generarPregunta() {
+      if (preguntas >= totalPreguntas) {
+        document.getElementById('mensaje').innerHTML = '<div class="message success">¡Bien hecho!</div>';
+        setTimeout(() => window.location.href = 'mascota.html', 3000);
+        return;
       }
-      const lista = Array.from(respuestas);
-      lista.sort(() => Math.random() - 0.5);
 
-      lista.forEach(res => {
-        const btn = document.createElement('div');
-        btn.className = 'opcion';
-        btn.textContent = res;
-        btn.onclick = () => {
-          if (res === resultado) {
-            nuevaPregunta();
-          } else {
-            vidasRestantes--;
-            if (vidasRestantes >= 0) vidas[vidasRestantes].src = 'imagenes/VidaMenos.png';
-            if (vidasRestantes <= 0) {
-              alert("Intenta de nuevo");
-              window.location.href = 'Mascota.html';
-            } else {
-              nuevaPregunta();
-            }
-          }
-        };
-        opciones.appendChild(btn);
+      const a = Math.floor(Math.random() * 10) + 1;
+      const b = Math.floor(Math.random() * 10) + 1;
+      const respuesta = a * b;
+      const titulo = document.getElementById('titulo');
+      titulo.textContent = `Multiplicación: Tabla del ${a}`;
+
+      document.getElementById('pregunta').textContent = `¿Cuánto es ${a} × ${b}?`;
+
+      const opcionesDiv = document.getElementById('opciones');
+      opcionesDiv.innerHTML = '';
+
+      const opciones = new Set();
+      opciones.add(respuesta);
+      while (opciones.size < 3) {
+        opciones.add(Math.floor(Math.random() * 100));
+      }
+
+      Array.from(opciones).sort(() => Math.random() - 0.5).forEach(op => {
+        const btn = document.createElement('button');
+        btn.textContent = op;
+        btn.onclick = () => verificarRespuesta(op, respuesta);
+        opcionesDiv.appendChild(btn);
       });
     }
 
-    nuevaPregunta();
+    function verificarRespuesta(opcion, correcta) {
+      if (opcion === correcta) {
+        preguntas++;
+        generarPregunta();
+      } else {
+        if (vidas > 0) {
+          document.getElementById(`vida${vidas}`).src = 'imagenes/VidaMenos.png';
+          vidas--;
+        }
+        if (vidas === 0) {
+          document.getElementById('mensaje').innerHTML = '<div class="message fail">Intenta de nuevo</div>';
+          setTimeout(() => window.location.href = 'mascota.html', 3000);
+        } else {
+          preguntas++;
+          generarPregunta();
+        }
+      }
+    }
+
+    function mostrarConfirmacion() {
+      document.getElementById('confirmExit').style.display = 'block';
+    }
+
+    function ocultarConfirmacion() {
+      document.getElementById('confirmExit').style.display = 'none';
+    }
+
+    window.onload = generarPregunta;
   </script>
 </body>
 </html>

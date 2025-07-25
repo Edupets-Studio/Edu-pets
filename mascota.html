@@ -100,6 +100,17 @@
       margin: 30px 0;
     }
 
+    .necesidad-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .porcentaje {
+      font-size: 1.2em;
+      margin-bottom: 5px;
+    }
+
     .necesidad {
       width: 120px;
       height: 120px;
@@ -197,10 +208,19 @@
     </div>
 
     <div class="contenido">
-      <div class="necesidades">
-        <div class="necesidad" id="comida" style="background-image: url('imagenes/comida.png');"></div>
-        <div class="necesidad" id="sueño" style="background-image: url('imagenes/sueño.png');"></div>
-        <div class="necesidad" id="felicidad" style="background-image: url('imagenes/felicidad.png');"></div>
+      <div class="necesidades" id="necesidades-container">
+        <div class="necesidad-container">
+          <div class="porcentaje" id="porcentaje-comida">100%</div>
+          <div class="necesidad" id="comida" style="background-image: url('imagenes/comida.png');"></div>
+        </div>
+        <div class="necesidad-container">
+          <div class="porcentaje" id="porcentaje-sueño">100%</div>
+          <div class="necesidad" id="sueño" style="background-image: url('imagenes/sueño.png');"></div>
+        </div>
+        <div class="necesidad-container">
+          <div class="porcentaje" id="porcentaje-felicidad">100%</div>
+          <div class="necesidad" id="felicidad" style="background-image: url('imagenes/felicidad.png');"></div>
+        </div>
       </div>
       <img src="imagenes/pet.jpeg" alt="Pinguino" class="pinguino">
     </div>
@@ -216,7 +236,6 @@
   </div>
 
   <script>
-    // Mostrar y ocultar paneles con fade
     document.getElementById('toggle-izquierda').addEventListener('click', () => {
       document.getElementById('panel-izquierda').classList.toggle('activa');
     });
@@ -225,29 +244,33 @@
       document.getElementById('panel-derecha').classList.toggle('activa');
     });
 
-    // Cambio de fondo cada 5 minutos (verde → amarillo → rojo)
-    const colores = ['green', 'yellow', 'red'];
-    const tiempoCambio = 5 * 60 * 1000; // 5 minutos
-    let paso = 0;
+    const necesidades = [
+      { id: 'comida', porcentajeId: 'porcentaje-comida' },
+      { id: 'sueño', porcentajeId: 'porcentaje-sueño' },
+      { id: 'felicidad', porcentajeId: 'porcentaje-felicidad' }
+    ];
 
-    const necesidades = ['comida', 'sueño', 'felicidad'];
+    necesidades.forEach(n => {
+      let porcentaje = 100;
+      const intervalo = setInterval(() => {
+        porcentaje--;
+        const elem = document.getElementById(n.id);
+        const label = document.getElementById(n.porcentajeId);
+        label.textContent = porcentaje + '%';
 
-    const cambiarColorFondo = () => {
-      if (paso < colores.length) {
-        const color = colores[paso];
-        necesidades.forEach(id => {
-          const elem = document.getElementById(id);
-          elem.style.backgroundColor = color;
-        });
-        paso++;
-      }
-    };
+        if (porcentaje > 59) {
+          elem.style.backgroundColor = 'green';
+        } else if (porcentaje > 29) {
+          elem.style.backgroundColor = 'yellow';
+        } else {
+          elem.style.backgroundColor = 'red';
+        }
 
-    cambiarColorFondo(); // primer color inmediato
-    const intervalo = setInterval(() => {
-      cambiarColorFondo();
-      if (paso >= colores.length) clearInterval(intervalo); // Detener al llegar a rojo
-    }, tiempoCambio);
+        if (porcentaje <= 0) {
+          clearInterval(intervalo);
+        }
+      }, 9000); 
+    });
   </script>
 </body>
 </html>
