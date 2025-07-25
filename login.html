@@ -1,10 +1,9 @@
-<!DOCTYPE html>  
+<!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Inicio de sesión</title>
-  <script src="https://apis.google.com/js/api.js"></script>
   <style>
     body {
       font-family: 'Arial', sans-serif;
@@ -129,7 +128,6 @@
       z-index: 3;
     }
 
-    /* Media Queries */
     @media (max-width: 480px) {
       .container {
         width: 100%;
@@ -168,78 +166,14 @@
       <input type="password" id="password" placeholder="Contraseña" />
       <div class="buttons">
         <button onclick="location.href='registro.html'">Registrarse</button> 
-        <button onclick="login()">Siguiente</button> 
+        <button onclick="window.location.href='mascota.html'">Siguiente</button> 
       </div>
     </div>
     <div class="volver-button" onclick="history.back()">Volver</div>
   </div>
 
-  <script>
-    // Inicializa la API de Google
-    function initApi() {
-      gapi.client.init({
-        'apiKey': '917160925676-ng88s2acmk4ue0mue79s863qqqba2g1a.apps.googleusercontent.com',  // Tu clave de API
-      }).then(function () {
-        console.log('API Inicializada');
-      }).catch(function (error) {
-        console.error('Error al inicializar la API:', error);
-      });
-    }
-
-    // Cargar la API de Google
-    function loadClient() {
-      gapi.load('client', initApi);
-    }
-
-    // Función de login
-    function login() {
-      const usuario = document.getElementById('usuario').value;
-      const password = document.getElementById('password').value;
-
-      if (usuario && password) {
-        verificarUsuario(usuario, password);
-      } else {
-        alert('Por favor, ingrese todos los campos.');
-      }
-    }
-
-    // Función para verificar usuario en Google Sheets
-    function verificarUsuario(usuario, password) {
-      const spreadsheetId = '1pxl9BOGw10L5ZD_wdcX_wNO6Fv-KyukjEpv7XpaluZE';  // ID de la hoja de cálculo
-      const range = 'Hoja1!A:B';  // Rango en la hoja de Google Sheets
-
-      gapi.client.sheets.spreadsheets.values.get({
-        spreadsheetId: spreadsheetId,
-        range: range
-      }).then((response) => {
-        const data = response.result.values;
-        let encontrado = false;
-
-        // Verificar si el usuario y la contraseña coinciden
-        for (let i = 0; i < data.length; i++) {
-          if (data[i][0] === usuario && data[i][1] === password) {
-            encontrado = true;
-            break;
-          }
-        }
-
-        if (encontrado) {
-          alert('¡Inicio de sesión exitoso!');
-          window.location.href = "mascota.html";  // Redirige a mascota.html si la validación es correcta
-        } else {
-          alert('Usuario o contraseña incorrectos.');
-        }
-      }, (error) => {
-        console.error('Error al verificar el usuario:', error);
-        alert('Hubo un error al verificar el usuario.');
-      });
-    }
-
-    // Cargar el cliente de Google Sheets al cargar la página
-    window.onload = loadClient;
-  </script>
-
 </body>
 </html>
+
 
 

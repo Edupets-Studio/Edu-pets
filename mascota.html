@@ -5,199 +5,248 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Pinguino Interactivo</title>
   <style>
-    * {
-      box-sizing: border-box;
+    body {
       margin: 0;
-      padding: 0;
+      font-family: "Comic Sans MS", cursive, sans-serif;
+      background-color: #f0f8ff;
+      font-size: 20px;
     }
 
-    body {
-      font-family: 'Comic Sans MS', cursive, sans-serif;
-      background-color: #f2f2f2;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      min-height: 100vh;
-    }
+    
 
     .contenedor {
       display: flex;
-      flex-direction: row;
-      justify-content: space-between;
-      width: 100%;
-      max-width: 1400px;
-      padding: 20px;
-      position: relative;
+      height: 100vh;
+      overflow: hidden;
     }
 
     .panel {
-      background-color: #b5e2c1;
-      border-radius: 10px;
-      padding: 20px;
-      min-width: 250px;
-      max-height: 90vh;
-      overflow-y: auto;
-      opacity: 0;
-      visibility: hidden;
-      transition: opacity 1s ease;
+      width: 300px;
+      padding: 30px;
+      box-sizing: border-box;
       position: absolute;
-      top: 80px;
-      z-index: 5;
+      height: 100%;
+      top: 0;
+      z-index: 2;
+      transition: opacity 0.5s ease;
+      opacity: 0;
+      pointer-events: none;
     }
 
     .panel.izquierda {
-      left: 30px;
+      left: 0;
+      background-color: #add8e6;
     }
 
     .panel.derecha {
-      right: 30px;
-      background-color: #b3d9ff;
+      right: 0;
+      background-color: #b2f2bb;
     }
 
     .panel.activa {
       opacity: 1;
-      visibility: visible;
+      pointer-events: auto;
+    }
+
+    .contenido {
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      z-index: 1;
     }
 
     .toggle {
-      font-size: 2.5em;
+      position: absolute;
+      top: 10px;
+      font-size: 40px; /* Agrandado */
+      background-color: #ffffff;
+      border-radius: 50%;
+      width: 80px; /* Más ancho */
+      height: 80px; /* Más alto */
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
       cursor: pointer;
-      padding: 20px;
-      z-index: 10;
-      background-color: #fff;
-      border: 2px solid #ccc;
-      border-radius: 10px;
+      z-index: 3;
+      transition: transform 0.2s ease;
+    }
+
+    .toggle:hover {
+      transform: scale(1.1);
     }
 
     #toggle-izquierda {
-      position: absolute;
-      left: 20px;
-      top: 10px;
+      left: 10px;
     }
 
     #toggle-derecha {
-      position: absolute;
-      right: 20px;
-      top: 10px;
-    }
-
-    .pinguino {
-      width: 380px;
-      animation: flotar 4s ease-in-out infinite;
-    }
-
-    @keyframes flotar {
-      0% { transform: translateY(0); }
-      50% { transform: translateY(-8px); }
-      100% { transform: translateY(0); }
+      right: 10px;
     }
 
     .necesidades {
       display: flex;
       justify-content: center;
-      gap: 30px;
-      margin: 30px 0;
+      margin-bottom: 30px;
+      gap: 40px;
     }
 
     .necesidad-container {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-
-    .porcentaje {
-      font-size: 1.2em;
-      margin-bottom: 5px;
+      text-align: center;
     }
 
     .necesidad {
-      width: 120px;
-      height: 120px;
+      width: 100px;
+      height: 100px;
       border-radius: 50%;
-      background-size: 60%;
+      background-size: cover;
       background-position: center;
-      background-repeat: no-repeat;
-      background-color: green;
-      transition: background-color 1s ease;
+      margin: 0 auto;
+      transition: background-color 0.5s ease;
+      border: 5px solid white;
+    }
+
+    .porcentaje {
+      margin-top: 10px;
+      font-weight: bold;
+      font-size: 22px;
+    }
+
+    .nombre-mascota {
+      font-size: 24px;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    #editar-nombre {
+      font-size: 20px;
+      background: none;
+      border: none;
+      cursor: pointer;
+    }
+
+    .pinguino {
+      width: 200px;
+      border-radius: 20px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.2);
+      animation: flotar 3s ease-in-out infinite;
+    }
+
+    @keyframes flotar {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-15px); }
     }
 
     .botones {
       display: flex;
       flex-direction: column;
-      align-items: center;
-      gap: 30px;
+      gap: 20px;
+      margin-top: 30px;
     }
 
-    .botones a {
-      width: 80px;
-      height: 80px;
-      border-radius: 50%;
-      background-color: #c6f5d9;
+    .botones button {
+      font-size: 32px;
+      padding: 15px 25px;
+      background-color: #fefefe;
+      border: 2px solid #ccc;
+      border-radius: 15px;
+      cursor: pointer;
+      transition: background-color 0.3s, transform 0.2s;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+
+    .botones button:hover {
+      background-color: #e0f7fa;
+      transform: scale(1.05);
+    }
+
+    .barra-edicion {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: #d4fcd4;
+      padding: 15px 20px;
+      border-radius: 15px;
       display: flex;
-      align-items: center;
       justify-content: center;
-      text-decoration: none;
-      font-size: 2.2em;
-      color: black;
-      transition: background-color 0.3s;
-    }
-
-    .botones a:hover {
-      background-color: #a2e0be;
-    }
-
-    .lista-tareas h3 {
-      margin-bottom: 10px;
-    }
-
-    .lista-tareas p {
-      font-size: 1.2em;
-      padding: 10px;
-    }
-
-    .contenido {
-      display: flex;
-      flex-direction: column;
+      gap: 10px;
       align-items: center;
-      flex: 1;
+      box-shadow: 0 -2px 8px rgba(0,0,0,0.2);
+      font-size: 20px;
+      z-index: 5;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.4s ease;
     }
 
-    @media screen and (max-width: 768px) {
-      .contenedor {
-        flex-direction: column;
-        align-items: center;
-        gap: 20px;
-      }
-
-      .panel {
-        position: static;
-        opacity: 1;
-        visibility: visible;
-      }
-
-      .toggle {
-        display: none;
-      }
-
-      .pinguino {
-        width: 250px;
-      }
-
-      .necesidad {
-        width: 80px;
-        height: 80px;
-      }
-
-      .botones a {
-        width: 60px;
-        height: 60px;
-        font-size: 1.8em;
-      }
+    .barra-edicion.activa {
+      opacity: 1;
+      visibility: visible;
     }
+
+    .barra-edicion input {
+      font-size: 18px;
+      padding: 8px 12px;
+      border-radius: 8px;
+      border: 1px solid #aaa;
+      width: 200px;
+    }
+
+    .barra-edicion button {
+      font-size: 18px;
+      padding: 8px 15px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    .barra-edicion .aceptar {
+      background-color: #7be77b;
+    }
+
+    .barra-edicion .cancelar {
+      background-color: #ffb3b3;
+    }
+
+    h3 {
+      margin-top: 0;
+      font-size: 26px;
+    }
+
+    .bienvenida {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #c8facc;
+    color: #333;
+    font-size: 18px;
+    font-weight: bold;
+    padding: 15px 25px;
+    border-radius: 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+    }
+  .bienvenida.mostrar {
+    opacity: 1;
+  }
+
   </style>
 </head>
 <body>
+
+  <div id="bienvenida" class="bienvenida">
+  Esta es tu mascota virtual. Deberás cuidarla por medio de divertidos ejercicios matemáticos. ¡Cuídala bien!
+  </div>
+
   <div id="toggle-izquierda" class="toggle">📘</div>
   <div id="toggle-derecha" class="toggle">📐</div>
 
@@ -222,20 +271,130 @@
           <div class="necesidad" id="felicidad" style="background-image: url('imagenes/felicidad.png');"></div>
         </div>
       </div>
+
+      <div class="nombre-mascota">
+        <span id="titulo-mascota">Tu mascota: <span id="nombre-mascota">Pingüi</span></span>
+        <button id="editar-nombre">✏️</button>
+      </div>
+
       <img src="imagenes/pet.jpeg" alt="Pinguino" class="pinguino">
     </div>
 
     <div class="panel derecha" id="panel-derecha">
-      <h3>Tareas</h3>
+      <h3>Operaciones</h3>
       <div class="botones">
-        <a href="ejercicio1.html">+</a>
-        <a href="ejercicio2.html">-</a>
-        <a href="ejercicio3.html">×</a>
+        <button onclick="irAEjercicio('ejercicio1.html')">+</button>
+        <button onclick="irAEjercicio('ejercicio2.html')">−</button>
+        <button onclick="irAEjercicio('ejercicio3.html')">×</button>
       </div>
     </div>
   </div>
 
+  <!-- BARRA EDICIÓN -->
+  <div class="barra-edicion" id="barra-edicion">
+    <input type="text" id="nuevo-nombre" placeholder="Nuevo nombre..." />
+    <button class="aceptar" id="btn-aceptar">✅ Aceptar</button>
+    <button class="cancelar" id="btn-cancelar">❌ Cancelar</button>
+  </div>
+
   <script>
+    const necesidades = [
+      { id: 'comida', porcentajeId: 'porcentaje-comida' },
+      { id: 'sueño', porcentajeId: 'porcentaje-sueño' },
+      { id: 'felicidad', porcentajeId: 'porcentaje-felicidad' }
+    ];
+
+    function getSavedEstado() {
+      return JSON.parse(localStorage.getItem('estadoMascota')) || {
+        comida: { valor: 100, timestamp: Date.now() },
+        sueño: { valor: 100, timestamp: Date.now() },
+        felicidad: { valor: 100, timestamp: Date.now() }
+      };
+    }
+
+    function saveEstado(estado) {
+      localStorage.setItem('estadoMascota', JSON.stringify(estado));
+    }
+
+    function actualizarColor(porcentaje, elem) {
+      if (porcentaje > 59) elem.style.backgroundColor = 'green';
+      else if (porcentaje > 29) elem.style.backgroundColor = 'yellow';
+      else elem.style.backgroundColor = 'red';
+    }
+
+    function iniciarNecesidades() {
+      const estado = getSavedEstado();
+      const ahora = Date.now();
+
+      necesidades.forEach(n => {
+        const obj = estado[n.id];
+        const elem = document.getElementById(n.id);
+        const label = document.getElementById(n.porcentajeId);
+
+        const segundosPasados = Math.floor((ahora - obj.timestamp) / 1000);
+        const unidadesPerdidas = Math.floor(segundosPasados / 9);
+        let nuevoValor = Math.max(0, obj.valor - unidadesPerdidas);
+
+        obj.valor = nuevoValor;
+        obj.timestamp = ahora;
+
+        label.textContent = nuevoValor + '%';
+        actualizarColor(nuevoValor, elem);
+
+        setInterval(() => {
+          obj.valor = Math.max(0, obj.valor - 1);
+          obj.timestamp = Date.now();
+          label.textContent = obj.valor + '%';
+          actualizarColor(obj.valor, elem);
+          saveEstado(estado);
+        }, 9000);
+      });
+
+      saveEstado(estado);
+    }
+
+    function incrementarOrbes() {
+      const estado = getSavedEstado();
+      const ahora = Date.now();
+      for (const key in estado) {
+        estado[key].valor = Math.min(100, estado[key].valor + 40);
+        estado[key].timestamp = ahora;
+      }
+      saveEstado(estado);
+    }
+
+    function irAEjercicio(url) {
+      incrementarOrbes();
+      setTimeout(() => {
+        window.location.href = url;
+      }, 100);
+    }
+
+    function cargarNombreMascota() {
+      const nombre = localStorage.getItem('nombreMascota') || 'Pingüi';
+      document.getElementById('nombre-mascota').textContent = nombre;
+    }
+
+    const barra = document.getElementById('barra-edicion');
+    document.getElementById('editar-nombre').addEventListener('click', () => {
+      const input = document.getElementById('nuevo-nombre');
+      input.value = document.getElementById('nombre-mascota').textContent;
+      barra.classList.add('activa');
+    });
+
+    document.getElementById('btn-cancelar').addEventListener('click', () => {
+      barra.classList.remove('activa');
+    });
+
+    document.getElementById('btn-aceptar').addEventListener('click', () => {
+      const nuevoNombre = document.getElementById('nuevo-nombre').value.trim();
+      if (nuevoNombre !== '') {
+        localStorage.setItem('nombreMascota', nuevoNombre);
+        document.getElementById('nombre-mascota').textContent = nuevoNombre;
+      }
+      barra.classList.remove('activa');
+    });
+
     document.getElementById('toggle-izquierda').addEventListener('click', () => {
       document.getElementById('panel-izquierda').classList.toggle('activa');
     });
@@ -244,33 +403,15 @@
       document.getElementById('panel-derecha').classList.toggle('activa');
     });
 
-    const necesidades = [
-      { id: 'comida', porcentajeId: 'porcentaje-comida' },
-      { id: 'sueño', porcentajeId: 'porcentaje-sueño' },
-      { id: 'felicidad', porcentajeId: 'porcentaje-felicidad' }
-    ];
-
-    necesidades.forEach(n => {
-      let porcentaje = 100;
-      const intervalo = setInterval(() => {
-        porcentaje--;
-        const elem = document.getElementById(n.id);
-        const label = document.getElementById(n.porcentajeId);
-        label.textContent = porcentaje + '%';
-
-        if (porcentaje > 59) {
-          elem.style.backgroundColor = 'green';
-        } else if (porcentaje > 29) {
-          elem.style.backgroundColor = 'yellow';
-        } else {
-          elem.style.backgroundColor = 'red';
-        }
-
-        if (porcentaje <= 0) {
-          clearInterval(intervalo);
-        }
-      }, 9000); 
-    });
+    window.onload = () => {
+      iniciarNecesidades();
+      cargarNombreMascota();
+      const bienvenida = document.getElementById('bienvenida');
+      bienvenida.classList.add('mostrar');
+      setTimeout(() => {
+      bienvenida.classList.remove('mostrar');
+      }, 6000);
+    };
   </script>
 </body>
 </html>
