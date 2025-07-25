@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ejercicio Multiplicación</title>
+  <style>
+    body {
+      font-family: 'Comic Sans MS', cursive, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f9f9f9;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      height: 100vh;
+      box-sizing: border-box;
+    }
+
+    .header {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 20px;
+      box-sizing: border-box;
+    }
+
+    .titulo {
+      background-color: #c0ebc9;
+      padding: 10px 20px;
+      border-radius: 15px;
+      font-size: 1.5em;
+    }
+
+    .vidas img {
+      height: 40px;
+      margin-left: 5px;
+    }
+
+    .pinguino {
+      animation: flotar 4s ease-in-out infinite;
+      max-width: 200px;
+      margin: 20px 0;
+    }
+
+    @keyframes flotar {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-5px); }
+    }
+
+    .pregunta {
+      background-color: #a3d4f7;
+      padding: 10px 20px;
+      border-radius: 10px;
+      font-size: 1.5em;
+      margin-bottom: 20px;
+    }
+
+    .opciones {
+      display: flex;
+      gap: 15px;
+    }
+
+    .opcion {
+      background-color: #add8f7;
+      border-radius: 50%;
+      width: 60px;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2em;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+
+    .opcion:hover {
+      transform: scale(1.1);
+    }
+
+    .navegacion {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      padding: 20px;
+    }
+
+    .boton-nav {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      border: none;
+      background-color: #fcc;
+      font-size: 2em;
+      cursor: pointer;
+    }
+
+    .boton-nav.der {
+      background-color: #c0ebc9;
+    }
+
+    @media (max-width: 600px) {
+      .opciones {
+        flex-direction: column;
+        align-items: center;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <div class="titulo" id="titulo">Multiplicación: Tabla del 5</div>
+    <div class="vidas" id="vidas">
+      <img src="imagenes/Vida.png" id="vida1">
+      <img src="imagenes/Vida.png" id="vida2">
+      <img src="imagenes/Vida.png" id="vida3">
+    </div>
+  </div>
+
+  <img src="imagenes/pet.jpeg" alt="Pinguino" class="pinguino">
+  <div class="pregunta" id="pregunta">¿Cuánto es 5 x 7?</div>
+  <div class="opciones" id="opciones">
+    
+  </div>
+
+  <div class="navegacion">
+    <button class="boton-nav izq" onclick="window.location.href='Mascota.html'">←</button>
+    <button class="boton-nav der">→</button>
+  </div>
+
+  <script>
+    const pregunta = document.getElementById('pregunta');
+    const opciones = document.getElementById('opciones');
+    const titulo = document.getElementById('titulo');
+    const vidas = [
+      document.getElementById('vida1'),
+      document.getElementById('vida2'),
+      document.getElementById('vida3')
+    ];
+    let vidasRestantes = 3;
+
+    function nuevaPregunta() {
+      opciones.innerHTML = "";
+      const num1 = Math.floor(Math.random() * 10 + 1);
+      const num2 = Math.floor(Math.random() * 10 + 1);
+      const resultado = num1 * num2;
+      pregunta.textContent = `¿Cuánto es ${num1} x ${num2}?`;
+      titulo.textContent = `Multiplicación: Tabla del ${num1}`;
+
+      const respuestas = new Set();
+      respuestas.add(resultado);
+      while (respuestas.size < 3) {
+        respuestas.add(Math.floor(Math.random() * 100));
+      }
+      const lista = Array.from(respuestas);
+      lista.sort(() => Math.random() - 0.5);
+
+      lista.forEach(res => {
+        const btn = document.createElement('div');
+        btn.className = 'opcion';
+        btn.textContent = res;
+        btn.onclick = () => {
+          if (res === resultado) {
+            nuevaPregunta();
+          } else {
+            vidasRestantes--;
+            if (vidasRestantes >= 0) vidas[vidasRestantes].src = 'imagenes/VidaMenos.png';
+            if (vidasRestantes <= 0) {
+              alert("Intenta de nuevo");
+              window.location.href = 'Mascota.html';
+            } else {
+              nuevaPregunta();
+            }
+          }
+        };
+        opciones.appendChild(btn);
+      });
+    }
+
+    nuevaPregunta();
+  </script>
+</body>
+</html>
