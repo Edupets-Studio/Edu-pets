@@ -6,10 +6,23 @@
   <title>Registro</title>
   <script src="https://apis.google.com/js/api.js"></script>
   <style>
-    body {
-      font-family: 'Arial', sans-serif;
+    :root {
+      --amarillo-claro: #fff1cc;
+      --verde-claro: #bfffcf;
+      --rosado: #f8bcbc;
+      --negro: #000;
+      --fuente: 'Arial', sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
       margin: 0;
-      background-color: #fff1cc;
+      padding: 0;
+    }
+
+    body {
+      font-family: var(--fuente);
+      background-color: var(--amarillo-claro);
       display: flex;
       justify-content: center;
       align-items: center;
@@ -17,59 +30,76 @@
       flex-direction: column;
       padding: 0 10px;
       position: relative;
+      overflow: hidden;
+    }
+
+    canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 0;
+      pointer-events: none;
     }
 
     .container {
       background-color: #fff;
-      padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      padding: 25px;
+      border-radius: 15px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
       width: 100%;
       max-width: 400px;
+      text-align: center;
+      z-index: 1;
     }
 
     .header {
-      background-color: #bfffcf;
+      background-color: var(--verde-claro);
       padding: 20px;
-      text-align: center;
-      border-radius: 8px;
+      border-radius: 10px;
+      margin-bottom: 15px;
     }
 
     .header h1 {
-      font-size: 1.8em;
+      font-size: 2em;
       margin: 0;
     }
 
     .input-container {
-      margin-top: 20px;
+      margin-top: 10px;
     }
 
     input {
       width: 100%;
       padding: 12px;
       margin: 10px 0;
-      border-radius: 7px;
-      border: 1px solid #ccc;
-      font-family: 'Arial', sans-serif;
-      font-size: 1em;
-      color: #333;
+      border-radius: 10px;
+      border: 1.5px solid #ccc;
+      font-size: 1.1em;
       text-align: center;
+      transition: border-color 0.3s;
+    }
+
+    input:focus {
+      border-color: var(--negro);
+      outline: none;
     }
 
     button {
       width: 100%;
       padding: 12px;
-      background-color: #bfffcf;
+      background-color: var(--verde-claro);
       color: #333;
-      border: none;
-      border-radius: 7px;
+      border: 2px solid var(--negro);
+      border-radius: 10px;
       font-size: 1.2em;
+      font-weight: bold;
       cursor: pointer;
-      transition: background-color 0.3s;
+      transition: background-color 0.3s, transform 0.2s;
     }
 
     button:hover {
       background-color: #a0f1c3;
+      transform: scale(1.03);
     }
 
     .volver-button {
@@ -78,9 +108,9 @@
       right: 20px;
       width: 60px;
       height: 60px;
-      background-color: #f8bcbc;
+      background-color: var(--rosado);
       border-radius: 50%;
-      border: 2px solid #000;
+      border: 2px solid var(--negro);
       font-size: 1.2em;
       font-weight: bold;
       cursor: pointer;
@@ -89,13 +119,18 @@
       justify-content: center;
       user-select: none;
       z-index: 3;
+      transition: background-color 0.3s, transform 0.3s;
     }
 
-    /* Media Queries */
+    .volver-button:hover {
+      background-color: #f29a9a;
+      transform: scale(1.1);
+    }
+
     @media (max-width: 480px) {
       .container {
         width: 100%;
-        padding: 15px;
+        padding: 20px;
       }
 
       button {
@@ -107,10 +142,18 @@
         font-size: 1em;
         padding: 10px;
       }
+
+      .volver-button {
+        width: 50px;
+        height: 50px;
+        font-size: 1em;
+      }
     }
   </style>
 </head>
 <body>
+
+  <canvas id="symbols"></canvas>
 
   <div class="container">
     <div class="header">
@@ -133,25 +176,22 @@
         'apiKey': '917160925676-ng88s2acmk4ue0mue79s863qqqba2g1a.apps.googleusercontent.com',  // Tu clave de API
       }).then(function () {
         console.log('API Inicializada');
-        // Ahora cargamos la API de Sheets después de la inicialización
-        return gapi.client.load('sheets', 'v4');  // Cargar API de Sheets
-      }).then(function() {
+        return gapi.client.load('sheets', 'v4');
+      }).then(function () {
         console.log('API de Sheets cargada correctamente');
       }).catch(function (error) {
         console.error('Error al inicializar la API:', error);
       });
     }
 
-    // Cargar la API de Google
     function loadClient() {
       gapi.load('client', initApi);
     }
 
-    // Función de registro
     function registrar() {
       const usuario = document.getElementById('usuario').value;
       const password = document.getElementById('password').value;
-      
+
       if (usuario && password) {
         agregarUsuario(usuario, password);
       } else {
@@ -159,10 +199,9 @@
       }
     }
 
-    // Función para agregar el usuario a Google Sheets
     function agregarUsuario(usuario, password) {
-      const spreadsheetId = '1pxl9BOGw10L5ZD_wdcX_wNO6Fv-KyukjEpv7XpaluZE';  // El ID de tu hoja de cálculo
-      const range = 'Hoja1!A:B';  // El rango donde se agregan los usuarios
+      const spreadsheetId = '1pxl9BOGw10L5ZD_wdcX_wNO6Fv-KyukjEpv7XpaluZE';
+      const range = 'Hoja1!A:B';
 
       const values = [
         [usuario, password]
@@ -172,7 +211,6 @@
         values: values
       };
 
-      // Esperar a que la API de Sheets esté lista
       gapi.client.sheets.spreadsheets.values.append({
         spreadsheetId: spreadsheetId,
         range: range,
@@ -187,8 +225,51 @@
       });
     }
 
-    // Cargar el cliente de Google Sheets al cargar la página
     window.onload = loadClient;
+  </script>
+
+  <script>
+    // Animación de símbolos matemáticos
+    const canvas = document.getElementById('symbols');
+    const ctx = canvas.getContext('2d');
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+    canvas.width = width;
+    canvas.height = height;
+
+    const symbols = ['π', '√', '∞', '∑', '∆', '≠', '≈', '∫', '∂'];
+    const particles = [];
+
+    for (let i = 0; i < 30; i++) {
+      particles.push({
+        x: Math.random() * width,
+        y: Math.random() * height,
+        dx: (Math.random() - 0.5) * 0.5,
+        dy: (Math.random() - 0.5) * 0.5,
+        size: Math.random() * 30 + 15,
+        symbol: symbols[Math.floor(Math.random() * symbols.length)],
+        opacity: Math.random() * 0.3 + 0.1
+      });
+    }
+
+    function animate() {
+      ctx.clearRect(0, 0, width, height);
+      particles.forEach(p => {
+        ctx.font = `${p.size}px Arial`;
+        ctx.fillStyle = `rgba(0, 0, 0, ${p.opacity})`;
+        ctx.fillText(p.symbol, p.x, p.y);
+
+        p.x += p.dx;
+        p.y += p.dy;
+
+        if (p.x < 0 || p.x > width) p.dx *= -1;
+        if (p.y < 0 || p.y > height) p.dy *= -1;
+      });
+
+      requestAnimationFrame(animate);
+    }
+
+    animate();
   </script>
 
 </body>
