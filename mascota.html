@@ -5,14 +5,23 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Pinguino Interactivo</title>
   <style>
-    body {
-      margin: 0;
-      font-family: "Comic Sans MS", cursive, sans-serif;
-      background-color: #f0f8ff;
-      font-size: 20px;
+    :root {
+      --azul-claro: #cfe8ff;
+      --azul: #7dbef5;
+      --verde-claro: #dafbe1;
+      --amarillo-claro: #fff9dc;
+      --rosado-suave: #edf3fa;
+      --texto: #333;
+      --fuente: 'Segoe UI', sans-serif;
     }
 
-    
+    body {
+      margin: 0;
+      font-family: var(--fuente);
+      background-color: var(--amarillo-claro);
+      font-size: 20px;
+      color: var(--texto);
+    }
 
     .contenedor {
       display: flex;
@@ -31,16 +40,19 @@
       transition: opacity 0.5s ease;
       opacity: 0;
       pointer-events: none;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+      border-radius: 0 16px 16px 0;
     }
 
     .panel.izquierda {
       left: 0;
-      background-color: #add8e6;
+      background: linear-gradient(180deg, var(--azul-claro), var(--azul));
+      color: white;
     }
 
     .panel.derecha {
       right: 0;
-      background-color: #b2f2bb;
+      background-color: var(--verde-claro);
     }
 
     .panel.activa {
@@ -56,36 +68,33 @@
       justify-content: center;
       position: relative;
       z-index: 1;
+      background-color: var(--rosado-suave);
     }
 
     .toggle {
       position: absolute;
       top: 10px;
-      font-size: 40px; /* Agrandado */
+      font-size: 30px;
       background-color: #ffffff;
       border-radius: 50%;
-      width: 80px; /* Más ancho */
-      height: 80px; /* Más alto */
+      width: 70px;
+      height: 70px;
       display: flex;
       align-items: center;
       justify-content: center;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
       cursor: pointer;
       z-index: 3;
-      transition: transform 0.2s ease;
+      transition: transform 0.3s ease;
+      font-weight: bold;
     }
 
     .toggle:hover {
       transform: scale(1.1);
     }
 
-    #toggle-izquierda {
-      left: 10px;
-    }
-
-    #toggle-derecha {
-      right: 10px;
-    }
+    #toggle-izquierda { left: 10px; }
+    #toggle-derecha { right: 10px; }
 
     .necesidades {
       display: flex;
@@ -105,8 +114,9 @@
       background-size: cover;
       background-position: center;
       margin: 0 auto;
-      transition: background-color 0.5s ease;
       border: 5px solid white;
+      transition: 0.3s;
+      box-shadow: 0 6px 15px rgba(0,0,0,0.15);
     }
 
     .porcentaje {
@@ -133,7 +143,7 @@
     .pinguino {
       width: 200px;
       border-radius: 20px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.2);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
       animation: flotar 3s ease-in-out infinite;
     }
 
@@ -150,18 +160,19 @@
     }
 
     .botones button {
-      font-size: 32px;
+      font-size: 30px;
       padding: 15px 25px;
-      background-color: #fefefe;
-      border: 2px solid #ccc;
+      background-color: var(--verde-claro);
+      border: none;
       border-radius: 15px;
       cursor: pointer;
-      transition: background-color 0.3s, transform 0.2s;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      transition: 0.3s ease;
+      font-weight: bold;
     }
 
     .botones button:hover {
-      background-color: #e0f7fa;
+      background-color: #c4efd3;
       transform: scale(1.05);
     }
 
@@ -238,31 +249,31 @@
     }
 
     .bienvenida {
-    position: fixed;
-    top: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    background-color: #c8facc;
-    color: #333;
-    font-size: 18px;
-    font-weight: bold;
-    padding: 15px 25px;
-    border-radius: 20px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-    z-index: 1000;
-    opacity: 0;
-    transition: opacity 0.5s ease-in-out;
+      position: fixed;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: #c8facc;
+      color: #333;
+      font-size: 18px;
+      font-weight: bold;
+      padding: 15px 25px;
+      border-radius: 20px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+      z-index: 1000;
+      opacity: 0;
+      transition: opacity 0.5s ease-in-out;
     }
-  .bienvenida.mostrar {
-    opacity: 1;
-  }
 
+    .bienvenida.mostrar {
+      opacity: 1;
+    }
   </style>
 </head>
 <body>
 
   <div id="bienvenida" class="bienvenida">
-  Esta es tu mascota virtual. Deberás cuidarla por medio de divertidos ejercicios matemáticos. ¡Cuídala bien!
+    Esta es tu mascota virtual. Deberás cuidarla por medio de divertidos ejercicios matemáticos. ¡Cuídala bien!
   </div>
 
   <div id="toggle-izquierda" class="toggle">📘</div>
@@ -273,7 +284,7 @@
       <h3>Lista de tareas</h3>
       <p>Realiza una tarea de suma para darle a tu mascota de comer</p>
     </div>
-    
+
     <a class="volver" href="javascript:history.back()">Volver</a>
 
     <div class="contenido">
@@ -310,7 +321,6 @@
     </div>
   </div>
 
-  
   <div class="barra-edicion" id="barra-edicion">
     <input type="text" id="nuevo-nombre" placeholder="Nuevo nombre..." />
     <button class="aceptar" id="btn-aceptar">✅ Aceptar</button>
@@ -429,9 +439,10 @@
       const bienvenida = document.getElementById('bienvenida');
       bienvenida.classList.add('mostrar');
       setTimeout(() => {
-      bienvenida.classList.remove('mostrar');
+        bienvenida.classList.remove('mostrar');
       }, 15000);
     };
   </script>
 </body>
 </html>
+
