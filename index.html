@@ -5,102 +5,163 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Edupets - Inicio</title>
   <style>
-    body {
-      font-family: 'Comic Sans MS', cursive, sans-serif;
-      margin: 0;
+    :root {
+      --azul-claro: #cfe8ff;
+      --azul: #7dbef5;
+      --verde-claro: #dafbe1;
+      --amarillo-claro: #fff9dc;
+      --rosado-suave: #edf3fa;
+      --texto: #333;
+      --fuente: 'Segoe UI', sans-serif;
     }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: var(--fuente);
+      background-color: var(--amarillo-claro);
+      color: var(--texto);
+    }
+
     .container {
       display: flex;
       flex-direction: row;
       height: 100vh;
       width: 100%;
-      border: 2px solid #ccc;
-      border-radius: 10px;
+      border-radius: 16px;
       overflow: hidden;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
     }
+
     .sidebar {
       width: 35%;
-      background-color: #add8f5;
+      background: linear-gradient(180deg, var(--azul-claro), var(--azul));
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      padding: 20px;
-      box-sizing: border-box;
-    }
-    .sidebar h1 {
-      font-size: 4.8em;
-      margin-bottom: 40px;
+      padding: 30px 20px;
       text-align: center;
     }
+
+    .sidebar h1 {
+      font-size: 4em;
+      margin-bottom: 50px;
+      color: #fff;
+      text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+    }
+
     .start-button {
-      background-color: #bfffcf;
-      border: 2px solid #000;
-      border-radius: 10px;
-      padding: 20px 30px;
-      font-size: 2em;
+      background-color: var(--verde-claro);
+      border: none;
+      border-radius: 14px;
+      padding: 18px 36px;
+      font-size: 1.5em;
       cursor: pointer;
       text-decoration: none;
-      color: black;
-      text-align: center;
+      color: #2b2b2b;
+      font-weight: bold;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      transition: all 0.3s ease;
     }
+
+    .start-button:hover {
+      background-color: #c4efd3;
+      transform: scale(1.05);
+    }
+
     .main-content {
       width: 65%;
-      background-color: #fff1cc;
+      background-color: var(--rosado-suave);
       position: relative;
       display: flex;
       justify-content: center;
       align-items: center;
       padding: 20px;
-      box-sizing: border-box;
+      overflow: hidden;
     }
+
     .main-content img {
       max-width: 100%;
       height: auto;
-      max-height: 500px;
-    }
-    .help-button {
-      position: absolute;
-      bottom: 20px;
-      right: 20px;
-      width: 80px;
-      height: 80px;
-      background-color: #bfffcf;
-      border: 2px solid #000;
-      border-radius: 50%;
-      font-size: 2em;
-      text-align: center;
-      line-height: 80px;
-      cursor: pointer;
-      text-decoration: none;
-      color: black;
-      font-weight: bold;
+      max-height: 480px;
+      border-radius: 20px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
     }
 
-    
+    .help-button {
+      position: absolute;
+      bottom: 25px;
+      right: 25px;
+      width: 70px;
+      height: 70px;
+      background-color: var(--verde-claro);
+      border: none;
+      border-radius: 50%;
+      font-size: 2.2em;
+      font-weight: bold;
+      color: #2b2b2b;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      transition: transform 0.3s ease;
+    }
+
+    .help-button:hover {
+      transform: scale(1.1);
+      background-color: #c4efd3;
+    }
+
+    .symbol {
+      position: absolute;
+      font-size: 2.5em;
+      color: rgba(50, 50, 50, 0.15);
+      animation: float 15s infinite linear;
+      pointer-events: none;
+    }
+
+    @keyframes float {
+      0% {
+        transform: translateY(0px) translateX(0px);
+      }
+      100% {
+        transform: translateY(-100vh) translateX(50vw);
+      }
+    }
+
     @media (max-width: 768px) {
       .container {
         flex-direction: column;
         height: auto;
       }
+
       .sidebar, .main-content {
         width: 100%;
-        padding: 30px 20px;
+        padding: 25px 20px;
       }
+
       .sidebar h1 {
-        font-size: 3em;
+        font-size: 2.8em;
       }
+
       .start-button {
-        font-size: 1.5em;
-        padding: 15px 20px;
+        font-size: 1.2em;
+        padding: 14px 26px;
       }
+
       .help-button {
         width: 60px;
         height: 60px;
         font-size: 1.5em;
-        line-height: 60px;
-        bottom: 10px;
-        right: 10px;
+        bottom: 15px;
+        right: 15px;
       }
     }
   </style>
@@ -109,11 +170,26 @@
   <div class="container">
     <div class="sidebar">
       <h1>Edupets</h1>
-      <a href="login.html" class="start-button">Inicio</a>
+      <a href="login.html" class="start-button">Comenzar</a>
     </div>
     <div class="main-content">
-      <img src="imagenes/pet.jpeg" alt="Pingüino" />
       <a href="que es.html" class="help-button">?</a>
+      <!-- Símbolos matemáticos -->
+      <script>
+        const symbols = ['+', '−', '×', '÷', '=', '≠', '<', '>', '∞', '∑', '∫', 'π', '√', '%', '±'];
+        const container = document.querySelector('.main-content');
+
+        for (let i = 0; i < 60; i++) {
+          const symbol = document.createElement('div');
+          symbol.classList.add('symbol');
+          symbol.textContent = symbols[Math.floor(Math.random() * symbols.length)];
+          symbol.style.top = Math.random() * 100 + '%';
+          symbol.style.left = Math.random() * 100 + '%';
+          symbol.style.fontSize = (Math.random() * 2 + 1.5) + 'em';
+          symbol.style.animationDuration = (Math.random() * 20 + 10) + 's';
+          container.appendChild(symbol);
+        }
+      </script>
     </div>
   </div>
 </body>
