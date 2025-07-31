@@ -1,114 +1,180 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Ayuda - Edupets</title>
   <style>
-    body {
-      font-family: 'Comic Sans MS', cursive, sans-serif;
+    :root {
+      --azul-claro: #cfe8ff;
+      --azul: #7dbef5;
+      --verde-claro: #dafbe1;
+      --amarillo-claro: #f7f9ff;
+      --rosado-suave: #edf3fa;
+      --texto: #333;
+      --fuente: 'Segoe UI', sans-serif;
+    }
+
+    * {
       margin: 0;
-      background-color: #ffffff;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: var(--fuente);
+      background-color: var(--rosado-suave);
+      color: var(--texto);
     }
 
     .container {
-      border: 2px solid #000;
-      border-radius: 15px;
-      margin: 20px;
-      padding: 10px;
-      height: 95vh;
+      margin: 20px auto;
+      max-width: 1000px;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+      background-color: var(--amarillo-claro);
       display: flex;
       flex-direction: column;
-      justify-content: flex-start;
+      min-height: 90vh;
+      padding: 20px;
     }
 
     .top-bar {
-      background-color: #bfffcf;
-      border-radius: 15px 15px 0 0;
+      background: linear-gradient(to right, var(--azul-claro), var(--azul));
+      border-radius: 14px;
+      padding: 20px;
       display: flex;
       justify-content: space-around;
-      padding: 20px 0;
+      flex-wrap: wrap;
+      gap: 15px;
     }
 
     .top-bar a {
-      background-color: #add8f5;
-      border: 2px solid #000;
-      border-radius: 10px;
-      padding: 10px 20px;
-      font-size: 1em;
+      background-color: var(--verde-claro);
+      border: none;
+      border-radius: 12px;
+      padding: 14px 24px;
+      font-size: 1.1em;
       text-decoration: none;
-      color: black;
-      text-align: center;
-      width: 180px;
+      color: #2b2b2b;
+      font-weight: bold;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      transition: background-color 0.3s ease, transform 0.3s ease;
+    }
+
+    .top-bar a:hover {
+      background-color: #c4efd3;
+      transform: scale(1.05);
     }
 
     .content {
       display: flex;
-      justify-content: space-around;
+      justify-content: space-between;
       align-items: flex-start;
-      padding: 30px;
-      flex: 1;
+      padding: 30px 20px;
+      flex-wrap: wrap;
+      gap: 20px;
     }
 
     .texto {
-      background-color: #add8f5;
+      background-color: var(--azul-claro);
       border-radius: 15px;
       padding: 20px;
-      width: 40%;
-      font-size: 1.6em;
+      width: 100%;
+      max-width: 500px;
+      font-size: 1.2em;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     }
 
     .imagen {
-      width: 35%;
+      width: 100%;
+      max-width: 380px;
       display: flex;
       align-items: center;
       justify-content: center;
     }
 
     .imagen img {
-      max-width: 100%;
-      height: auto;
-      border-radius: 10px;
+      width: 100%;
+      border-radius: 14px;
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+      max-height: 320px;
+      object-fit: contain;
     }
 
     .volver {
       position: fixed;
       bottom: 20px;
       right: 20px;
-      width: 60px;
-      height: 60px;
-      background-color: #f8bcbc;
-      border: 2px solid #000;
+      width: 65px;
+      height: 65px;
+      background-color: var(--verde-claro);
+      border: none;
       border-radius: 50%;
-      text-align: center;
-      line-height: 55px;
-      font-size: 0.9em;
+      font-size: 1.8em;
       font-weight: bold;
+      color: #2b2b2b;
+      text-align: center;
+      line-height: 65px;
       cursor: pointer;
       text-decoration: none;
-      color: black;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      transition: transform 0.3s ease, background-color 0.3s ease;
+    }
+
+    .volver:hover {
+      background-color: #c4efd3;
+      transform: scale(1.1);
+    }
+
+    @media (max-width: 768px) {
+      .content {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .texto, .imagen {
+        max-width: 100%;
+      }
+
+      .top-bar {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .top-bar a {
+        width: 100%;
+        text-align: center;
+      }
+
+      .volver {
+        width: 55px;
+        height: 55px;
+        font-size: 1.4em;
+        line-height: 55px;
+      }
     }
   </style>
 </head>
 <body>
   <div class="container">
     <div class="top-bar">
-      <a href="que es.html">¿Qué es edupets?</a>
+      <a href="que es.html">¿Qué es Edupets?</a>
       <a href="equipo.html">El equipo</a>
       <a href="por que.html">¿Por qué lo hicimos?</a>
     </div>
 
     <div class="content">
       <div class="texto">
-        queremos brindar apoyo a los niños y estudiantes que presenten dificultades para aprender un ejemplo Duque...<br>
-        
+        EduPet es una plataforma educativa diseñada para niños de primaria, especialmente pensada para reforzar conocimientos en matemáticas. La plataforma utiliza una mascota virtual que los niños deben cuidar, lo cual se convierte en una motivación para completar las tareas académicas.
       </div>
       <div class="imagen">
-        <img src="imagenes/pet.jpeg" alt="Pingüino" style="max-height: 320px;" />
+        <img src="imagenes/pet.jpeg" alt="Pingüino" />
       </div>
     </div>
 
-    <a class="volver" href="javascript:history.back()">Volver</a>
+    <a class="volver" href="javascript:history.back()">↩</a>
   </div>
 </body>
 </html>
