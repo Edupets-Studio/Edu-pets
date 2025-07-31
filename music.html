@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Reproducción Automática</title>
+</head>
+<body>
+
+  <h1>Bienvenido a mi página</h1>
+
+  <audio id="miAudio" loop hidden>
+    <source src="Borderline  Tame Impala (Traducida al español).mp3" type="audio/mpeg">
+    Tu navegador no soporta el audio.
+  </audio>
+
+  <script>
+    
+    document.addEventListener('DOMContentLoaded', () => {
+      const audio = document.getElementById('miAudio');
+
+
+      audio.play().catch(() => {
+      
+        document.addEventListener('click', () => {
+          audio.play();
+        }, { once: true });
+      });
+    });
+  </script>
+
+</body>
+</html>
