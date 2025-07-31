@@ -1,1 +1,201 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Suma - Juego</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Comic Sans MS', cursive, sans-serif;
+      background-color: #ffffff;
+    }
+    .header {
+      background-color: #c8f5c1;
+      padding: 25px;
+      font-size: 3em;
+      border-radius: 0 0 20px 20px;
+    }
+    .container {
+      text-align: center;
+      padding: 30px;
+    }
+    .hearts {
+      position: absolute;
+      right: 20px;
+      top: 20px;
+    }
+    .hearts img {
+      width: 70px;
+      height: 70px;
+      margin-left: 10px;
+    }
+    .question {
+      background-color: #add8f5;
+      display: inline-block;
+      padding: 20px 50px;
+      margin: 20px 0;
+      border-radius: 15px;
+      font-size: 3em;
+    }
+    .options button {
+      background-color: #add8f5;
+      border: none;
+      border-radius: 50%;
+      margin: 25px;
+      width: 140px;
+      height: 140px;
+      font-size: 2.5em;
+      cursor: pointer;
+    }
+    .message {
+      font-size: 2.5em;
+      padding: 25px;
+      margin: 30px auto;
+      width: 80%;
+      border-radius: 15px;
+    }
+    .success { background-color: #c8f5c1; color: #000; }
+    .fail { background-color: #fbc9cc; color: #000; }
+    .penguin {
+      animation: float 2s ease-in-out infinite;
+      width: 280px;
+      display: block;
+      margin: 0 auto;
+    }
+    @keyframes float {
+      0% { transform: translateY(0); }
+      50% { transform: translateY(-20px); }
+      100% { transform: translateY(0); }
+    }
+    .confirm-exit {
+      display: none;
+      position: fixed;
+      top: 30%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: white;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+      text-align: center;
+      z-index: 9999;
+    }
+    .confirm-exit button {
+      font-size: 1.5em;
+      margin: 20px;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+    .btn-salir { background-color: #fbc9cc; }
+    .btn-quedar { background-color: #c8f5c1; }
+  </style>
+</head>
+<body>
+  <div class="header" id="titulo">Suma: Ejercicio de ?</div>
+  <div class="hearts">
+    <img src="imagenes/Vida.png" id="vida1">
+    <img src="imagenes/Vida.png" id="vida2">
+    <img src="imagenes/Vida.png" id="vida3">
+  </div>
+  <div class="container">
+    <img src="imagenes/pet.jpeg" alt="Pingüino" class="penguin">
+    <div class="question" id="pregunta">¿Cuánto es ?</div>
+    <div class="options" id="opciones"></div>
+    <div id="mensaje"></div>
+  </div>
+  <div class="arrow left" style="position: absolute; bottom: 30px; left: 30px; font-size: 2em; background-color: #fbc9cc; padding: 15px 25px; border-radius: 15px; cursor: pointer;" onclick="confirmarSalida()">Volver</div>
 
+  <div class="confirm-exit" id="confirm-exit">
+    <p style="font-size: 1.5em;">¿Estás seguro de que quieres salir de la prueba?</p>
+    <button class="btn-salir" onclick="window.location.href='mascota.html'">Sí, volver</button>
+    <button class="btn-quedar" onclick="document.getElementById('confirm-exit').style.display='none'">No, me quiero quedar</button>
+  </div>
+
+  <script>
+    let vidas = 3;
+    let preguntas = 0;
+    const totalPreguntas = 10;
+
+    function aumentarOrbe(orbe) {
+      const niveles = JSON.parse(localStorage.getItem('niveles')) || {
+        comida: 100,
+        sueño: 100,
+        felicidad: 100
+      };
+
+      const timestamps = JSON.parse(localStorage.getItem('ultimosIncrementos')) || {
+        comida: 0,
+        sueño: 0,
+        felicidad: 0
+      };
+
+      const ahora = Date.now();
+      const tiempoEspera = 60 * 1000; // 1 minuto
+
+      if (ahora - timestamps[orbe] > tiempoEspera) {
+        niveles[orbe] = Math.min(100, niveles[orbe] + 20);
+        timestamps[orbe] = ahora;
+
+        localStorage.setItem('niveles', JSON.stringify(niveles));
+        localStorage.setItem('ultimosIncrementos', JSON.stringify(timestamps));
+      }
+    }
+
+    function generarPregunta() {
+      if (preguntas >= totalPreguntas) {
+        document.getElementById('mensaje').innerHTML = '<div class="message success">¡Bien hecho!</div>';
+        aumentarOrbe('comida');
+        setTimeout(() => window.location.href = 'mascota.html', 3000);
+        return;
+      }
+
+      const a = Math.floor(Math.random() + 10) + 1;
+      const b = Math.floor(Math.random() + 10) + 1;
+      const respuesta = a * b;
+      document.getElementById('titulo').textContent = `Suma: Ejercicios de ${a}`;
+      document.getElementById('pregunta').textContent = `¿Cuánto es ${a} + ${b}?`;
+      const opcionesDiv = document.getElementById('opciones');
+      opcionesDiv.innerHTML = '';
+
+      const opciones = new Set();
+      opciones.add(respuesta);
+      while (opciones.size < 3) opciones.add(Math.floor(Math.random() + 100));
+
+      Array.from(opciones).sort(() => Math.random() - 0.5).forEach(op => {
+        const btn = document.createElement('button');
+        btn.textContent = op;
+        btn.onclick = () => verificarRespuesta(op, respuesta);
+        opcionesDiv.appendChild(btn);
+      });
+    }
+
+    function verificarRespuesta(opcion, correcta) {
+      if (opcion === correcta) {
+        preguntas++;
+        generarPregunta();
+      } else {
+        if (vidas > 0) {
+          document.getElementById(`vida${vidas}`).src = 'imagenes/VidaMenos.png';
+          vidas--;
+        }
+        if (vidas === 0) {
+          document.getElementById('mensaje').innerHTML = '<div class="message fail">Intenta de nuevo</div>';
+          setTimeout(() => window.location.href = 'mascota.html', 3000);
+        } else {
+          preguntas++;
+          generarPregunta();
+        }
+      }
+    }
+
+    function confirmarSalida() {
+      document.getElementById('confirm-exit').style.display = 'block';
+    }
+
+    window.onload = generarPregunta;
+  </script>
+</body>
+</html>
