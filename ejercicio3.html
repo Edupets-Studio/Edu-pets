@@ -34,7 +34,7 @@
 
     .container {
       text-align: center;
-      padding: 30px;
+      padding: 60px 30px 30px;
     }
 
     .hearts {
@@ -47,13 +47,14 @@
       width: 70px;
       height: 70px;
       margin-left: 10px;
+      transition: transform 0.2s ease;
     }
 
     .question {
       background-color: var(--azul-claro);
       display: inline-block;
       padding: 20px 50px;
-      margin: 20px 0;
+      margin: 40px 0 30px;
       border-radius: 15px;
       font-size: 3em;
       box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
@@ -174,6 +175,19 @@
       color: white;
       transform: scale(1.05);
     }
+
+    /* Animación sacudida */
+    @keyframes shake {
+      0% { transform: translateX(0); }
+      25% { transform: translateX(-10px); }
+      50% { transform: translateX(10px); }
+      75% { transform: translateX(-10px); }
+      100% { transform: translateX(0); }
+    }
+
+    .shake {
+      animation: shake 0.4s;
+    }
   </style>
 </head>
 <body>
@@ -261,7 +275,12 @@
         generarPregunta();
       } else {
         if (vidas > 0) {
-          document.getElementById(`vida${vidas}`).src = 'imagenes/VidaMenos.png';
+          const vida = document.getElementById(`vida${vidas}`);
+          vida.classList.add('shake');
+          setTimeout(() => {
+            vida.src = 'imagenes/VidaMenos.png';
+            vida.classList.remove('shake');
+          }, 400);
           vidas--;
         }
         if (vidas === 0) {
@@ -282,3 +301,4 @@
   </script>
 </body>
 </html>
+
