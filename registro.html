@@ -1,4 +1,4 @@
-<!DOCTYPE html>   
+<!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
@@ -6,152 +6,168 @@
   <title>Registro</title>
   <script src="https://apis.google.com/js/api.js"></script>
   <style>
-    body {
-      font-family: 'Arial', sans-serif;
+    :root {
+      --fondo: #f2f6fc;
+      --azul: #a5c8ff;
+      --azul-oscuro: #4a80cc;
+      --blanco: #ffffff;
+      --gris: #444;
+      --rosado: #f7c2d4;
+      --fuente: 'Segoe UI', sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
       margin: 0;
-      background-color: #fff1cc;
+      padding: 0;
+    }
+
+    body {
+      font-family: var(--fuente);
+      background-color: var(--fondo);
       display: flex;
       justify-content: center;
       align-items: center;
       height: 100vh;
-      flex-direction: column;
-      padding: 0 10px;
+      padding: 20px;
+      overflow: hidden;
       position: relative;
     }
 
+    canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 0;
+      pointer-events: none;
+    }
+
     .container {
-      background-color: #fff;
-      padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      background-color: var(--blanco);
+      padding: 30px 25px;
+      border-radius: 24px;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
       width: 100%;
       max-width: 400px;
+      text-align: center;
+      z-index: 1;
+      animation: fadeIn 0.8s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
     .header {
-      background-color: #bfffcf;
-      padding: 20px;
-      text-align: center;
-      border-radius: 8px;
+      background: linear-gradient(135deg, var(--azul), var(--azul-oscuro));
+      padding: 24px;
+      border-radius: 16px;
+      margin-bottom: 20px;
+      color: var(--blanco);
     }
 
     .header h1 {
       font-size: 1.8em;
-      margin: 0;
-    }
-
-    .input-container {
-      margin-top: 20px;
     }
 
     input {
       width: 100%;
-      padding: 12px;
+      padding: 12px 15px;
       margin: 10px 0;
-      border-radius: 7px;
-      border: 1px solid #ccc;
-      font-family: 'Arial', sans-serif;
+      border-radius: 12px;
+      border: 1.5px solid #ccc;
       font-size: 1em;
-      color: #333;
+      transition: border-color 0.3s;
       text-align: center;
+    }
+
+    input:focus {
+      border-color: var(--azul-oscuro);
+      outline: none;
     }
 
     button {
       width: 100%;
       padding: 12px;
-      background-color: #bfffcf;
-      color: #333;
+      background-color: var(--azul);
+      color: var(--blanco);
       border: none;
-      border-radius: 7px;
-      font-size: 1.2em;
+      border-radius: 12px;
+      font-size: 1.1em;
+      font-weight: bold;
       cursor: pointer;
-      transition: background-color 0.3s;
+      transition: background-color 0.3s, transform 0.2s;
     }
 
     button:hover {
-      background-color: #a0f1c3;
+      background-color: var(--azul-oscuro);
+      transform: scale(1.03);
     }
 
     .volver-button {
       position: fixed;
       bottom: 20px;
       right: 20px;
-      width: 60px;
-      height: 60px;
-      background-color: #f8bcbc;
+      width: 56px;
+      height: 56px;
+      background-color: var(--rosado);
       border-radius: 50%;
-      border: 2px solid #000;
-      font-size: 1.2em;
+      border: none;
+      font-size: 1.5em;
       font-weight: bold;
+      color: var(--gris);
       cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
-      user-select: none;
-      z-index: 3;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      transition: transform 0.3s;
+      z-index: 10;
     }
 
-    /* Media Queries */
-    @media (max-width: 480px) {
-      .container {
-        width: 100%;
-        padding: 15px;
-      }
-
-      button {
-        font-size: 1em;
-        padding: 10px;
-      }
-
-      input {
-        font-size: 1em;
-        padding: 10px;
-      }
+    .volver-button:hover {
+      transform: scale(1.1);
     }
   </style>
 </head>
 <body>
+  <canvas id="symbols"></canvas>
 
   <div class="container">
     <div class="header">
       <h1>Crea tu cuenta</h1>
     </div>
 
-    <div class="input-container">
-      <input type="text" id="usuario" placeholder="Usuario" />
-      <input type="password" id="password" placeholder="Contraseña" />
-      <button onclick="registrar()">Registrarse</button>
-    </div>
+    <input type="text" id="usuario" placeholder="Usuario" />
+    <input type="password" id="password" placeholder="Contraseña" />
+    <button onclick="registrar()">Registrarse</button>
   </div>
 
-  <div class="volver-button" onclick="history.back()">Volver</div>
+  <div class="volver-button" onclick="history.back()">&larr;</div>
 
   <script>
-    // Inicializa la API de Google
     function initApi() {
       gapi.client.init({
-        'apiKey': '917160925676-ng88s2acmk4ue0mue79s863qqqba2g1a.apps.googleusercontent.com',  // Tu clave de API
+        'apiKey': '917160925676-ng88s2acmk4ue0mue79s863qqqba2g1a.apps.googleusercontent.com',
       }).then(function () {
         console.log('API Inicializada');
-        // Ahora cargamos la API de Sheets después de la inicialización
-        return gapi.client.load('sheets', 'v4');  // Cargar API de Sheets
-      }).then(function() {
+        return gapi.client.load('sheets', 'v4');
+      }).then(function () {
         console.log('API de Sheets cargada correctamente');
       }).catch(function (error) {
         console.error('Error al inicializar la API:', error);
       });
     }
 
-    // Cargar la API de Google
     function loadClient() {
       gapi.load('client', initApi);
     }
 
-    // Función de registro
     function registrar() {
       const usuario = document.getElementById('usuario').value;
       const password = document.getElementById('password').value;
-      
+
       if (usuario && password) {
         agregarUsuario(usuario, password);
       } else {
@@ -159,38 +175,69 @@
       }
     }
 
-    // Función para agregar el usuario a Google Sheets
     function agregarUsuario(usuario, password) {
-      const spreadsheetId = '1pxl9BOGw10L5ZD_wdcX_wNO6Fv-KyukjEpv7XpaluZE';  // El ID de tu hoja de cálculo
-      const range = 'Hoja1!A:B';  // El rango donde se agregan los usuarios
+      const spreadsheetId = '1pxl9BOGw10L5ZD_wdcX_wNO6Fv-KyukjEpv7XpaluZE';
+      const range = 'Hoja1!A:B';
 
-      const values = [
-        [usuario, password]
-      ];
+      const values = [[usuario, password]];
+      const body = { values: values };
 
-      const body = {
-        values: values
-      };
-
-      // Esperar a que la API de Sheets esté lista
       gapi.client.sheets.spreadsheets.values.append({
         spreadsheetId: spreadsheetId,
         range: range,
         valueInputOption: 'RAW',
         resource: body
       }).then((response) => {
-        console.log(response);
         alert('¡Usuario registrado correctamente!');
       }, (error) => {
-        console.error(error);
         alert('Hubo un error al registrar el usuario.');
+        console.error(error);
       });
     }
 
-    // Cargar el cliente de Google Sheets al cargar la página
     window.onload = loadClient;
   </script>
 
+  <script>
+    const canvas = document.getElementById('symbols');
+    const ctx = canvas.getContext('2d');
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+    canvas.width = width;
+    canvas.height = height;
+
+    const symbols = ['π', '√', '∞', '∑', '∆', '≠', '≈', '∫', '∂'];
+    const particles = [];
+
+    for (let i = 0; i < 30; i++) {
+      particles.push({
+        x: Math.random() * width,
+        y: Math.random() * height,
+        dx: (Math.random() - 0.5) * 0.5,
+        dy: (Math.random() - 0.5) * 0.5,
+        size: Math.random() * 30 + 18,
+        symbol: symbols[Math.floor(Math.random() * symbols.length)],
+        opacity: Math.random() * 0.3 + 0.1
+      });
+    }
+
+    function animate() {
+      ctx.clearRect(0, 0, width, height);
+      particles.forEach(p => {
+        ctx.font = `${p.size}px Segoe UI`;
+        ctx.fillStyle = `rgba(0, 0, 0, ${p.opacity})`;
+        ctx.fillText(p.symbol, p.x, p.y);
+
+        p.x += p.dx;
+        p.y += p.dy;
+
+        if (p.x < 0 || p.x > width) p.dx *= -1;
+        if (p.y < 0 || p.y > height) p.dy *= -1;
+      });
+      requestAnimationFrame(animate);
+    }
+
+    animate();
+  </script>
 </body>
 </html>
-

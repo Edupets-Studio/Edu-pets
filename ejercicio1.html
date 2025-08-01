@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Multiplicación - Juego</title>
+  <title>Suma - Juego</title>
   <style>
     body {
       margin: 0;
@@ -94,7 +94,7 @@
   </style>
 </head>
 <body>
-  <div class="header" id="titulo">Multiplicación: Tabla del ?</div>
+  <div class="header" id="titulo">Suma: Ejercicio de ?</div>
   <div class="hearts">
     <img src="imagenes/Vida.png" id="vida1">
     <img src="imagenes/Vida.png" id="vida2">
@@ -152,19 +152,19 @@
         return;
       }
 
-      const a = Math.floor(Math.random() * 10) + 1;
-      const b = Math.floor(Math.random() * 10) + 1;
+      const a = Math.floor(Math.random() + 10) + 1;
+      const b = Math.floor(Math.random() + 10) + 1;
       const respuesta = a * b;
-      document.getElementById('titulo').textContent = `Multiplicación: Tabla del ${a}`;
-      document.getElementById('pregunta').textContent = `¿Cuánto es ${a} × ${b}?`;
+      document.getElementById('titulo').textContent = `Suma: Ejercicios de ${a}`;
+      document.getElementById('pregunta').textContent = `¿Cuánto es ${a} + ${b}?`;
       const opcionesDiv = document.getElementById('opciones');
       opcionesDiv.innerHTML = '';
 
       const opciones = new Set();
       opciones.add(respuesta);
-      while (opciones.size < 3) opciones.add(Math.floor(Math.random() * 100));
+      while (opciones.size < 3) opciones.add(Math.floor(Math.random() + 100));
 
-      Array.from(opciones).sort(() => Math.random() - 0.5).forEach(op => {
+      Array.from(opciones).sort(() => Math.random() - 0.1).forEach(op => {
         const btn = document.createElement('button');
         btn.textContent = op;
         btn.onclick = () => verificarRespuesta(op, respuesta);
