@@ -5,41 +5,62 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Multiplicación - Juego</title>
   <style>
+    :root {
+      --azul-claro: #cfe8ff;
+      --azul: #7dbef5;
+      --verde-claro: #dafbe1;
+      --amarillo-claro: #fff9dc;
+      --rosado-suave: #edf3fa;
+      --texto: #333;
+      --fuente: 'Segoe UI', sans-serif;
+      --azul-hover: #518dcf;
+    }
+
     body {
       margin: 0;
-      font-family: 'Comic Sans MS', cursive, sans-serif;
-      background-color: #ffffff;
+      font-family: var(--fuente);
+      background-color: var(--rosado-suave);
+      color: var(--texto);
     }
+
     .header {
-      background-color: #c8f5c1;
+      background-color: var(--azul);
       padding: 25px;
       font-size: 3em;
       border-radius: 0 0 20px 20px;
+      color: white;
+      text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
     }
+
     .container {
       text-align: center;
       padding: 30px;
     }
+
     .hearts {
       position: absolute;
       right: 20px;
       top: 20px;
     }
+
     .hearts img {
       width: 70px;
       height: 70px;
       margin-left: 10px;
     }
+
     .question {
-      background-color: #add8f5;
+      background-color: var(--azul-claro);
       display: inline-block;
       padding: 20px 50px;
       margin: 20px 0;
       border-radius: 15px;
       font-size: 3em;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
     }
+
     .options button {
-      background-color: #add8f5;
+      background-color: var(--verde-claro);
       border: none;
       border-radius: 50%;
       margin: 25px;
@@ -47,7 +68,17 @@
       height: 140px;
       font-size: 2.5em;
       cursor: pointer;
+      transition: transform 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
     }
+
+    .options button:hover {
+      background-color: var(--azul-hover);
+      color: white;
+      transform: scale(1.05);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+    }
+
     .message {
       font-size: 2.5em;
       padding: 25px;
@@ -55,19 +86,30 @@
       width: 80%;
       border-radius: 15px;
     }
-    .success { background-color: #c8f5c1; color: #000; }
-    .fail { background-color: #fbc9cc; color: #000; }
+
+    .success {
+      background-color: var(--verde-claro);
+      color: #000;
+    }
+
+    .fail {
+      background-color: #fbc9cc;
+      color: #000;
+    }
+
     .penguin {
       animation: float 2s ease-in-out infinite;
       width: 280px;
       display: block;
       margin: 0 auto;
     }
+
     @keyframes float {
       0% { transform: translateY(0); }
       50% { transform: translateY(-20px); }
       100% { transform: translateY(0); }
     }
+
     .confirm-exit {
       display: none;
       position: fixed;
@@ -81,6 +123,7 @@
       text-align: center;
       z-index: 9999;
     }
+
     .confirm-exit button {
       font-size: 1.5em;
       margin: 20px;
@@ -88,9 +131,49 @@
       border: none;
       border-radius: 10px;
       cursor: pointer;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease;
     }
-    .btn-salir { background-color: #fbc9cc; }
-    .btn-quedar { background-color: #c8f5c1; }
+
+    .confirm-exit button:hover {
+      background-color: var(--azul-hover);
+      color: white;
+    }
+
+    .btn-salir {
+      background-color: #fbc9cc;
+    }
+
+    .btn-salir:hover {
+      background-color: #f5aab1;
+    }
+
+    .btn-quedar {
+      background-color: var(--verde-claro);
+    }
+
+    .btn-quedar:hover {
+      background-color: #c4efd3;
+    }
+
+    .arrow.left {
+      position: absolute;
+      bottom: 30px;
+      left: 30px;
+      font-size: 2em;
+      background-color: var(--azul-claro);
+      padding: 15px 25px;
+      border-radius: 15px;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+      transition: background-color 0.3s ease, transform 0.3s ease;
+    }
+
+    .arrow.left:hover {
+      background-color: var(--azul-hover);
+      color: white;
+      transform: scale(1.05);
+    }
   </style>
 </head>
 <body>
@@ -101,12 +184,12 @@
     <img src="imagenes/Vida.png" id="vida3">
   </div>
   <div class="container">
-    <img src="imagenes/pet.png" alt="Pingüino" class="penguin">
+    <img src="imagenes/pet.jpeg" alt="Pingüino" class="penguin">
     <div class="question" id="pregunta">¿Cuánto es ?</div>
     <div class="options" id="opciones"></div>
     <div id="mensaje"></div>
   </div>
-  <div class="arrow left" style="position: absolute; bottom: 30px; left: 30px; font-size: 2em; background-color: #fbc9cc; padding: 15px 25px; border-radius: 15px; cursor: pointer;" onclick="confirmarSalida()">Volver</div>
+  <div class="arrow left" onclick="confirmarSalida()">Volver</div>
 
   <div class="confirm-exit" id="confirm-exit">
     <p style="font-size: 1.5em;">¿Estás seguro de que quieres salir de la prueba?</p>
