@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Audio Global</title>
+</head>
+<body>
+  <audio id="global-audio" src="Sonido/Mii.mp3" autoplay loop></audio>
+
+  <script>
+    const audio = document.getElementById("global-audio");
+    audio.volume = 0.5;
+
+    // Actualiza el tiempo en localStorage cada 500ms
+    setInterval(() => {
+      localStorage.setItem('audioTime', audio.currentTime);
+    }, 500);
+
+    // Reanuda desde donde iba
+    const lastTime = parseFloat(localStorage.getItem('audioTime')) || 0;
+    audio.currentTime = lastTime;
+
+    audio.play().catch(() => {
+      audio.muted = true;
+    });
+  </script>
+</body>
+</html>
