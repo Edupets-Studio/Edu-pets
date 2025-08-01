@@ -30,6 +30,7 @@
       border-radius: 0 0 20px 20px;
       color: white;
       text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+      text-align: center;
     }
 
     .container {
@@ -176,7 +177,6 @@
       transform: scale(1.05);
     }
 
-    /* Animación sacudida */
     @keyframes shake {
       0% { transform: translateX(0); }
       25% { transform: translateX(-10px); }
@@ -192,17 +192,20 @@
 </head>
 <body>
   <div class="header" id="titulo">Multiplicación: Tabla del ?</div>
+
   <div class="hearts">
     <img src="imagenes/Vida.png" id="vida1">
     <img src="imagenes/Vida.png" id="vida2">
     <img src="imagenes/Vida.png" id="vida3">
   </div>
+
   <div class="container">
     <img src="imagenes/pet.jpeg" alt="Pingüino" class="penguin">
     <div class="question" id="pregunta">¿Cuánto es ?</div>
     <div class="options" id="opciones"></div>
     <div id="mensaje"></div>
   </div>
+
   <div class="arrow left" onclick="confirmarSalida()">Volver</div>
 
   <div class="confirm-exit" id="confirm-exit">
@@ -230,7 +233,7 @@
       };
 
       const ahora = Date.now();
-      const tiempoEspera = 60 * 1000; // 1 minuto
+      const tiempoEspera = 60 * 1000;
 
       if (ahora - timestamps[orbe] > tiempoEspera) {
         niveles[orbe] = Math.min(100, niveles[orbe] + 20);
@@ -252,8 +255,10 @@
       const a = Math.floor(Math.random() * 10) + 1;
       const b = Math.floor(Math.random() * 10) + 1;
       const respuesta = a * b;
+
       document.getElementById('titulo').textContent = `Multiplicación: Tabla del ${a}`;
       document.getElementById('pregunta').textContent = `¿Cuánto es ${a} × ${b}?`;
+
       const opcionesDiv = document.getElementById('opciones');
       opcionesDiv.innerHTML = '';
 
@@ -283,6 +288,7 @@
           }, 400);
           vidas--;
         }
+
         if (vidas === 0) {
           document.getElementById('mensaje').innerHTML = '<div class="message fail">Intenta de nuevo</div>';
           setTimeout(() => window.location.href = 'mascota.html', 3000);
@@ -301,4 +307,3 @@
   </script>
 </body>
 </html>
-
