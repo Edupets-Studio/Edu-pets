@@ -165,6 +165,22 @@
       <a href="por que.html">¿Por qué lo hicimos?</a>
     </div>
 
+    <script>
+        const symbols = ['+', '−', '×', '÷', '=', '≠', '<', '>', '∞', '∑', '∫', 'π', '√', '%', '±'];
+        const container = document.querySelector('.main-content');
+
+        for (let i = 0; i < 60; i++) {
+          const symbol = document.createElement('div');
+          symbol.classList.add('symbol');
+          symbol.textContent = symbols[Math.floor(Math.random() * symbols.length)];
+          symbol.style.top = Math.random() * 100 + '%';
+          symbol.style.left = Math.random() * 100 + '%';
+          symbol.style.fontSize = (Math.random() * 2 + 1.5) + 'em';
+          symbol.style.animationDuration = (Math.random() * 20 + 10) + 's';
+          container.appendChild(symbol);
+        }
+      </script>
+
     <div class="content">
       <div class="texto">
         EduPet es una plataforma educativa diseñada para niños de primaria, especialmente pensada para reforzar conocimientos en matemáticas. La plataforma utiliza una mascota virtual que los niños deben cuidar, lo cual se convierte en una motivación para completar las tareas académicas.
