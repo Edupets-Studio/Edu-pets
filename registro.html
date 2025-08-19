@@ -196,7 +196,8 @@
             .then(data => {
                 if (data.success) {
                     alert(data.message);
-                    location.href = "login.html";
+                    // CAMBIO AQUI: Redirige a la pantalla de la mascota
+                    location.href = "mascota.html"; 
                 } else {
                     alert(data.message);
                 }
