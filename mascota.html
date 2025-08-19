@@ -44,14 +44,7 @@
       border-radius: 0 16px 16px 0;
     }
 
-    .main-content img {
-      max-width: 100%;
-      height: auto;
-      max-height: 480px;
-      border-radius: 20px;
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-      animation: flotar 3s ease-in-out infinite;
-    }
+    
 
 
     .panel.izquierda {
@@ -340,18 +333,7 @@
 
   <script>
 
-    const symbols = ['+', '−', '×', '÷', '=', '≠', '<', '>', '∞', '∑', '∫', 'π', '√', '%', '±'];
-        const container = document.querySelector('.main-content');
-
-        for (let i = 0; i < 60; i++) {
-          const symbol = document.createElement('div');
-          symbol.classList.add('symbol');
-          symbol.textContent = symbols[Math.floor(Math.random() * symbols.length)];
-          symbol.style.top = Math.random() * 100 + '%';
-          symbol.style.left = Math.random() * 100 + '%';
-          symbol.style.fontSize = (Math.random() * 2 + 1.5) + 'em';
-          symbol.style.animationDuration = (Math.random() * 20 + 10) + 's';
-          container.appendChild(symbol);
+    
     const necesidades = [
       { id: 'comida', porcentajeId: 'porcentaje-comida' },
       { id: 'sueño', porcentajeId: 'porcentaje-sueño' },
