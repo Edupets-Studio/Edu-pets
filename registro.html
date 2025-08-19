@@ -185,7 +185,7 @@
                 return;
             }
 
-            const url = "https://script.google.com/macros/s/AKfycbzprJfJknFYMROkxdFUoueCxe605iUwaS4KAw1LQzb6h4yfRzMQKppNEn88Y43qFtsu/exec";
+            const url = "https://script.google.com/macros/s/AKfycbx0QYUNFwVmyhpRq51ZBYVpuaPkAM6n_qw6oS8ry9kupQtunlmCIt_wLE_PwZ4ieIrq/exec";
 
             fetch(url, {
                 method: "POST",
@@ -196,8 +196,7 @@
             .then(data => {
                 if (data.success) {
                     alert(data.message);
-                    // CAMBIO AQUI: Redirige a la pantalla de la mascota
-                    location.href = "mascota.html"; 
+                    location.href = "mascota.html";
                 } else {
                     alert(data.message);
                 }
