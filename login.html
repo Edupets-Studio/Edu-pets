@@ -1,146 +1,147 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Inicio de sesión</title>
-  <style>
-    :root {
-      --fondo: #f2f6fc;
-      --azul: #a5c8ff;
-      --azul-oscuro: #4a80cc;
-      --blanco: #ffffff;
-      --gris: #444;
-      --rosado: #f7c2d4;
-      --fuente: 'Segoe UI', sans-serif;
-    }
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Inicio de sesión</title>
+    <style>
+        :root {
+            --fondo: #f2f6fc;
+            --azul: #a5c8ff;
+            --azul-oscuro: #4a80cc;
+            --blanco: #ffffff;
+            --gris: #444;
+            --rosado: #f7c2d4;
+            --fuente: 'Segoe UI', sans-serif;
+        }
 
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
 
-    body {
-      font-family: var(--fuente);
-      background-color: var(--fondo);
-      min-height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 20px;
-      overflow: hidden;
-      position: relative;
-    }
+        body {
+            font-family: var(--fuente);
+            background-color: var(--fondo);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            overflow: hidden;
+            position: relative;
+        }
 
-    canvas { position: fixed; top: 0; left: 0; z-index: 0; pointer-events: none; }
+        canvas { position: fixed; top: 0; left: 0; z-index: 0; pointer-events: none; }
 
-    .container {
-      background-color: var(--blanco);
-      border-radius: 24px;
-      max-width: 380px;
-      width: 100%;
-      overflow: hidden;
-      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
-      position: relative;
-      z-index: 1;
-      animation: fadeIn 0.8s ease;
-    }
+        .container {
+            background-color: var(--blanco);
+            border-radius: 24px;
+            max-width: 380px;
+            width: 100%;
+            overflow: hidden;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+            position: relative;
+            z-index: 1;
+            animation: fadeIn 0.8s ease;
+        }
 
-    @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 
-    .header { background: linear-gradient(135deg, var(--azul), var(--azul-oscuro)); padding: 24px; text-align: center; color: var(--blanco); }
-    .header h2 { font-size: 1.8em; }
+        .header { background: linear-gradient(135deg, var(--azul), var(--azul-oscuro)); padding: 24px; text-align: center; color: var(--blanco); }
+        .header h2 { font-size: 1.8em; }
 
-    .main { padding: 30px 25px; display: flex; flex-direction: column; gap: 16px; }
-    input[type="text"], input[type="password"] {
-      width: 100%; padding: 12px 15px; border-radius: 12px; border: 1.5px solid #ccc; font-size: 1em; transition: border-color 0.3s;
-    }
-    input[type="text"]:focus, input[type="password"]:focus { outline: none; border-color: var(--azul-oscuro); }
+        .main { padding: 30px 25px; display: flex; flex-direction: column; gap: 16px; }
+        input[type="text"], input[type="password"] {
+            width: 100%; padding: 12px 15px; border-radius: 12px; border: 1.5px solid #ccc; font-size: 1em; transition: border-color 0.3s;
+        }
+        input[type="text"]:focus, input[type="password"]:focus { outline: none; border-color: var(--azul-oscuro); }
 
-    .buttons { display: flex; flex-direction: column; gap: 12px; }
-    .buttons button {
-      background-color: var(--azul); color: var(--blanco); border: none; border-radius: 12px; padding: 12px; font-size: 1em; font-weight: bold; cursor: pointer;
-      transition: transform 0.2s, background-color 0.3s;
-    }
-    .buttons button:hover { background-color: var(--azul-oscuro); transform: scale(1.02); }
+        .buttons { display: flex; flex-direction: column; gap: 12px; }
+        .buttons button {
+            background-color: var(--azul); color: var(--blanco); border: none; border-radius: 12px; padding: 12px; font-size: 1em; font-weight: bold; cursor: pointer;
+            transition: transform 0.2s, background-color 0.3s;
+        }
+        .buttons button:hover { background-color: var(--azul-oscuro); transform: scale(1.02); }
 
-    .volver-button {
-      position: fixed; bottom: 20px; right: 20px; width: 56px; height: 56px;
-      background-color: var(--rosado); border-radius: 50%; border: none; font-size: 1.5em; font-weight: bold; color: var(--gris);
-      cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 12px rgba(0,0,0,0.2); transition: transform 0.3s; z-index: 10;
-    }
-    .volver-button:hover { transform: scale(1.1); }
+        .volver-button {
+            position: fixed; bottom: 20px; right: 20px; width: 56px; height: 56px;
+            background-color: var(--rosado); border-radius: 50%; border: none; font-size: 1.5em; font-weight: bold; color: var(--gris);
+            cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 12px rgba(0,0,0,0.2); transition: transform 0.3s; z-index: 10;
+        }
+        .volver-button:hover { transform: scale(1.1); }
 
-    @media (max-width: 480px) {
-      .main { padding: 25px 20px; }
-      .header h2 { font-size: 1.5em; }
-      input { font-size: 0.95em; }
-      .buttons button { font-size: 0.95em; }
-      .volver-button { width: 48px; height: 48px; font-size: 1.2em; }
-    }
-  </style>
+        @media (max-width: 480px) {
+            .main { padding: 25px 20px; }
+            .header h2 { font-size: 1.5em; }
+            input { font-size: 0.95em; }
+            .buttons button { font-size: 0.95em; }
+            .volver-button { width: 48px; height: 48px; font-size: 1.2em; }
+        }
+    </style>
 </head>
 <body>
-  <canvas id="symbols"></canvas>
+    <canvas id="symbols"></canvas>
 
-  <div class="container">
-    <div class="header"><h2>Inicio de sesión</h2></div>
-    <div class="main">
-      <input type="text" id="usuario" placeholder="Usuario" />
-      <input type="password" id="password" placeholder="Contraseña" />
-      <div class="buttons">
-        <button onclick="login()">Iniciar sesión</button>
-        <button onclick="location.href='registro.html'">Registrarse</button>
-      </div>
+    <div class="container">
+        <div class="header"><h2>Inicio de sesión</h2></div>
+        <div class="main">
+            <input type="text" id="usuario" placeholder="Usuario" />
+            <input type="password" id="password" placeholder="Contraseña" />
+            <div class="buttons">
+                <button onclick="login()">Iniciar sesión</button>
+                <button onclick="location.href='registro.html'">Registrarse</button>
+            </div>
+        </div>
     </div>
-  </div>
 
-  <div class="volver-button" onclick="history.back()">←</div>
+    <div class="volver-button" onclick="history.back()">←</div>
 
-  <script>
-    const canvas = document.getElementById('symbols');
-    const ctx = canvas.getContext('2d');
-    const width = window.innerWidth;
-    const height = window.innerHeight;
-    canvas.width = width;
-    canvas.height = height;
+    <script>
+        const canvas = document.getElementById('symbols');
+        const ctx = canvas.getContext('2d');
+        const width = window.innerWidth;
+        const height = window.innerHeight;
+        canvas.width = width;
+        canvas.height = height;
 
-    const symbols = ['π','√','∞','∑','∆','≠','≈','∫','∂'];
-    const particles = [];
-    for(let i=0;i<30;i++){
-      particles.push({ x:Math.random()*width, y:Math.random()*height, dx:(Math.random()-0.5)*0.6, dy:(Math.random()-0.5)*0.6, size:Math.random()*30+18, symbol:symbols[Math.floor(Math.random()*symbols.length)], opacity:Math.random()*0.3+0.1 });
-    }
-    function animate(){
-      ctx.clearRect(0,0,width,height);
-      particles.forEach(p=>{
-        ctx.font = `${p.size}px Segoe UI`;
-        ctx.fillStyle = `rgba(0,0,0,${p.opacity})`;
-        ctx.fillText(p.symbol,p.x,p.y);
-        p.x+=p.dx; p.y+=p.dy;
-        if(p.x<0||p.x>width)p.dx*=-1;
-        if(p.y<0||p.y>height)p.dy*=-1;
-      });
-      requestAnimationFrame(animate);
-    }
-    animate();
-
-    function login() {
-      const usuario = document.getElementById('usuario').value;
-      const password = document.getElementById('password').value;
-
-      if(!usuario || !password){ alert("Por favor completa todos los campos."); return; }
-
-      const url = "https://script.google.com/macros/s/AKfycbzprJfJknFYMROkxdFUoueCxe605iUwaS4KAw1LQzb6h4yfRzMQKppNEn88Y43qFtsu/exec";
-
-      fetch(`${url}?usuario=${encodeURIComponent(usuario)}&password=${encodeURIComponent(password)}`)
-      .then(response => response.json())
-      .then(data => {
-        if(data.success){
-          alert(data.message);
-          location.href = "mascota.html";
-        } else {
-          alert(data.message);
+        const symbols = ['π','√','∞','∑','∆','≠','≈','∫','∂'];
+        const particles = [];
+        for(let i=0;i<30;i++){
+            particles.push({ x:Math.random()*width, y:Math.random()*height, dx:(Math.random()-0.5)*0.6, dy:(Math.random()-0.5)*0.6, size:Math.random()*30+18, symbol:symbols[Math.floor(Math.random()*symbols.length)], opacity:Math.random()*0.3+0.1 });
         }
-      })
-      .catch(error => { console.error(error); alert("Hubo un problema al procesar la solicitud."); });
-    }
-  </script>
+        function animate(){
+            ctx.clearRect(0,0,width,height);
+            particles.forEach(p=>{
+                ctx.font = `${p.size}px Segoe UI`;
+                ctx.fillStyle = `rgba(0,0,0,${p.opacity})`;
+                ctx.fillText(p.symbol,p.x,p.y);
+                p.x+=p.dx; p.y+=p.dy;
+                if(p.x<0||p.x>width)p.dx*=-1;
+                if(p.y<0||p.y>height)p.dy*=-1;
+            });
+            requestAnimationFrame(animate);
+        }
+        animate();
+
+        function login() {
+            const usuario = document.getElementById('usuario').value;
+            const password = document.getElementById('password').value;
+
+            if(!usuario || !password){ alert("Por favor completa todos los campos."); return; }
+
+            // URL CORRECTA DE TU APPS SCRIPT WEB APP
+            const url = "https://script.google.com/macros/s/AKfycbwYiOX36ZvnL3kyZzzqFFrDOub9_T9E8eSLvJ0uBlu2qYeuTZWlNtZBXY-Q8jqF68r5/exec";
+
+            fetch(`${url}?usuario=${encodeURIComponent(usuario)}&password=${encodeURIComponent(password)}`)
+            .then(response => response.json())
+            .then(data => {
+                if(data.success){
+                    alert(data.message);
+                    location.href = "mascota.html"; // Redirige a la página de tu mascota
+                } else {
+                    alert(data.message);
+                }
+            })
+            .catch(error => { console.error(error); alert("Hubo un problema al procesar la solicitud."); });
+        }
+    </script>
 </body>
 </html>
