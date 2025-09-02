@@ -127,7 +127,7 @@
 
             if(!usuario || !password){ alert("Por favor completa todos los campos."); return; }
 
-            // URL CORRECTA DE TU APPS SCRIPT WEB APP
+        
             const url = "https://script.google.com/macros/s/AKfycbwYiOX36ZvnL3kyZzzqFFrDOub9_T9E8eSLvJ0uBlu2qYeuTZWlNtZBXY-Q8jqF68r5/exec";
 
             fetch(`${url}?usuario=${encodeURIComponent(usuario)}&password=${encodeURIComponent(password)}`)
@@ -135,7 +135,7 @@
             .then(data => {
                 if(data.success){
                     alert(data.message);
-                    location.href = "mascota.html"; // Redirige a la página de tu mascota
+                    location.href = "mascota.html"; // esta linea te redirige a la página de tu mascota
                 } else {
                     alert(data.message);
                 }
