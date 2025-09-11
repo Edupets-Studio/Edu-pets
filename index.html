@@ -146,23 +146,29 @@
     }
 
   
-    @media (max-width: 600px) {
-      .sidebar img {
-        max-width: 140px;
-      }
-      .start-button {
-        width: 100%;
-        font-size: 1em;
-        padding: 12px;
-      }
-      .help-button {
-        width: 50px;
-        height: 50px;
-        font-size: 1.2em;
-        bottom: 15px;
-        right: 15px;
-      }
-    }
+   
+@media (max-width: 600px) {
+  .sidebar img {
+    max-width: 140px;
+  }
+  .start-button {
+    width: 100%;
+    font-size: 1em;
+    padding: 12px;
+  }
+  
+  .help-button {
+    position: fixed;
+    bottom: 15px;
+    right: 15px;
+    width: 55px;
+    height: 55px;
+    font-size: 1.4em;
+    z-index: 999; 
+  }
+}
+
+
   </style>
 </head>
 <body>
@@ -193,4 +199,3 @@
   </div>
 </body>
 </html>
-
