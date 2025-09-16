@@ -1,0 +1,266 @@
+:root {
+      --azul-claro: #cfe8ff;
+      --azul: #7dbef5;
+      --verde-claro: #dafbe1;
+      --amarillo-claro: #fff9dc;
+      --rosado-suave: #edf3fa;
+      --texto: #333;
+      --fuente: 'Segoe UI', sans-serif;
+    }
+
+    body {
+      margin: 0;
+      font-family: var(--fuente);
+      background-color: var(--amarillo-claro);
+      font-size: 20px;
+      color: var(--texto);
+    }
+
+    .contenedor {
+      display: flex;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    .panel {
+      width: 300px;
+      padding: 30px;
+      box-sizing: border-box;
+      position: absolute;
+      height: 100%;
+      top: 0;
+      z-index: 2;
+      transition: opacity 0.5s ease;
+      opacity: 0;
+      pointer-events: none;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+      border-radius: 0 16px 16px 0;
+    }
+
+    
+
+
+    .panel.izquierda {
+      left: 0;
+      background: linear-gradient(180deg, var(--azul-claro), var(--azul));
+      color: white;
+    }
+
+    .panel.derecha {
+      right: 0;
+      background-color: var(--verde-claro);
+    }
+
+    .panel.activa {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .contenido {
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      z-index: 1;
+      background-color: var(--rosado-suave);
+    }
+
+    .toggle {
+      position: absolute;
+      top: 10px;
+      font-size: 30px;
+      background-color: #ffffff;
+      border-radius: 50%;
+      width: 70px;
+      height: 70px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+      cursor: pointer;
+      z-index: 3;
+      transition: transform 0.3s ease;
+      font-weight: bold;
+    }
+
+    .toggle:hover {
+      transform: scale(1.1);
+    }
+
+    #toggle-izquierda { left: 10px; }
+    #toggle-derecha { right: 10px; }
+
+    .necesidades {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 30px;
+      gap: 40px;
+    }
+
+    .necesidad-container {
+      text-align: center;
+    }
+
+    .necesidad {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      background-size: cover;
+      background-position: center;
+      margin: 0 auto;
+      border: 5px solid white;
+      transition: 0.3s;
+      box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+    }
+
+    .porcentaje {
+      margin-top: 10px;
+      font-weight: bold;
+      font-size: 22px;
+    }
+
+    .nombre-mascota {
+      font-size: 24px;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    #editar-nombre {
+      font-size: 20px;
+      background: none;
+      border: none;
+      cursor: pointer;
+    }
+
+    .pinguino {
+      width: 200px;
+      border-radius: 20px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+      animation: flotar 3s ease-in-out infinite;
+    }
+
+    @keyframes flotar {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-15px); }
+    }
+
+    .botones {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      margin-top: 30px;
+    }
+
+    .botones button {
+      font-size: 30px;
+      padding: 15px 25px;
+      background-color: var(--verde-claro);
+      border: none;
+      border-radius: 15px;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      transition: 0.3s ease;
+      font-weight: bold;
+    }
+
+    .botones button:hover {
+      background-color: #c4efd3;
+      transform: scale(1.05);
+    }
+
+    .barra-edicion {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: #d4fcd4;
+      padding: 15px 20px;
+      border-radius: 15px;
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      align-items: center;
+      box-shadow: 0 -2px 8px rgba(0,0,0,0.2);
+      font-size: 20px;
+      z-index: 5;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.4s ease;
+    }
+
+    .barra-edicion.activa {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .barra-edicion input {
+      font-size: 18px;
+      padding: 8px 12px;
+      border-radius: 8px;
+      border: 1px solid #aaa;
+      width: 200px;
+    }
+
+    .barra-edicion button {
+      font-size: 18px;
+      padding: 8px 15px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    .barra-edicion .aceptar {
+      background-color: #7be77b;
+    }
+
+    .barra-edicion .cancelar {
+      background-color: #ffb3b3;
+    }
+
+    h3 {
+      margin-top: 0;
+      font-size: 26px;
+    }
+
+    .volver {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      width: 60px;
+      height: 60px;
+      background-color: #f8bcbc;
+      border: 2px solid #000;
+      border-radius: 50%;
+      text-align: center;
+      line-height: 55px;
+      font-size: 0.9em;
+      font-weight: bold;
+      cursor: pointer;
+      text-decoration: none;
+      color: black;
+    }
+
+    .bienvenida {
+      position: fixed;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: #c8facc;
+      color: #333;
+      font-size: 18px;
+      font-weight: bold;
+      padding: 15px 25px;
+      border-radius: 20px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+      z-index: 1000;
+      opacity: 0;
+      transition: opacity 0.5s ease-in-out;
+    }
+
+    .bienvenida.mostrar {
+      opacity: 1;
+    }
