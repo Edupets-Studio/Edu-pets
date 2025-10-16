@@ -6,7 +6,7 @@
   <title>Tu mascota</title>
   <link rel="stylesheet" href="Estilos/Mascota.css">
 </head>
-  <iframe src="player.html" style="display:none;" allow="autoplay"></iframe>
+<iframe src="player.html" style="display:none;" allow="autoplay"></iframe>
 <body>
 
   <div id="bienvenida" class="bienvenida">
@@ -22,8 +22,8 @@
       <p>Realiza una tarea de suma para darle a tu mascota de comer</p>
     </div>
 
-
-    <a class="volver" href="javascript:history.back()">Volver</a>
+    <!-- 🔹 BOTÓN VOLVER AJUSTADO -->
+    <a class="boton volver" href="javascript:history.back()">Volver</a>
 
     <div class="contenido">
       <div class="necesidades" id="necesidades-container">
@@ -66,13 +66,12 @@
     <button class="cancelar" id="btn-cancelar">❌ Cancelar</button>
   </div>
 
-  <div class="Tienda">
-    <button>
-      <a href="Tienda.html"> <span>Tienda</span></a>
-    </button> 
-  <script>
+  <!-- 🔹 BOTÓN TIENDA AJUSTADO -->
+  <div class="tienda">
+    <a href="Tienda.html" class="boton tienda-boton"><span>Tienda</span></a>
+  </div>
 
-    
+  <script>
     const necesidades = [
       { id: 'comida', porcentajeId: 'porcentaje-comida' },
       { id: 'sueño', porcentajeId: 'porcentaje-sueño' },
@@ -187,18 +186,19 @@
         bienvenida.classList.remove('mostrar');
       }, 15000);
     };
+
     const symbols = ['+', '−', '×', '÷', '=', '≠', '<', '>', '∞', '∑', '∫', 'π', '√', '%', '±'];
-        const container = document.querySelector('.main-content');
-        for (let i = 0; i < 40; i++) {
-          const symbol = document.createElement('div');
-          symbol.classList.add('symbol');
-          symbol.textContent = symbols[Math.floor(Math.random() * symbols.length)];
-          symbol.style.top = Math.random() * 100 + '%';
-          symbol.style.left = Math.random() * 100 + '%';
-          symbol.style.fontSize = (Math.random() * 1.5 + 1) + 'em';
-          symbol.style.animationDuration = (Math.random() * 15 + 8) + 's';
-          container.appendChild(symbol);
-        }
+    const container = document.querySelector('.main-content');
+    for (let i = 0; i < 40; i++) {
+      const symbol = document.createElement('div');
+      symbol.classList.add('symbol');
+      symbol.textContent = symbols[Math.floor(Math.random() * symbols.length)];
+      symbol.style.top = Math.random() * 100 + '%';
+      symbol.style.left = Math.random() * 100 + '%';
+      symbol.style.fontSize = (Math.random() * 1.5 + 1) + 'em';
+      symbol.style.animationDuration = (Math.random() * 15 + 8) + 's';
+      container.appendChild(symbol);
+    }
   </script>
 </body>
 </html>
