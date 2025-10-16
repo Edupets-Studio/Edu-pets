@@ -107,7 +107,6 @@
 .boton:active,
 .tienda-boton:active,
 .volver:active {
-  
   box-shadow: 0 4px 10px rgba(0,0,0,0.07);
 }
 
@@ -126,7 +125,6 @@
   bottom: 18px;
   z-index: 40;
   background: transparent;
-  
 }
 
 
@@ -136,7 +134,35 @@
   bottom: 18px;
   z-index: 40;
   background: transparent;
-} 
+}
+
+.panel.derecha {
+  background-color: #e6f0ff;
+  border-left: 3px solid #9ec5ff;
+  color: #003366;
+}
+
+.panel.derecha h3 {
+  color: #004c99;
+}
+
+.panel.derecha .botones button {
+  background-color: #d9eaff;
+  border: 2px solid #99c2ff;
+  color: #003366;
+  font-weight: bold;
+  border-radius: .5rem;
+  padding: .5rem 1rem;
+  margin: .3rem;
+  cursor: pointer;
+  transition: all .2s ease;
+}
+
+.panel.derecha .botones button:hover {
+  background-color: #c2dcff;
+  border-color: #80bfff;
+}
+
 </style>
 
   <script>
@@ -159,9 +185,9 @@
     }
 
     function actualizarColor(porcentaje, elem) {
-      if (porcentaje > 59) elem.style.backgroundColor = 'green';
-      else if (porcentaje > 29) elem.style.backgroundColor = 'yellow';
-      else elem.style.backgroundColor = 'red';
+      if (porcentaje > 59) elem.style.backgroundColor = '#99ccff';
+      else if (porcentaje > 29) elem.style.backgroundColor = '#ffd966';
+      else elem.style.backgroundColor = '#ff9999';
     }
 
     function iniciarNecesidades() {
@@ -270,4 +296,3 @@
   </script>
 </body>
 </html>
-
