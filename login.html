@@ -22,7 +22,50 @@
         </div>
     </div>
 
-    <div class="volver-button" onclick="history.back()">←</div>
+   <div class="volver">
+  <a href="index.html" class="volver"><span>Volver</span></a>
+</div>
+
+<style>
+.volver {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: .5rem;
+  padding: .6rem 1rem;
+  font-size: 1rem;
+  font-weight: 600;
+  text-decoration: none;
+  color: inherit;
+  background: #ffffff;
+  border: 2px solid transparent;
+  border-radius: .6rem;
+  box-shadow: 0 6px 14px rgba(0,0,0,0.08);
+  cursor: pointer;
+  transition: box-shadow .12s ease, opacity .12s;
+  user-select: none;
+  position: fixed;
+  right: 18px;
+  bottom: 18px;
+  z-index: 40;
+  background: transparent;
+}
+
+.volver:hover {
+  box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+  opacity: 0.98;
+}
+
+.volver:active {
+  box-shadow: 0 4px 10px rgba(0,0,0,0.07);
+}
+
+.volver:focus {
+  outline: 3px solid rgba(100, 150, 255, 0.25);
+  outline-offset: 3px;
+}
+</style>
+
 
     <script>
         const canvas = document.getElementById('symbols');
