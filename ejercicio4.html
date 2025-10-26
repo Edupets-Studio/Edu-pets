@@ -4,9 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="Estilos/Ejercicios.css">
-  <link rel="icon" type="image/png" href="imagenes/Logo.png">
   <title>División - Juego</title>
-  
 </head>
   <iframe src="player.html" style="display:none;" allow="autoplay"></iframe>
 <body>
@@ -36,24 +34,15 @@
   const totalPreguntas = 10;
   const mensajeDiv = document.getElementById('mensaje');
 
-  function aumentarOrbe(orbe) {
-    const niveles = JSON.parse(localStorage.getItem('niveles')) || {
-      comida: 100,
-      sueño: 100,
-      felicidad: 100
-    };
-    const timestamps = JSON.parse(localStorage.getItem('ultimosIncrementos')) || {
-      comida: 0,
-      sueño: 0,
-      felicidad: 0
-    };
-    const ahora = Date.now();
-    const tiempoEspera = 60 * 1000;
-    if (ahora - timestamps[orbe] > tiempoEspera) {
+  function aumentarOrbeSiCoincide(tipoEjercicio) {
+    const tarea = JSON.parse(localStorage.getItem("tareaActual"));
+    if (!tarea) return;
+    if (tarea.tipo === tipoEjercicio) {
+      const niveles = JSON.parse(localStorage.getItem("niveles")) || { comida: 100, sueño: 100, felicidad: 100 };
+      const orbe = tarea.orbe;
       niveles[orbe] = Math.min(100, niveles[orbe] + 20);
-      timestamps[orbe] = ahora;
-      localStorage.setItem('niveles', JSON.stringify(niveles));
-      localStorage.setItem('ultimosIncrementos', JSON.stringify(timestamps));
+      localStorage.setItem("niveles", JSON.stringify(niveles));
+      localStorage.removeItem("tareaActual");
     }
   }
 
@@ -65,45 +54,36 @@
     mensajeDiv.innerHTML = "";
     if (preguntas >= totalPreguntas) {
       mensajeDiv.innerHTML = '<div class="message success">🎉 ¡Excelente trabajo! Terminaste todas las divisiones. 🎉</div>';
-      aumentarOrbe('comida');
+      aumentarOrbeSiCoincide("division");
       setTimeout(() => window.location.href = 'mascota.html', 4000);
       return;
     }
-
     const divisor = generarNumeroFacil();
     const cociente = generarNumeroFacil();
     const dividendo = divisor * cociente;
     const respuesta = cociente;
-
     document.getElementById('titulo').textContent = `División: Ejercicios con ${divisor}`;
     document.getElementById('pregunta').textContent = `¿Cuánto es ${dividendo} ÷ ${divisor}?`;
-
     const opcionesDiv = document.getElementById('opciones');
     opcionesDiv.innerHTML = '';
-
     const opciones = new Set();
     opciones.add(respuesta);
-
     while (opciones.size < 3) {
       const diferencia = Math.floor(Math.random() * 3) + 1;
       const opcion = Math.random() < 0.5 ? respuesta + diferencia : respuesta - diferencia;
       if (opcion > 0) opciones.add(opcion);
     }
-
-    Array.from(opciones)
-      .sort(() => Math.random() - 0.5)
-      .forEach(op => {
-        const btn = document.createElement('button');
-        btn.textContent = op;
-        btn.onclick = () => verificarRespuesta(op, respuesta, btn);
-        opcionesDiv.appendChild(btn);
-      });
+    Array.from(opciones).sort(() => Math.random() - 0.5).forEach(op => {
+      const btn = document.createElement('button');
+      btn.textContent = op;
+      btn.onclick = () => verificarRespuesta(op, respuesta, btn);
+      opcionesDiv.appendChild(btn);
+    });
   }
 
   function verificarRespuesta(opcion, correcta, boton) {
     const botones = document.querySelectorAll('.options button');
     botones.forEach(b => b.disabled = true);
-
     if (opcion === correcta) {
       boton.style.backgroundColor = '#a8f5a8';
       mensajeDiv.innerHTML = '<div class="message success">✅ ¡Muy bien! 👍</div>';
@@ -138,3 +118,4 @@
   </script>
 </body>
 </html>
+

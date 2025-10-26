@@ -1,274 +1,162 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Tu mascota</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mi Mascota</title>
   <link rel="stylesheet" href="Estilos/Mascota.css">
-  <link rel="icon" type="image/png" href="imagenes/Logo.png">
+  <link rel="icon" type="image/png" href="imagenes/logo.png">
 </head>
-<iframe src="player.html" style="display:none;" allow="autoplay"></iframe>
 <body>
-
-  <div id="bienvenida" class="bienvenida">
-    Esta es tu mascota virtual. Deberás cuidarla por medio de divertidos ejercicios matemáticos. ¡Cuídala bien!
-  </div>
-
-  <div id="toggle-izquierda" class="toggle">📘</div>
-  <div id="toggle-derecha" class="toggle">📐</div>
+  <iframe src="player.html" style="display:none;" allow="autoplay"></iframe>
 
   <div class="contenedor">
-    <div class="panel izquierda lista-tareas" id="panel-izquierda">
-      <h3>Lista de tareas</h3>
-      <p>Realiza una tarea de suma para darle a tu mascota de comer</p>
+
+    
+    <div class="panel izquierda" id="panel-izquierda">
+      <h3>Lista de Tareas</h3>
+      <div id="tarea-actual" class="bienvenida"></div>
     </div>
 
-    <a class="boton volver" href="javascript:history.back()">Volver</a>
-
-    <div class="contenido">
-      <div class="necesidades" id="necesidades-container">
-        <div class="necesidad-container">
-          <div class="porcentaje" id="porcentaje-comida">100%</div>
-          <div class="necesidad" id="comida" style="background-image: url('imagenes/comida.png');"></div>
-        </div>
-        <div class="necesidad-container">
-          <div class="porcentaje" id="porcentaje-sueño">100%</div>
-          <div class="necesidad" id="sueño" style="background-image: url('imagenes/sueño.png');"></div>
-        </div>
-        <div class="necesidad-container">
-          <div class="porcentaje" id="porcentaje-felicidad">100%</div>
-          <div class="necesidad" id="felicidad" style="background-image: url('imagenes/felicidad.png');"></div>
-        </div>
+    
+    <div class="panel derecha" id="panel-derecha">
+      <h3>Menú de Juegos</h3>
+      <div class="botones">
+        <button onclick="location.href='ejercicio1.html'">➕ Suma</button>
+        <button onclick="location.href='ejercicio2.html'">➖ Resta</button>
+        <button onclick="location.href='ejercicio3.html'">✖️ Multiplicación</button>
+        <button onclick="location.href='ejercicio4.html'">➗ División</button>
       </div>
+    </div>
 
+    
+    <div class="contenido">
       <div class="nombre-mascota">
-        <span id="titulo-mascota">Tu mascota: <span id="nombre-mascota">Katy</span></span>
+        <span id="nombreMascota">Pingüi</span>
         <button id="editar-nombre">✏️</button>
       </div>
 
-      <img src="imagenes/pet.png" alt="Pinguino" class="pinguino">
-    </div>
-
-    <div class="panel derecha" id="panel-derecha">
-      <h3>Operaciones</h3>
-      <div class="botones">
-        <button onclick="irAEjercicio('ejercicio1.html')">+</button>
-        <button onclick="irAEjercicio('ejercicio2.html')">−</button>
-        <button onclick="irAEjercicio('ejercicio3.html')">×</button>
-        <button onclick="irAEjercicio('ejercicio4.html')">÷</button>
+      <div class="necesidades">
+        <div class="necesidad-container">
+          <div class="necesidad" id="comida" style="background-image:url('imagenes/comida.png')"></div>
+          <div class="porcentaje" id="comida-texto">100%</div>
+        </div>
+        <div class="necesidad-container">
+          <div class="necesidad" id="sueño" style="background-image:url('imagenes/sueño.png')"></div>
+          <div class="porcentaje" id="sueño-texto">100%</div>
+        </div>
+        <div class="necesidad-container">
+          <div class="necesidad" id="felicidad" style="background-image:url('imagenes/felicidad.png')"></div>
+          <div class="porcentaje" id="felicidad-texto">100%</div>
+        </div>
       </div>
+
+      <img src="imagenes/pet.png" class="pinguino" alt="Mascota">
     </div>
+
+    
+    <div id="toggle-izquierda" class="toggle">📋</div>
+    <div id="toggle-derecha" class="toggle">🎮</div>
+
+    
+    <div class="barra-edicion" id="barra-edicion">
+      <input type="text" id="nuevo-nombre" placeholder="Nuevo nombre">
+      <button class="aceptar" onclick="guardarNombre()">Aceptar</button>
+      <button class="cancelar" onclick="cancelarEdicion()">Cancelar</button>
+    </div>
+
+   
+    <a href="index.html" class="volver">Volver</a>
   </div>
 
-  <div class="barra-edicion" id="barra-edicion">
-    <input type="text" id="nuevo-nombre" placeholder="Nuevo nombre..." />
-    <button class="aceptar" id="btn-aceptar">✅ Aceptar</button>
-    <button class="cancelar" id="btn-cancelar">❌ Cancelar</button>
-  </div>
+  <script>
+  const tareas = [
+    { tipo: "suma", texto: "Realiza una suma para aumentar la felicidad", orbe: "felicidad" },
+    { tipo: "resta", texto: "Haz una resta para mejorar el sueño", orbe: "sueño" },
+    { tipo: "multiplicacion", texto: "Completa una multiplicación para ganar comida", orbe: "comida" },
+    { tipo: "division", texto: "Resuelve una división para subir la felicidad", orbe: "felicidad" }
+  ];
 
-  <div class="tienda">
-    <a href="Tienda.html" class="boton tienda-boton"><span>Tienda</span></a>
-  </div>
+  function generarTarea() {
+    const tareaGuardada = localStorage.getItem("tareaActual");
+    const tareaBox = document.getElementById("tarea-actual");
+    if (tareaGuardada) {
+      const tarea = JSON.parse(tareaGuardada);
+      tareaBox.textContent = "🧩 " + tarea.texto;
+    } else {
+      const tarea = tareas[Math.floor(Math.random() * tareas.length)];
+      localStorage.setItem("tareaActual", JSON.stringify(tarea));
+      tareaBox.textContent = "🧩 " + tarea.texto;
+    }
+    tareaBox.classList.add("mostrar");
+  }
 
-  <div class="volver">
-    <a href="login.html" class="boton volver"><span>Volver</span></a>
-  </div>
+  function actualizarOrbes() {
+    const niveles = JSON.parse(localStorage.getItem("niveles")) || { comida: 100, sueño: 100, felicidad: 100 };
+    for (let orbe in niveles) {
+      const porcentaje = Math.round(niveles[orbe]);
+      document.getElementById(`${orbe}-texto`).textContent = porcentaje + "%";
+      const orbeElemento = document.getElementById(orbe);
+      orbeElemento.style.filter = `brightness(${0.5 + porcentaje / 150})`;
+    }
+  }
 
-<style> 
-.boton,
-.tienda-boton,
-.volver {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: .5rem;
-  padding: .6rem 1rem;
-  font-size: 1rem;
-  font-weight: 600;
-  text-decoration: none;
-  color: inherit;
-  background: var(--boton-bg, #ffffff);
-  border: var(--boton-border, 2px solid transparent);
-  border-radius: .6rem;
-  box-shadow: 0 6px 14px rgba(0,0,0,0.08);
-  cursor: pointer;
-  transition: transform .12s ease, box-shadow .12s ease, opacity .12s;
-  user-select: none;
-}
+  function degradarOrbes() {
+    const niveles = JSON.parse(localStorage.getItem("niveles")) || { comida: 100, sueño: 100, felicidad: 100 };
+    for (let orbe in niveles) {
+      niveles[orbe] = Math.max(0, niveles[orbe] - 0.03);
+    }
+    localStorage.setItem("niveles", JSON.stringify(niveles));
+    actualizarOrbes();
+  }
 
-.boton:hover,
-.tienda-boton:hover,
-.volver:hover {
-  box-shadow: 0 8px 20px rgba(0,0,0,0.12);
-  opacity: 0.98;
-}
-
-.boton:active,
-.tienda-boton:active,
-.volver:active {
-  box-shadow: 0 4px 10px rgba(0,0,0,0.07);
-}
-
-.boton:focus,
-.tienda-boton:focus,
-.volver:focus {
-  outline: 3px solid rgba(100, 150, 255, 0.25);
-  outline-offset: 3px;
-}
-
-.volver {
-  position: fixed;
-  right: 18px;
-  bottom: 18px;
-  z-index: 40;
-  background: transparent;
-}
-
-.tienda {
-  position: fixed;
-  left: 18px;
-  bottom: 18px;
-  z-index: 40;
-  background: transparent;
-}
-
-.panel.derecha {
-  background-color: #e8f2ff;
-  border-left: 3px solid #a6c8ff;
-  color: #002b80;
-}
-
-.panel.derecha h3 {
-  color: #0040bf;
-}
-
-.panel.derecha .botones button {
-  background: linear-gradient(135deg, #99caff, #cce6ff);
-  border: 2px solid #80b3ff;
-  color: #002b80;
-  font-weight: bold;
-  border-radius: .5rem;
-  padding: .6rem 1rem;
-  margin: .3rem;
-  cursor: pointer;
-  transition: all .2s ease;
-}
-
-.panel.derecha .botones button:hover {
-  background: linear-gradient(135deg, #80b3ff, #b3daff);
-  border-color: #6699ff;
-}
-</style>
-
-<script>
-const necesidades = [
-  { id: 'comida', porcentajeId: 'porcentaje-comida' },
-  { id: 'sueño', porcentajeId: 'porcentaje-sueño' },
-  { id: 'felicidad', porcentajeId: 'porcentaje-felicidad' }
-];
-
-function getSavedEstado() {
-  return JSON.parse(localStorage.getItem('estadoMascota')) || {
-    comida: { valor: 100, timestamp: Date.now() },
-    sueño: { valor: 100, timestamp: Date.now() },
-    felicidad: { valor: 100, timestamp: Date.now() }
-  };
-}
-
-function saveEstado(estado) {
-  localStorage.setItem('estadoMascota', JSON.stringify(estado));
-}
-
-function actualizarColor(porcentaje, elem) {
-  if (porcentaje > 59) elem.style.backgroundColor = '#99ccff';
-  else if (porcentaje > 29) elem.style.backgroundColor = '#ffd966';
-  else elem.style.backgroundColor = '#ff9999';
-}
-
-function iniciarNecesidades() {
-  const estado = getSavedEstado();
-  const ahora = Date.now();
-  necesidades.forEach(n => {
-    const obj = estado[n.id];
-    const elem = document.getElementById(n.id);
-    const label = document.getElementById(n.porcentajeId);
-    const segundosPasados = Math.floor((ahora - obj.timestamp) / 1000);
-    const unidadesPerdidas = Math.floor(segundosPasados / 9);
-    let nuevoValor = Math.max(0, obj.valor - unidadesPerdidas);
-    obj.valor = nuevoValor;
-    obj.timestamp = ahora;
-    label.textContent = nuevoValor + '%';
-    actualizarColor(nuevoValor, elem);
-    setInterval(() => {
-      obj.valor = Math.max(0, obj.valor - 1);
-      obj.timestamp = Date.now();
-      label.textContent = obj.valor + '%';
-      actualizarColor(obj.valor, elem);
-      saveEstado(estado);
-    }, 9000);
+  
+  const panelIzq = document.getElementById("panel-izquierda");
+  const panelDer = document.getElementById("panel-derecha");
+  document.getElementById("toggle-izquierda").addEventListener("click", () => {
+    panelIzq.classList.toggle("activa");
+    panelDer.classList.remove("activa");
   });
-  saveEstado(estado);
-}
+  document.getElementById("toggle-derecha").addEventListener("click", () => {
+    panelDer.classList.toggle("activa");
+    panelIzq.classList.remove("activa");
+  });
 
-function incrementarOrbes() {
-  const estado = getSavedEstado();
-  const ahora = Date.now();
-  for (const key in estado) {
-    estado[key].valor = Math.min(100, estado[key].valor + 40);
-    estado[key].timestamp = ahora;
+  
+  const barraEdicion = document.getElementById("barra-edicion");
+  const nombreMascota = document.getElementById("nombreMascota");
+  const editarBtn = document.getElementById("editar-nombre");
+
+  editarBtn.addEventListener("click", () => {
+    barraEdicion.classList.add("activa");
+  });
+
+  function guardarNombre() {
+    const nuevo = document.getElementById("nuevo-nombre").value.trim();
+    if (nuevo) {
+      nombreMascota.textContent = nuevo;
+      localStorage.setItem("nombreMascota", nuevo);
+    }
+    barraEdicion.classList.remove("activa");
   }
-  saveEstado(estado);
-}
 
-function irAEjercicio(url) {
-  incrementarOrbes();
-  setTimeout(() => {
-    window.location.href = url;
-  }, 100);
-}
-
-function cargarNombreMascota() {
-  const nombre = localStorage.getItem('nombreMascota') || 'Pingüi';
-  document.getElementById('nombre-mascota').textContent = nombre;
-}
-
-const barra = document.getElementById('barra-edicion');
-document.getElementById('editar-nombre').addEventListener('click', () => {
-  const input = document.getElementById('nuevo-nombre');
-  input.value = document.getElementById('nombre-mascota').textContent;
-  barra.classList.add('activa');
-});
-
-document.getElementById('btn-cancelar').addEventListener('click', () => {
-  barra.classList.remove('activa');
-});
-
-document.getElementById('btn-aceptar').addEventListener('click', () => {
-  const nuevoNombre = document.getElementById('nuevo-nombre').value.trim();
-  if (nuevoNombre !== '') {
-    localStorage.setItem('nombreMascota', nuevoNombre);
-    document.getElementById('nombre-mascota').textContent = nuevoNombre;
+  function cancelarEdicion() {
+    barraEdicion.classList.remove("activa");
   }
-  barra.classList.remove('activa');
-});
 
-document.getElementById('toggle-izquierda').addEventListener('click', () => {
-  document.getElementById('panel-izquierda').classList.toggle('activa');
-});
+  function cargarNombre() {
+    const guardado = localStorage.getItem("nombreMascota");
+    if (guardado) nombreMascota.textContent = guardado;
+  }
 
-document.getElementById('toggle-derecha').addEventListener('click', () => {
-  document.getElementById('panel-derecha').classList.toggle('activa');
-});
-
-window.onload = () => {
-  iniciarNecesidades();
-  cargarNombreMascota();
-  const bienvenida = document.getElementById('bienvenida');
-  bienvenida.classList.add('mostrar');
-  setTimeout(() => {
-    bienvenida.classList.remove('mostrar');
-  }, 15000);
-};
-</script>
+  window.onload = () => {
+    generarTarea();
+    actualizarOrbes();
+    cargarNombre();
+    setInterval(degradarOrbes, 3000);
+  };
+  </script>
 </body>
 </html>
+
+
