@@ -69,6 +69,13 @@
     <a href="index.html" class="volver">Volver</a>
   </div>
 
+  <div id="pantalla-carga">
+  <div class="loader">
+    <img src="imagenes/pet.png" alt="Cargando..." class="cargando">
+    <p>Cargando tu mascota...</p>
+  </div>
+</div>
+
   <script>
   const tareas = [
     { tipo: "suma", texto: "Realiza una suma para aumentar la felicidad", orbe: "felicidad" },
@@ -148,6 +155,11 @@
     const guardado = localStorage.getItem("nombreMascota");
     if (guardado) nombreMascota.textContent = guardado;
   }
+
+  window.addEventListener("load", () => {
+  const loader = document.getElementById("pantalla-carga");
+  loader.classList.add("oculto");
+});
 
   window.onload = () => {
     generarTarea();
