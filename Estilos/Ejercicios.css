@@ -1,183 +1,295 @@
-:root {
-      --azul-claro: #cfe8ff;
-      --azul: #7dbef5;
-      --verde-claro: #dafbe1;
-      --amarillo-claro: #fff9dc;
-      --rosado-suave: #edf3fa;
-      --texto: #333;
-      --fuente: 'Segoe UI', sans-serif;
-      --azul-hover: #518dcf;
-    }
+ body {
+  margin: 0;
+  font-family: 'Comic Sans MS', cursive, sans-serif;
+  background-color: #eaf1f8;
+}
 
-    body {
-      margin: 0;
-      font-family: var(--fuente);
-      background-color: var(--rosado-suave);
-      color: var(--texto);
-    }
+.header {
+  background-color: #79b5e8;
+  color: white;
+  padding: 25px;
+  font-size: 2.8em;
+  text-align: center;
+  border-radius: 0 0 20px 20px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
 
-    .header {
-      background-color: var(--azul);
-      padding: 25px;
-      font-size: 3em;
-      border-radius: 0 0 20px 20px;
-      color: white;
-      text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
-      text-align: center;
-    }
+.container {
+  text-align: center;
+  padding: 50px 20px;
+}
 
-    .container {
-      text-align: center;
-      padding: 60px 30px 30px;
-    }
+.hearts {
+  position: absolute;
+  top: 15px;
+  right: 25px;
+}
 
-    .hearts {
-      position: absolute;
-      right: 20px;
-      top: 20px;
-    }
+.hearts img {
+  width: 55px;
+  height: 55px;
+  margin-left: 10px;
+}
 
-    .hearts img {
-      width: 70px;
-      height: 70px;
-      margin-left: 10px;
-      transition: transform 0.2s ease;
-    }
+.penguin {
+  width: 200px;
+  display: block;
+  margin: 40px auto 20px;
+  animation: float 2s ease-in-out infinite;
+}
 
-    .question {
-      background-color: var(--azul-claro);
-      display: inline-block;
-      padding: 20px 50px;
-      margin: 40px 0 30px;
-      border-radius: 15px;
-      font-size: 3em;
-      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
-    }
+@keyframes float {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-15px); }
+  100% { transform: translateY(0); }
+}
 
-    .options button {
-      background-color: var(--verde-claro);
-      border: none;
-      border-radius: 50%;
-      margin: 25px;
-      width: 140px;
-      height: 140px;
-      font-size: 2.5em;
-      cursor: pointer;
-      transition: transform 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
-      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
-    }
+.question {
+  background-color: #c2dcf7;
+  display: inline-block;
+  padding: 20px 60px;
+  border-radius: 20px;
+  font-size: 2.3em;
+  color: #000;
+  margin: 25px 0 50px;
+}
 
-    .options button:hover {
-      background-color: var(--azul-hover);
-      color: white;
-      transform: scale(1.05);
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
-    }
+.options {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 50px;
+}
 
-    .message {
-      font-size: 2.5em;
-      padding: 25px;
-      margin: 30px auto;
-      width: 80%;
-      border-radius: 15px;
-    }
+.options button {
+  background-color: #d6f5d6;
+  border: none;
+  border-radius: 50%;
+  width: 150px;
+  height: 150px;
+  font-size: 2.5em;
+  cursor: pointer;
+  transition: transform 0.2s, background-color 0.2s;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
 
-    .success {
-      background-color: var(--verde-claro);
-      color: #000;
-    }
+.options button:hover {
+  transform: scale(1.1);
+  background-color: #bff2bf;
+}
 
-    .fail {
-      background-color: #fbc9cc;
-      color: #000;
-    }
+.message {
+  font-size: 2em;
+  margin-top: 40px;
+}
 
-    .penguin {
-      animation: float 2s ease-in-out infinite;
-      width: 280px;
-      display: block;
-      margin: 0 auto;
-    }
+.arrow {
+  position: absolute;
+  bottom: 30px;
+  left: 30px;
+  background-color: #c2dcf7;
+  padding: 15px 25px;
+  border-radius: 15px;
+  font-size: 1.8em;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+}
 
-    @keyframes float {
-      0% { transform: translateY(0); }
-      50% { transform: translateY(-20px); }
-      100% { transform: translateY(0); }
-    }
+.arrow:hover {
+  background-color: #a5c8f3;
+  transform: scale(1.05);
+}
 
-    .confirm-exit {
-      display: none;
-      position: fixed;
-      top: 30%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      background-color: white;
-      padding: 30px;
-      border-radius: 15px;
-      box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
-      text-align: center;
-      z-index: 9999;
-    }
+.confirm-exit {
+  display: none;
+  position: fixed;
+  top: 30%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #fff;
+  padding: 35px;
+  border-radius: 15px;
+  box-shadow: 0 0 25px rgba(0, 0, 0, 0.3);
+  text-align: center;
+  z-index: 9999;
+}
 
-    .confirm-exit button {
-      font-size: 1.5em;
-      margin: 20px;
-      padding: 10px 20px;
-      border: none;
-      border-radius: 10px;
-      cursor: pointer;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-      transition: all 0.3s ease;
-    }
+.confirm-exit p {
+  font-size: 1.6em;
+  margin-bottom: 25px;
+}
 
-    .confirm-exit button:hover {
-      background-color: var(--azul-hover);
-      color: white;
-    }
+.confirm-exit button {
+  font-size: 1.5em;
+  margin: 15px;
+  padding: 12px 25px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
 
-    .btn-salir {
-      background-color: #fbc9cc;
-    }
+.confirm-exit button:hover {
+  transform: scale(1.05);
+}
 
-    .btn-salir:hover {
-      background-color: #f5aab1;
-    }
+.btn-salir {
+  background-color: #fbc9cc;
+}
 
-    .btn-quedar {
-      background-color: var(--verde-claro);
-    }
+.btn-quedar {
+  background-color: #c8f5c1;
+}
 
-    .btn-quedar:hover {
-      background-color: #c4efd3;
-    }
+@media (max-width: 768px) {
+  .header {
+    font-size: 1.8em;
+    padding: 15px;
+    border-radius: 0 0 15px 15px;
+  }
 
-    .arrow.left {
-      position: absolute;
-      bottom: 30px;
-      left: 30px;
-      font-size: 2em;
-      background-color: var(--azul-claro);
-      padding: 15px 25px;
-      border-radius: 15px;
-      cursor: pointer;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
-      transition: background-color 0.3s ease, transform 0.3s ease;
-    }
+  .hearts {
+    top: 10px;
+    right: 10px;
+  }
 
-    .arrow.left:hover {
-      background-color: var(--azul-hover);
-      color: white;
-      transform: scale(1.05);
-    }
+  .hearts img {
+    width: 35px;
+    height: 35px;
+    margin-left: 5px;
+  }
 
-    @keyframes shake {
-      0% { transform: translateX(0); }
-      25% { transform: translateX(-10px); }
-      50% { transform: translateX(10px); }
-      75% { transform: translateX(-10px); }
-      100% { transform: translateX(0); }
-    }
+  .penguin {
+    width: 130px;
+    margin: 25px auto 15px;
+  }
 
-    .shake {
-      animation: shake 0.4s;
-    }
+  .question {
+    padding: 15px 25px;
+    font-size: 1.5em;
+    margin: 15px 0 30px;
+  }
+
+  .options {
+    gap: 25px;
+  }
+
+  .options button {
+    width: 90px;
+    height: 90px;
+    font-size: 1.6em;
+  }
+
+  .message {
+    font-size: 1.3em;
+    margin-top: 25px;
+  }
+
+  .arrow {
+    font-size: 1.2em;
+    bottom: 15px;
+    left: 15px;
+    padding: 10px 15px;
+  }
+
+  .confirm-exit {
+    width: 85%;
+    padding: 20px;
+  }
+
+  .confirm-exit p {
+    font-size: 1.3em;
+  }
+
+  .confirm-exit button {
+    font-size: 1.2em;
+    margin: 10px;
+    padding: 10px 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  .header {
+    font-size: 1.5em;
+  }
+
+  .penguin {
+    width: 100px;
+  }
+
+  .options button {
+    width: 75px;
+    height: 75px;
+    font-size: 1.3em;
+  }
+
+  .question {
+    font-size: 1.3em;
+    padding: 10px 20px;
+  }
+
+  .arrow {
+    font-size: 1em;
+  }
+}
+
+
+@media (orientation: landscape) and (max-width: 1024px) {
+  .container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+  }
+
+  
+  .question {
+    order: 1;
+    margin: 10px 0 15px;
+    padding: 12px 20px;
+    font-size: 1.6em;
+  }
+
+  .penguin {
+    order: 0;
+    width: 150px;
+    margin: 10px 0;
+  }
+
+ 
+  .options {
+    order: 2;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    gap: 18px;
+    flex-wrap: wrap;
+    padding: 8px 10px;
+  }
+
+  
+  .options button {
+    width: 110px;
+    height: 110px;
+    font-size: 1.6em;
+    border-radius: 12px; 
+  }
+
+ 
+  .hearts {
+    top: 8px;
+    right: 8px;
+  }
+  .hearts img { width: 40px; height: 40px; margin-left: 6px; }
+
+  .arrow {
+    bottom: 12px;
+    left: 12px;
+    padding: 10px 14px;
+    font-size: 1.1em;
+  }
+
+  .message { font-size: 1.2em; margin-top: 18px; }
+}
+
