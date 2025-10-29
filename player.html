@@ -11,12 +11,12 @@
     const audio = document.getElementById("global-audio");
     audio.volume = 0.5;
 
-    // Actualiza el tiempo en localStorage cada 500ms
+    
     setInterval(() => {
       localStorage.setItem('audioTime', audio.currentTime);
     }, 500);
 
-    // Reanuda desde donde iba
+    
     const lastTime = parseFloat(localStorage.getItem('audioTime')) || 0;
     audio.currentTime = lastTime;
 
