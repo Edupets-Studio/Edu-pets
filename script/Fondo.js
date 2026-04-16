@@ -1,86 +1,43 @@
-let vidas = 3;
-  let preguntas = 0;
-  const totalPreguntas = 10;
-  const mensajeDiv = document.getElementById('mensaje');
+const canvas = document.getElementById('symbols');
+const ctx = canvas.getContext('2d');
 
-  function aumentarOrbeSiCoincide(tipoEjercicio) {
-    const tarea = JSON.parse(localStorage.getItem("tareaActual"));
-    if (!tarea) return;
-    if (tarea.tipo === tipoEjercicio) {
-      const niveles = JSON.parse(localStorage.getItem("niveles")) || { comida: 100, sueño: 100, felicidad: 100 };
-      const orbe = tarea.orbe;
-      niveles[orbe] = Math.min(100, niveles[orbe] + 20);
-      localStorage.setItem("niveles", JSON.stringify(niveles));
-      localStorage.removeItem("tareaActual");
-    }
-  }
+const width = window.innerWidth;
+const height = window.innerHeight;
 
-  function generarNumeroFacil() {
-    return Math.floor(Math.random() * 10) + 1;
-  }
+canvas.width = width;
+canvas.height = height;
 
-  function generarPregunta() {
-    mensajeDiv.innerHTML = "";
-    if (preguntas >= totalPreguntas) {
-      mensajeDiv.innerHTML = '<div class="message success">🎉 ¡Excelente trabajo! Terminaste todas las divisiones. 🎉</div>';
-      aumentarOrbeSiCoincide("division");
-      setTimeout(() => window.location.href = 'mascota.html', 4000);
-      return;
-    }
-    const divisor = generarNumeroFacil();
-    const cociente = generarNumeroFacil();
-    const dividendo = divisor * cociente;
-    const respuesta = cociente;
-    document.getElementById('titulo').textContent = `División: Ejercicios con ${divisor}`;
-    document.getElementById('pregunta').textContent = `¿Cuánto es ${dividendo} ÷ ${divisor}?`;
-    const opcionesDiv = document.getElementById('opciones');
-    opcionesDiv.innerHTML = '';
-    const opciones = new Set();
-    opciones.add(respuesta);
-    while (opciones.size < 3) {
-      const diferencia = Math.floor(Math.random() * 3) + 1;
-      const opcion = Math.random() < 0.5 ? respuesta + diferencia : respuesta - diferencia;
-      if (opcion > 0) opciones.add(opcion);
-    }
-    Array.from(opciones).sort(() => Math.random() - 0.5).forEach(op => {
-      const btn = document.createElement('button');
-      btn.textContent = op;
-      btn.onclick = () => verificarRespuesta(op, respuesta, btn);
-      opcionesDiv.appendChild(btn);
+const symbols = ['π','√','∞','∑','∆','≠','≈','∫','∂'];
+const particles = [];
+
+for(let i = 0; i < 30; i++){
+    particles.push({
+        x: Math.random() * width,
+        y: Math.random() * height,
+        dx: (Math.random() - 0.5) * 0.6,
+        dy: (Math.random() - 0.5) * 0.6,
+        size: Math.random() * 30 + 18,
+        symbol: symbols[Math.floor(Math.random() * symbols.length)],
+        opacity: Math.random() * 0.3 + 0.1
     });
-  }
+}
 
-  function verificarRespuesta(opcion, correcta, boton) {
-    const botones = document.querySelectorAll('.options button');
-    botones.forEach(b => b.disabled = true);
-    if (opcion === correcta) {
-      boton.style.backgroundColor = '#a8f5a8';
-      mensajeDiv.innerHTML = '<div class="message success">✅ ¡Muy bien! 👍</div>';
-      setTimeout(() => {
-        preguntas++;
-        generarPregunta();
-      }, 1200);
-    } else {
-      boton.style.backgroundColor = '#f8b0b0';
-      mensajeDiv.innerHTML = '<div class="message fail">❌ Intenta otra vez.</div>';
-      if (vidas > 0) {
-        document.getElementById(`vida${vidas}`).src = 'imagenes/VidaMenos.png';
-        vidas--;
-      }
-      setTimeout(() => {
-        if (vidas === 0) {
-          mensajeDiv.innerHTML = '<div class="message fail">😢 Se acabaron las vidas. ¡Vuelve a intentarlo!</div>';
-          setTimeout(() => window.location.href = 'mascota.html', 3500);
-        } else {
-          preguntas++;
-          generarPregunta();
-        }
-      }, 1500);
-    }
-  }
+function animate(){
+    ctx.clearRect(0, 0, width, height);
 
-  function confirmarSalida() {
-    document.getElementById('confirm-exit').style.display = 'block';
-  }
+    particles.forEach(p => {
+        ctx.font = `${p.size}px Segoe UI`;
+        ctx.fillStyle = `rgba(0,0,0,${p.opacity})`;
+        ctx.fillText(p.symbol, p.x, p.y);
 
-  window.onload = generarPregunta;
+        p.x += p.dx;
+        p.y += p.dy;
+
+        if(p.x < 0 || p.x > width) p.dx *= -1;
+        if(p.y < 0 || p.y > height) p.dy *= -1;
+    });
+
+    requestAnimationFrame(animate);
+}
+
+animate();
