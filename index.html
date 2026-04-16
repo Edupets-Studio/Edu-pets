@@ -7,115 +7,112 @@
   <link rel="icon" type="image/png" href="imagenes/Logo.png">
 
   <style>
-     :root {
+    :root {
   --azul-claro: #e3f2fd;
   --azul: #2196f3;
-  --verde-claro: #ffffff;
+  --azul-oscuro: #1565c0;
   --blanco: #ffffff;
   --texto: #0d1b2a;
   --fuente: 'Segoe UI', sans-serif;
 }
-    
 
-     {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
 
-    body {
-      font-family: var(--fuente);
-      background-color: var(--amarillo-claro);
-      color: var(--texto);
-      overflow: hidden;
-    }
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
-    canvas {
-      position: fixed;
-      top: 0;
-      left: 0;
-      z-index: 0;
-    }
+body {
+  font-family: var(--fuente);
+  background-color: var(--blanco); 
+  color: var(--texto);
+  overflow: hidden;
+}
 
-    .container {
-      display: flex;
-      min-height: 100vh;
-      width: 100%;
-    }
+canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 0;
+}
 
-    .main-content {
-      flex: 1;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 60px;
-      position: relative;
-      z-index: 1;
-    }
+.container {
+  display: flex;
+  min-height: 100vh;
+  width: 100%;
+}
 
-    .start-button {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      background-color: var(--verde-claro);
-      border: none;
-      border-radius: 14px;
-      padding: 16px 52px;
-      font-size: 1.3em;
-      cursor: pointer;
-      text-decoration: none;
-      color: #2b2b2b;
-      font-weight: bold;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-      transition: all 0.3s ease;
-    }
+.main-content {
+  flex: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 60px;
+  position: relative;
+  z-index: 1;
+}
 
-    .start-button:hover {
-      background-color: #c4efd3;
-      transform: translate(-50%, -50%) scale(1.05);
-    }
+.start-button {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: var(--azul);
+  border: none;
+  border-radius: 14px;
+  padding: 16px 52px;
+  font-size: 1.3em;
+  cursor: pointer;
+  text-decoration: none;
+  color: var(--blanco);
+  font-weight: bold;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transition: all 0.3s ease;
+}
 
-    .main-content img {
-      max-width: 40%;
-      height: auto;
-      border-radius: 20px;
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-    }
+.start-button:hover {
+  background-color: var(--azul-oscuro);
+  transform: translate(-50%, -50%) scale(1.05);
+}
 
-    .help-button {
-      position: absolute;
-      bottom: 20px;
-      right: 20px;
-      width: 60px;
-      height: 60px;
-      background-color: var(--verde-claro);
-      border-radius: 50%;
-      font-size: 1.6em;
-      font-weight: bold;
-      color: #2b2b2b;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-decoration: none;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-    }
+.help-button {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  width: 60px;
+  height: 60px;
+  background-color: var(--azul);
+  border-radius: 50%;
+  font-size: 1.6em;
+  font-weight: bold;
+  color: var(--blanco);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
 
-    @media (max-width: 768px) {
-      .main-content {
-        flex-direction: column;
-        justify-content: center;
-      }
+.help-button:hover {
+  background-color: var(--azul-oscuro);
+}
 
-      .start-button {
-        left: 50%;
-      }
+@media (max-width: 768px) {
+  .main-content {
+    flex-direction: column;
+    justify-content: center;
+  }
 
-      .main-content img {
-        max-width: 80%;
-        margin-top: 20px;
-      }
-    }
+  .start-button {
+    left: 50%;
+  }
+
+  .main-content img {
+    max-width: 80%;
+    margin-top: 20px;
+  }
+}
   </style>
 </head>
 
