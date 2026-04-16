@@ -3,10 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="Estilos/Examenes.css">
+    <link rel="stylesheet" href="Estilos/Ejercicios.css">
     <title>Diversion - Examenes</title>
 </head>
+ <iframe src="player.html" style="display:none;" allow="autoplay"></iframe>
 <body>
+    <div class="header" id="titulo">Examenes: ejercicios de ?</div>
+    <div class="hearts">
+        <img src="imagenes/Vida.png" id="vida1">
+        <img src="imagenes/Vida.png" id="vida2">
+    </div>
+    <div class="container">
+        <img src="imagenes/pet.png" alt="Pingüino" class="penguin">
+        <div class="question" id="pregunta">¿Cuánto es ?</div>
+        <div class="options" id="opciones"></div>
+        <div id="mensaje"></div>
+    </div>
+    <div class="arrow left" style="position: absolute; bottom: 30px; left: 30px; font-size: 2em; background-color: #fbc2c4;"></div>
     
 
     <script src="script/Examen.js"></script>
