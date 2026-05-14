@@ -18,6 +18,10 @@
       color: var(--texto);
     }
 
+    .audio-frame {
+      display: none;
+    }
+
     .contenedor {
       display: flex;
       height: 100vh;
@@ -74,6 +78,7 @@
       top: 10px;
       font-size: 30px;
       background-color: #ffffff;
+      border: 0;
       border-radius: 50%;
       width: 70px;
       height: 70px;
@@ -292,38 +297,6 @@
       opacity: 1;
     }
     
-    .Tienda, button{
-      border-bottom: #1ba01b;
-      border-radius: 10px;
-      padding: 4px;
-      color: #121212;
-      cursor: pointer;
-      border: 0;
-      background-image: linear-gradient(
-      150deg,
-      #e9fff0,
-      #76edff
-      );
-      display:flex;
-      font-size: 18px;
-      transition: 0.3s;
-    }
-
-    .Tienda, button span {
-      padding: 20px 24px;
-      border-radius: 6px;
-      transition: 0.3s;
-    }
-
-    .Tienda,button :hover span{
-      background: none;
-    }
-
-    .Tienda, button :active{
-      transform: scale(0.9);
-
-    }
-
     #pantalla-carga {
   position: fixed;
   top: 0;

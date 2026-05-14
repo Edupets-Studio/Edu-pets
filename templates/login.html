@@ -1,35 +1,31 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Inicio de sesión</title>
-    <link rel="stylesheet" href="Estilos/login.css">
-    <link rel="icon" type="image/png" href="imagenes/Logo.png">
- 
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Inicio de sesión - EduPets</title>
+  <link rel="stylesheet" href="{{ url_for('static', path='Estilos/login.css') }}">
+  <link rel="icon" type="image/png" href="{{ url_for('static', path='assets/images/Logo.png') }}">
 </head>
 <body>
-    <canvas id="symbols"></canvas>
+  <canvas id="symbols" aria-hidden="true"></canvas>
 
-    <div class="container">
-        <div class="header"><h2>Inicio de sesión</h2></div>
-        <div class="main">
-            <input type="text" id="usuario" placeholder="Usuario" />
-            <input type="password" id="password" placeholder="Contraseña" />
-            <div class="buttons">
-                <button onclick="login()">Iniciar sesión</button>
-                <button onclick="location.href='registro.html'">Registrarse</button>
-            </div>
-        </div>
+  <main class="container">
+    <div class="header">
+      <h2>Inicio de sesión</h2>
     </div>
+    <div class="main">
+      <input type="text" id="usuario" placeholder="Usuario" autocomplete="username">
+      <input type="password" id="password" placeholder="Contraseña" autocomplete="current-password">
+      <div class="buttons">
+        <button type="button" onclick="login()">Iniciar sesión</button>
+        <button type="button" onclick="location.href='/registro'">Registrarse</button>
+      </div>
+    </div>
+  </main>
 
-   <div class="volver">
-  <a href="index.html" class="volver"><span>Volver</span></a>
-</div>
+  <a href="/" class="volver"><span>Volver</span></a>
 
-
-
-
-    <script src="script/Login.js"></script>
+  <script src="{{ url_for('static', path='js/Login.js') }}"></script>
 </body>
 </html>

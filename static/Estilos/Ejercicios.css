@@ -1,7 +1,11 @@
- body {
+body {
   margin: 0;
   font-family: 'Comic Sans MS', cursive, sans-serif;
   background-color: #eaf1f8;
+}
+
+.audio-frame {
+  display: none;
 }
 
 .header {
@@ -88,10 +92,13 @@
   bottom: 30px;
   left: 30px;
   background-color: #c2dcf7;
+  border: 0;
   padding: 15px 25px;
   border-radius: 15px;
+  color: #111;
   font-size: 1.8em;
   cursor: pointer;
+  text-decoration: none;
   transition: background-color 0.3s, transform 0.2s;
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
 }

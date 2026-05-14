@@ -10,6 +10,25 @@ body {
   padding: 24px;
 }
 
+.store {
+  width: 100%;
+  max-width: 720px;
+}
+
+.store-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.store-header a {
+  color: #1565c0;
+  font-weight: 700;
+  text-decoration: none;
+}
+
 h1 {
   font-size: 2rem;
   margin: 0;

@@ -1,181 +1,24 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Edupets - Inicio</title>
-  <link rel="icon" type="image/png" href="imagenes/Logo.png">
-
-  <style>
-    :root {
-  --azul-claro: #e3f2fd;
-  --azul: #2196f3;
-  --azul-oscuro: #1565c0;
-  --blanco: #ffffff;
-  --texto: #0d1b2a;
-  --fuente: 'Segoe UI', sans-serif;
-}
-
-
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-body {
-  font-family: var(--fuente);
-  background-color: var(--blanco); 
-  color: var(--texto);
-  overflow: hidden;
-}
-
-canvas {
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 0;
-}
-
-.container {
-  display: flex;
-  min-height: 100vh;
-  width: 100%;
-}
-
-.main-content {
-  flex: 1;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 60px;
-  position: relative;
-  z-index: 1;
-}
-
-.start-button {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background-color: var(--azul);
-  border: none;
-  border-radius: 14px;
-  padding: 16px 52px;
-  font-size: 1.3em;
-  cursor: pointer;
-  text-decoration: none;
-  color: var(--blanco);
-  font-weight: bold;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-  transition: all 0.3s ease;
-}
-
-.start-button:hover {
-  background-color: var(--azul-oscuro);
-  transform: translate(-50%, -50%) scale(1.05);
-}
-
-.help-button {
-  position: absolute;
-  bottom: 20px;
-  right: 20px;
-  width: 60px;
-  height: 60px;
-  background-color: var(--azul);
-  border-radius: 50%;
-  font-size: 1.6em;
-  font-weight: bold;
-  color: var(--blanco);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-decoration: none;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-}
-
-.help-button:hover {
-  background-color: var(--azul-oscuro);
-}
-
-@media (max-width: 768px) {
-  .main-content {
-    flex-direction: column;
-    justify-content: center;
-  }
-
-  .start-button {
-    left: 50%;
-  }
-
-  .main-content img {
-    max-width: 80%;
-    margin-top: 20px;
-  }
-}
-  </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>EduPets - Inicio</title>
+  <link rel="icon" type="image/png" href="{{ url_for('static', path='assets/images/Logo.png') }}">
+  <link rel="stylesheet" href="{{ url_for('static', path='Estilos/index.css') }}">
 </head>
-
 <body>
+  <iframe src="/player" class="audio-frame" allow="autoplay"></iframe>
 
-<iframe src="player.html" style="display:none;" allow="autoplay"></iframe>
+  <canvas id="symbols" aria-hidden="true"></canvas>
 
-<canvas id="symbols"></canvas>
+  <main class="container">
+    <section class="main-content" aria-label="Inicio de EduPets">
+      <a href="/login" class="start-button">Comenzar</a>
+      <a href="/que-es" class="help-button" aria-label="Ayuda">?</a>
+    </section>
+  </main>
 
-<div class="container">
-  <div class="main-content">
-    <a href="login.html" class="start-button">Comenzar</a>
-    <a href="que es.html" class="help-button">?</a>
-  </div>
-</div>
-
-<script>
-const canvas = document.getElementById('symbols');
-const ctx = canvas.getContext('2d');
-
-function resizeCanvas() {
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
-}
-
-resizeCanvas();
-window.addEventListener('resize', resizeCanvas);
-
-const symbols = ['π','√','∞','∑','∆','≠','≈','∫','∂'];
-const particles = [];
-
-for(let i = 0; i < 30; i++){
-  particles.push({
-    x: Math.random() * canvas.width,
-    y: Math.random() * canvas.height,
-    dx: (Math.random() - 0.5) * 0.6,
-    dy: (Math.random() - 0.5) * 0.6,
-    size: Math.random() * 30 + 18,
-    symbol: symbols[Math.floor(Math.random() * symbols.length)],
-    opacity: Math.random() * 0.3 + 0.1
-  });
-}
-
-function animate(){
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-  particles.forEach(p => {
-    ctx.font = `${p.size}px Segoe UI`;
-    ctx.fillStyle = `rgba(0,0,0,${p.opacity})`;
-    ctx.fillText(p.symbol, p.x, p.y);
-
-    p.x += p.dx;
-    p.y += p.dy;
-
-    if(p.x < 0 || p.x > canvas.width) p.dx *= -1;
-    if(p.y < 0 || p.y > canvas.height) p.dy *= -1;
-  });
-
-  requestAnimationFrame(animate);
-}
-
-animate();
-</script>
-
+  <script src="{{ url_for('static', path='js/Fondo.js') }}"></script>
 </body>
 </html>

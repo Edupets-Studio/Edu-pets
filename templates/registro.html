@@ -1,115 +1,32 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Registro</title>
-    <link rel="stylesheet" href="Estilos/registro.css">
-    <link rel="icon" type="image/png" href="imagenes/Logo.png">
-
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Registro - EduPets</title>
+  <link rel="stylesheet" href="{{ url_for('static', path='Estilos/registro.css') }}">
+  <link rel="icon" type="image/png" href="{{ url_for('static', path='assets/images/Logo.png') }}">
 </head>
 <body>
-    <iframe src="player.html" style="display:none;" allow="autoplay"></iframe>
+  <iframe src="/player" class="audio-frame" allow="autoplay"></iframe>
+  <canvas id="symbols" aria-hidden="true"></canvas>
 
-    <canvas id="symbols"></canvas>
-
-    <div class="container">
-        <div class="header">
-            <h2>Crea tu cuenta</h2>
-        </div>
-        <div class="main">
-            <input type="text" id="usuario" placeholder="Usuario" />
-            <input type="password" id="password" placeholder="Contraseña" />
-            <div class="buttons">
-                <button onclick="registrar()">Registrar</button>
-                <button onclick="location.href='login.html'">Volver al login</button>
-            </div>
-        </div>
+  <main class="container">
+    <div class="header">
+      <h2>Crea tu cuenta</h2>
     </div>
+    <div class="main">
+      <input type="text" id="usuario" placeholder="Usuario" autocomplete="username">
+      <input type="password" id="password" placeholder="Contraseña" autocomplete="new-password">
+      <div class="buttons">
+        <button type="button" onclick="registrar()">Registrar</button>
+        <button type="button" onclick="location.href='/login'">Volver al login</button>
+      </div>
+    </div>
+  </main>
 
-    <div class="volver-button" onclick="history.back()">←</div>
+  <button class="volver-button" type="button" onclick="history.back()" aria-label="Volver">←</button>
 
-    <script>
-        function registrar() {
-            const usuario = document.getElementById('usuario').value;
-            const password = document.getElementById('password').value;
-
-            if (!usuario || !password) {
-                alert("Por favor completa todos los campos.");
-                return;
-            }
-
-            const url = "https://script.google.com/macros/s/AKfycbx0QYUNFwVmyhpRq51ZBYVpuaPkAM6n_qw6oS8ry9kupQtunlmCIt_wLE_PwZ4ieIrq/exec";
-
-            fetch(url, {
-                method: "POST",
-                headers: { "Content-Type": "application/x-www-form-urlencoded" },
-                body: `usuario=${encodeURIComponent(usuario)}&password=${encodeURIComponent(password)}`
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    alert(data.message);
-                    location.href = "mascota.html";
-                } else {
-                    alert(data.message);
-                }
-            })
-            .catch(error => {
-                console.error("Error en la solicitud Fetch:", error);
-                alert("Hubo un problema al procesar la solicitud.");
-            });
-        }
-
-        const canvas = document.getElementById('symbols');
-        const ctx = canvas.getContext('2d');
-
-        let width = window.innerWidth;
-        let height = window.innerHeight;
-        canvas.width = width;
-        canvas.height = height;
-
-        window.addEventListener('resize', () => {
-            width = window.innerWidth;
-            height = window.innerHeight;
-            canvas.width = width;
-            canvas.height = height;
-        });
-
-        const symbols = ['π', '√', '∞', '∑', '∆', '≠', '≈', '∫', '∂'];
-        const particles = [];
-
-        for (let i = 0; i < 30; i++) {
-            particles.push({
-                x: Math.random() * width,
-                y: Math.random() * height,
-                dx: (Math.random() - 0.5) * 0.6,
-                dy: (Math.random() - 0.5) * 0.6,
-                size: Math.random() * 30 + 18,
-                symbol: symbols[Math.floor(Math.random() * symbols.length)],
-                opacity: Math.random() * 0.3 + 0.1
-            });
-        }
-
-        function animate() {
-            ctx.clearRect(0, 0, width, height);
-            particles.forEach(p => {
-                ctx.font = `${p.size}px Segoe UI`;
-                ctx.fillStyle = `rgba(0,0,0,${p.opacity})`;
-                ctx.fillText(p.symbol, p.x, p.y);
-
-                p.x += p.dx;
-                p.y += p.dy;
-
-                if (p.x < 0 || p.x > width) p.dx *= -1;
-                if (p.y < 0 || p.y > height) p.dy *= -1;
-            });
-            requestAnimationFrame(animate);
-        }
-
-        window.onload = function() {
-            animate();
-        };
-    </script>
+  <script src="{{ url_for('static', path='js/registro.js') }}"></script>
 </body>
 </html>

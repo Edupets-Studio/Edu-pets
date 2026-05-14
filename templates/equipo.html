@@ -1,36 +1,32 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Ayuda - Edupets</title>
-  <link rel="stylesheet" href="Estilos/informacion.css">
-  <link rel="icon" type="image/png" href="imagenes/Logo.png">
-  
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Equipo - EduPets</title>
+  <link rel="stylesheet" href="{{ url_for('static', path='Estilos/informacion.css') }}">
+  <link rel="icon" type="image/png" href="{{ url_for('static', path='assets/images/Logo.png') }}">
 </head>
-  <iframe src="player.html" style="display:none;" allow="autoplay"></iframe>
 <body>
-  <div class="container">
-    <div class="top-bar">
-      <a href="que es.html">¿Qué es Edupets?</a>
-      <a href="equipo.html">El equipo</a>
-      <a href="por que.html">¿Por qué lo hicimos?</a>
-    </div>
+  <iframe src="/player" class="audio-frame" allow="autoplay"></iframe>
 
-    
+  <main class="container">
+    <nav class="top-bar">
+      <a href="/que-es">¿Qué es EduPets?</a>
+      <a href="/equipo">El equipo</a>
+      <a href="/por-que">¿Por qué lo hicimos?</a>
+    </nav>
 
-    <div class="content">
-      <div class="texto">
-        somos siete estudiantes de la media tecnica de software, nuestro equipo es el número seis y compartimos la pasion por los video juegos, la musica y 
-        la programación, creemos en que el futuro de nuestra generación es la tecnoligia y nuestro proyecto quiere demostrar que el software y la tecnologia 
-        nos pueden ayudar dia a dia.
-      </div>
+    <section class="content">
+      <p class="texto">
+        Somos siete estudiantes de la media técnica de software. Nuestro equipo es el número seis y compartimos la pasión por los videojuegos, la música y la programación. Creemos que el futuro de nuestra generación es la tecnología, y nuestro proyecto quiere demostrar que el software puede ayudarnos día a día.
+      </p>
       <div class="imagen">
-        <img src="imagenes/pet.png" alt="Pingüino" />
+        <img src="{{ url_for('static', path='assets/images/pet.png') }}" alt="Pingüino">
       </div>
-    </div>
+    </section>
 
-    <a class="volver" href="index.html">↩</a>
-  </div>
+    <a class="volver" href="/">↩</a>
+  </main>
 </body>
 </html>

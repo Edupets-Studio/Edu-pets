@@ -3,32 +3,34 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="Estilos/Ejercicios.css">
   <title>Suma - Juego</title>
+  <link rel="stylesheet" href="{{ url_for('static', path='Estilos/Ejercicios.css') }}">
 </head>
-  <iframe src="player.html" style="display:none;" allow="autoplay"></iframe>
 <body>
-  <div class="header" id="titulo">Suma: Ejercicio de ?</div>
+  <iframe src="/player" class="audio-frame" allow="autoplay"></iframe>
+
+  <div class="header" id="titulo">Suma: ejercicio de ?</div>
   <div class="hearts">
-    <img src="imagenes/Vida.png" id="vida1">
-    <img src="imagenes/Vida.png" id="vida2">
-    <img src="imagenes/Vida.png" id="vida3">
+    <img src="{{ url_for('static', path='assets/images/Vida.png') }}" id="vida1" alt="Vida 1">
+    <img src="{{ url_for('static', path='assets/images/Vida.png') }}" id="vida2" alt="Vida 2">
+    <img src="{{ url_for('static', path='assets/images/Vida.png') }}" id="vida3" alt="Vida 3">
   </div>
-  <div class="container">
-    <img src="imagenes/pet.png" alt="Pingüino" class="penguin">
-    <div class="question" id="pregunta">¿Cuánto es ?</div>
+
+  <main class="container">
+    <img src="{{ url_for('static', path='assets/images/pet.png') }}" alt="Pingüino" class="penguin">
+    <div class="question" id="pregunta">¿Cuánto es?</div>
     <div class="options" id="opciones"></div>
     <div id="mensaje"></div>
-  </div>
-  <div class="arrow left" style="position: absolute; bottom: 30px; left: 30px; font-size: 2em; background-color: #fbc9cc; padding: 15px 25px; border-radius: 15px; cursor: pointer;" onclick="confirmarSalida()">Volver</div>
+  </main>
 
-  <div class="confirm-exit" id="confirm-exit">
-    <p style="font-size: 1.5em;">¿Estás seguro de que quieres salir de la prueba?</p>
-    <button class="btn-salir" onclick="window.location.href='mascota.html'">Sí, volver</button>
-    <button class="btn-quedar" onclick="document.getElementById('confirm-exit').style.display='none'">No, me quiero quedar</button>
+  <button class="arrow left" type="button" onclick="confirmarSalida()">Volver</button>
+
+  <div class="confirm-exit" id="confirm-exit" role="dialog" aria-modal="true">
+    <p>¿Estás seguro de que quieres salir de la prueba?</p>
+    <button class="btn-salir" type="button" onclick="window.location.href='/mascota'">Sí, volver</button>
+    <button class="btn-quedar" type="button" onclick="document.getElementById('confirm-exit').style.display='none'">No, me quiero quedar</button>
   </div>
 
-  <scrip src="script/Suma.js"></script>
+  <script src="{{ url_for('static', path='js/Suma.js') }}"></script>
 </body>
 </html>
-

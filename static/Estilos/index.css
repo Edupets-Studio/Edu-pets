@@ -1,109 +1,102 @@
 :root {
-      --azul-claro: #cfe8ff;
-      --azul: #7dbef5;
-      --verde-claro: #ffffff;
-      --amarillo-claro: #ffffffd4;
-      --rosado-suave: #edf3fa;
-      --texto: #333;
-      --fuente: 'Segoe UI', sans-serif;
-    }
+  --azul-claro: #e3f2fd;
+  --azul: #2196f3;
+  --azul-oscuro: #1565c0;
+  --blanco: #ffffff;
+  --texto: #0d1b2a;
+  --fuente: "Segoe UI", sans-serif;
+}
 
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
 
-    body {
-      font-family: var(--fuente);
-      background-color: var(--amarillo-claro);
-      color: var(--texto);
-      overflow: hidden;
-    }
+body {
+  min-height: 100vh;
+  overflow: hidden;
+  font-family: var(--fuente);
+  color: var(--texto);
+  background: var(--blanco);
+}
 
-    canvas {
-      position: fixed;
-      top: 0;
-      left: 0;
-      z-index: 0;
-    }
+.audio-frame {
+  display: none;
+}
 
-    .container {
-      display: flex;
-      min-height: 100vh;
-      width: 100%;
-    }
+canvas {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+}
 
-    .main-content {
-      flex: 1;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 60px;
-      position: relative;
-      z-index: 1;
-    }
+.container {
+  display: flex;
+  min-height: 100vh;
+  width: 100%;
+}
 
-    .start-button {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      background-color: var(--verde-claro);
-      border: none;
-      border-radius: 14px;
-      padding: 16px 52px;
-      font-size: 1.3em;
-      cursor: pointer;
-      text-decoration: none;
-      color: #2b2b2b;
-      font-weight: bold;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-      transition: all 0.3s ease;
-    }
+.main-content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+  padding: 60px;
+}
 
-    .start-button:hover {
-      background-color: #68a9e1;
-      transform: translate(-50%, -50%) scale(1.05);
-    }
+.start-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 220px;
+  min-height: 64px;
+  padding: 16px 52px;
+  border-radius: 14px;
+  color: var(--blanco);
+  font-size: 1.3rem;
+  font-weight: 700;
+  text-decoration: none;
+  background-color: var(--azul);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transition: transform 0.25s ease, background-color 0.25s ease;
+}
 
-    .main-content img {
-      max-width: 40%;
-      height: auto;
-      border-radius: 20px;
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-    }
+.start-button:hover {
+  background-color: var(--azul-oscuro);
+  transform: scale(1.05);
+}
 
-    .help-button {
-      position: absolute;
-      bottom: 20px;
-      right: 20px;
-      width: 60px;
-      height: 60px;
-      background-color: var(--verde-claro);
-      border-radius: 50%;
-      font-size: 1.6em;
-      font-weight: bold;
-      color: #2b2b2b;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-decoration: none;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-    }
+.help-button {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  display: flex;
+  width: 60px;
+  height: 60px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  color: var(--blanco);
+  font-size: 1.6rem;
+  font-weight: 700;
+  text-decoration: none;
+  background-color: var(--azul);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
 
-    @media (max-width: 768px) {
-      .main-content {
-        flex-direction: column;
-        justify-content: center;
-      }
+.help-button:hover {
+  background-color: var(--azul-oscuro);
+}
 
-      .start-button {
-        left: 50%;
-      }
+@media (max-width: 768px) {
+  .main-content {
+    padding: 32px;
+  }
 
-      .main-content img {
-        max-width: 80%;
-        margin-top: 20px;
-      }
-    }
+  .start-button {
+    width: min(100%, 260px);
+  }
+}

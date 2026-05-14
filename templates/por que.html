@@ -1,33 +1,32 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Ayuda - Edupets</title>
-  <link rel="stylesheet" href="Estilos/informacion.css">
-  <link rel="icon" type="image/png" href="imagenes/Logo.png">
-
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>¿Por qué hicimos EduPets?</title>
+  <link rel="stylesheet" href="{{ url_for('static', path='Estilos/informacion.css') }}">
+  <link rel="icon" type="image/png" href="{{ url_for('static', path='assets/images/Logo.png') }}">
 </head>
-  <iframe src="player.html" style="display:none;" allow="autoplay"></iframe>
 <body>
-  <div class="container">
-    <div class="top-bar">
-      <a href="que es.html">¿Qué es Edupets?</a>
-      <a href="equipo.html">El equipo</a>
-      <a href="por que.html">¿Por qué lo hicimos?</a>
-    </div>
+  <iframe src="/player" class="audio-frame" allow="autoplay"></iframe>
 
-    <div class="content">
-      <div class="texto">
-        Como equipo, llegamos a una conclución, a los mas pequeños se les puede hacer algo complejo o tedioso la asignatura de matematicas, asi que desidimos investigar mas a fondo y decidimos apoyar a niños, no solo con dificultades 
-        academicas, sino tambien a chicos que presenten TDAH.
-      </div>
+  <main class="container">
+    <nav class="top-bar">
+      <a href="/que-es">¿Qué es EduPets?</a>
+      <a href="/equipo">El equipo</a>
+      <a href="/por-que">¿Por qué lo hicimos?</a>
+    </nav>
+
+    <section class="content">
+      <p class="texto">
+        Como equipo, llegamos a una conclusión: a los más pequeños se les puede hacer compleja o tediosa la asignatura de matemáticas. Por eso decidimos investigar más a fondo y apoyar a niños con dificultades académicas, además de chicos que presenten TDAH.
+      </p>
       <div class="imagen">
-        <img src="imagenes/pet.png" alt="Pingüino" />
+        <img src="{{ url_for('static', path='assets/images/pet.png') }}" alt="Pingüino">
       </div>
-    </div>
+    </section>
 
-    <a class="volver" href="javascript:history.back()">↩</a>
-  </div>
+    <a class="volver" href="/que-es">↩</a>
+  </main>
 </body>
 </html>

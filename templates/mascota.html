@@ -3,85 +3,74 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Mi Mascota</title>
-  <link rel="stylesheet" href="Estilos/Mascota.css">
-  <link rel="icon" type="image/png" href="imagenes/logo.png">
+  <title>Mi Mascota - EduPets</title>
+  <link rel="stylesheet" href="{{ url_for('static', path='Estilos/Mascota.css') }}">
+  <link rel="icon" type="image/png" href="{{ url_for('static', path='assets/images/Logo.png') }}">
 </head>
 <body>
-  <iframe src="player.html" style="display:none;" allow="autoplay"></iframe>
+  <iframe src="/player" class="audio-frame" allow="autoplay"></iframe>
 
-  <div class="contenedor">
-
-    
-    <div class="panel izquierda" id="panel-izquierda">
-      <h3>Lista de Tareas</h3>
+  <main class="contenedor">
+    <section class="panel izquierda" id="panel-izquierda">
+      <h3>Lista de tareas</h3>
       <div id="tarea-actual" class="bienvenida"></div>
-    </div>
+    </section>
 
-    
-    <div class="panel derecha" id="panel-derecha">
-      <h3>Menú de Juegos</h3>
+    <section class="panel derecha" id="panel-derecha">
+      <h3>Menú de juegos</h3>
       <div class="botones">
-        <button onclick="location.href='ejercicio1.html'">➕ Suma</button>
-        <button onclick="location.href='ejercicio2.html'">➖ Resta</button>
-        <button onclick="location.href='ejercicio3.html'">✖️ Multiplicación</button>
-        <button onclick="location.href='ejercicio4.html'">➗ División</button>
-        <button onclick="location.href='Examenes.html'">Examenes</button>
-        <button onclick="location.href='Tienda.html'">Tienda</button>
+        <button type="button" onclick="location.href='/ejercicio1'">+ Suma</button>
+        <button type="button" onclick="location.href='/ejercicio2'">- Resta</button>
+        <button type="button" onclick="location.href='/ejercicio3'">× Multiplicación</button>
+        <button type="button" onclick="location.href='/ejercicio4'">÷ División</button>
+        <button type="button" onclick="location.href='/examenes'">Exámenes</button>
+        <button type="button" onclick="location.href='/tienda'">Tienda</button>
       </div>
-    </div>
+    </section>
 
-    
-    <div class="contenido">
+    <section class="contenido">
       <div class="nombre-mascota">
         <span id="nombreMascota">Pingüi</span>
-        <button id="editar-nombre">✏️</button>
+        <button id="editar-nombre" type="button" aria-label="Editar nombre">✎</button>
       </div>
 
       <div class="necesidades">
         <div class="necesidad-container">
-          <div class="necesidad" id="comida" style="background-image:url('imagenes/comida.png')"></div>
+          <div class="necesidad" id="comida" style="background-image:url('{{ url_for('static', path='assets/images/comida.png') }}')"></div>
           <div class="porcentaje" id="comida-texto">100%</div>
         </div>
         <div class="necesidad-container">
-          <div class="necesidad" id="sueño" style="background-image:url('imagenes/sueño.png')"></div>
-          <div class="porcentaje" id="sueño-texto">100%</div>
+          <div class="necesidad" id="sueno" style="background-image:url('{{ url_for('static', path='assets/images/sueño.png') }}')"></div>
+          <div class="porcentaje" id="sueno-texto">100%</div>
         </div>
         <div class="necesidad-container">
-          <div class="necesidad" id="felicidad" style="background-image:url('imagenes/felicidad.png')"></div>
+          <div class="necesidad" id="felicidad" style="background-image:url('{{ url_for('static', path='assets/images/felicidad.png') }}')"></div>
           <div class="porcentaje" id="felicidad-texto">100%</div>
         </div>
       </div>
 
-      <img src="imagenes/pet.png" class="pinguino" alt="Mascota">
-    </div>
+      <img src="{{ url_for('static', path='assets/images/pet.png') }}" class="pinguino" alt="Mascota">
+    </section>
 
-    
-    <div id="toggle-izquierda" class="toggle">📋</div>
-    <div id="toggle-derecha" class="toggle">🎮</div>
+    <button id="toggle-izquierda" class="toggle" type="button" aria-label="Abrir tareas">☑</button>
+    <button id="toggle-derecha" class="toggle" type="button" aria-label="Abrir juegos">▦</button>
 
-    
     <div class="barra-edicion" id="barra-edicion">
       <input type="text" id="nuevo-nombre" placeholder="Nuevo nombre">
-      <button class="aceptar" onclick="guardarNombre()">Aceptar</button>
-      <button class="cancelar" onclick="cancelarEdicion()">Cancelar</button>
+      <button class="aceptar" type="button" onclick="guardarNombre()">Aceptar</button>
+      <button class="cancelar" type="button" onclick="cancelarEdicion()">Cancelar</button>
     </div>
 
-   
-    <a href="index.html" class="volver">Volver</a>
-  </div>
+    <a href="/" class="volver">Volver</a>
+  </main>
 
   <div id="pantalla-carga">
-  <div class="loader">
-    <img src="imagenes/pet.png" alt="Cargando..." class="cargando">
-    <p>Cargando tu mascota...</p>
+    <div class="loader">
+      <img src="{{ url_for('static', path='assets/images/pet.png') }}" alt="Cargando..." class="cargando">
+      <p>Cargando tu mascota...</p>
+    </div>
   </div>
-</div>
 
-  <script src="script/mascota.js">
-  
-  </script>
+  <script src="{{ url_for('static', path='js/mascota.js') }}"></script>
 </body>
 </html>
-
-

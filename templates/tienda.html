@@ -1,23 +1,27 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bienvenidos a nuestra fuente de lucro</title>
-    <link rel="stylesheet" href="Estilos/Tienda.css">
-
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tienda - EduPets</title>
+  <link rel="stylesheet" href="{{ url_for('static', path='Estilos/Tienda.css') }}">
 </head>
-
 <body>
-    <h1>Tienda</h1>
-    <div class="cosmeticos">
-        <div class="product-card">
-            <img class="product-image" src="imagenes/cp.png" alt="Producto de la tienda">
-            <div class="product-info">
-                <h2>Producto destacado</h2>
-                <p class="product-price">$9.99</p>
-            </div>
+  <main class="store">
+    <header class="store-header">
+      <h1>Tienda</h1>
+      <a href="/mascota">Volver</a>
+    </header>
+
+    <section class="cosmeticos" aria-label="Cosméticos">
+      <article class="product-card">
+        <img class="product-image" src="{{ url_for('static', path='assets/images/cp.png') }}" alt="Producto de la tienda">
+        <div class="product-info">
+          <h2>Producto destacado</h2>
+          <p class="product-price">$9.99</p>
         </div>
-    </div>
+      </article>
+    </section>
+  </main>
 </body>
 </html>
