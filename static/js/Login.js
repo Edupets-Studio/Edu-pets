@@ -1,6 +1,6 @@
 const canvas = document.getElementById("symbols");
 const ctx = canvas.getContext("2d");
-const symbols = ["π", "√", "∞", "∑", "∆", "≠", "≈", "∫", "∂"];
+const symbols = ["π", "√", "∞", "∑", "∆", "≠", "≈", "∫", "∂", "✡︎"];
 const particles = [];
 
 function resizeCanvas() {
