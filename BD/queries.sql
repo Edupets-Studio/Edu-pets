@@ -1,0 +1,1 @@
+SELECT usuario FROM Credenciales WHERE contraseña = 777777
