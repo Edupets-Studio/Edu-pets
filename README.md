@@ -19,7 +19,7 @@ estudiante a practicar y avanzar.
 
 Esta base de datos soporta:
 - El usuario puede crear un usuario mediante una interfaz de registro.
-- Sistema asíncrono que permite que múltiples usuales usen nuestra pagina.
+- Sistema asíncrono que permite que múltiples usuarios usen nuestra pagina.
 - El sistema recibe respuestas dadas por los usuarios y responde de forma negativa o positiva.
 - El sistema deberá entregar al estudiante determinada cantidad de monedas conforme complete actividades.
 - El sistema debe permitir gastar las monedas en productos
