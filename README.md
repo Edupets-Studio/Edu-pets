@@ -321,7 +321,7 @@ MASCOTA y PRODUCTO**.
 
 ## MASCOTA → EJERCICIO
 
-**Tipo: 1:N según el modelo conceptual**
+**Tipo: 1:N**
 
 El diagrama representa que una mascota realiza ejercicios. Una mascota
 puede realizar varios ejercicios a lo largo de su uso de la plataforma.
