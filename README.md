@@ -1,5 +1,8 @@
 # Documentación de la base de datos --- EduPets
 
+## Video explicativo
+- https://youtu.be/9L-wekeTEOk?si=qEA2O17OXD61GGHb
+
 ## 1. Breve resumen del proyecto
 
 **EduPets** es una plataforma web educativa que busca hacer más
@@ -12,8 +15,19 @@ plataforma. La idea combina educación y gamificación para motivar al
 estudiante a practicar y avanzar.
 
 ------------------------------------------------------------------------
+## Requisitos funcionales
 
-## 2. Propósito de la base de datos
+Esta base de datos soporta:
+- El usuario puede crear un usuario mediante una interfaz de registro.
+- Sistema asíncrono que permite que múltiples usuales usen nuestra pagina.
+- El sistema recibe respuestas dadas por los usuarios y responde de forma negativa o positiva.
+- El sistema deberá entregar al estudiante determinada cantidad de monedas conforme complete actividades.
+- El sistema debe permitir gastar las monedas en productos
+- El sistema debe permitir usar los productos
+
+---
+
+## 2. Propósito
 
 La base de datos tiene como propósito **guardar y organizar la
 información necesaria para que EduPets funcione correctamente**.
@@ -459,3 +473,5 @@ En general, la base de datos sirve como la estructura que permite que
 EduPets no sea solamente una página educativa, sino una plataforma capaz
 de **guardar el progreso y las acciones de cada usuario dentro de la
 experiencia de la mascota virtual**.
+
+
