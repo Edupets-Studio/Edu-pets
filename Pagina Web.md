@@ -1,1 +1,0 @@
-# Edupets.vercel.app
