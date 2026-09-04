@@ -1,4 +1,7 @@
+import logging
+
 from fastapi import APIRouter, Depends, HTTPException, Request, status
+from starlette.concurrency import run_in_threadpool
 
 from app.dependencies import (
     get_current_user,
@@ -14,6 +17,7 @@ from app.services.pet_service import apply_pet_sync, normalize_pet_name
 
 
 router = APIRouter()
+logger = logging.getLogger(__name__)
 
 
 @router.get("/pet")
@@ -44,7 +48,7 @@ async def update_pet_name(
     payload = await request_payload(request)
     user.pet_name = normalize_pet_name(payload.get("pet_name", payload.get("nombre", "")))
     try:
-        repo.update_user(user)
+        await run_in_threadpool(repo.update_user, user)
     except GoogleSheetsError as exc:
         raise HTTPException(status_code=status.HTTP_503_SERVICE_UNAVAILABLE, detail=str(exc)) from exc
     return {"user": user.public_dict()}
@@ -58,9 +62,11 @@ async def sync_pet(
 ):
     await verify_csrf(request)
     payload = await request_payload(request)
+    logger.info("Sincronización de mascota iniciada para usuario %s", user.username)
     apply_pet_sync(user, payload)
     try:
-        repo.update_user(user)
+        await run_in_threadpool(repo.update_user, user)
     except GoogleSheetsError as exc:
         raise HTTPException(status_code=status.HTTP_503_SERVICE_UNAVAILABLE, detail=str(exc)) from exc
+    logger.info("Sincronización de mascota completada para usuario %s", user.username)
     return {"user": user.public_dict()}
