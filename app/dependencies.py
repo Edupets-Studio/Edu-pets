@@ -1,3 +1,4 @@
+import json
 import secrets
 from functools import lru_cache
 from typing import Any
@@ -10,11 +11,13 @@ from app.config import get_settings
 from database.repository import DatabaseRepository, RepositoryError
 from app.models.user import UserRecord
 from app.services.pet_service import prepare_user_state
+from app.services.pet_service import pet_image_path
 from app.utils.security import decode_access_token
 
 
 settings = get_settings()
 templates = Jinja2Templates(directory=str(settings.TEMPLATES_DIR))
+templates.env.globals["pet_image_path"] = pet_image_path
 
 
 @lru_cache
@@ -31,8 +34,11 @@ async def request_payload(request: Request) -> dict[str, Any]:
     if "application/json" in content_type:
         try:
             payload = await request.json()
-        except Exception:
-            return {}
+        except (json.JSONDecodeError, UnicodeDecodeError) as exc:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail="El cuerpo JSON no es válido.",
+            ) from exc
         return payload if isinstance(payload, dict) else {}
     if "form" in content_type:
         form = await request.form()

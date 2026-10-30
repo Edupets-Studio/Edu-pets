@@ -1,15 +1,11 @@
 from typing import Any
 
-from app.models.user import UserRecord
-from app.services.pet_service import clamp_stat
-
-
 SHOP_ITEMS: dict[str, dict[str, Any]] = {
     "pollo": {
         "id": "pollo",
         "name": "Comida",
+        "database_name": "Comida",
         "image": "pescado.png",
-        "price": 20,
         "stat": "food",
         "effect": 20,
         "description": "+20 comida",
@@ -17,8 +13,8 @@ SHOP_ITEMS: dict[str, dict[str, Any]] = {
     "juguete": {
         "id": "juguete",
         "name": "Juguete",
+        "database_name": "Juguete",
         "image": "juguete.png",
-        "price": 30,
         "stat": "happiness",
         "effect": 20,
         "description": "+20 felicidad",
@@ -26,23 +22,56 @@ SHOP_ITEMS: dict[str, dict[str, Any]] = {
     "caramelos": {
         "id": "caramelos",
         "name": "Caramelos",
+        "database_name": "caramelos",
         "image": "caramelos.png",
-        "price": 25,
         "stat": "sleep",
         "effect": 20,
         "description": "+20 sueño",
     },
 }
 
+PET_ITEMS: dict[str, dict[str, Any]] = {
+    "oso": {
+        "id": "oso",
+        "name": "Oso",
+        "database_name": "Oso",
+        "image": "oso.png",
+        "description": "Un compañero fuerte y tranquilo.",
+    },
+    "zorro": {
+        "id": "zorro",
+        "name": "Zorro",
+        "database_name": "Zorro",
+        "image": "zorro.png",
+        "description": "El zorro fenek representa la astucia, la inteligencia, la adaptabilidad y la flexibilidad ante los cambios",
+    },
+    "pinguino": {
+        "id": "pinguino",
+        "name": "Pingüino",
+        "database_name": "pinguino",
+        "image": "pet.png",
+        "description": "Un compañero estudioso y siempre listo para aprender.",
+    },
+    "nutria": {
+        "id": "nutria",
+        "name": "Nutria",
+        "database_name": "nutria",
+        "image": "nutria.png",
+        "description": "La nutria representa la curiosidad, la adaptabilidad y el equilibrio de los ecosistemas acuáticos.",
+    },
+}
 
-def buy_item(user: UserRecord, item_id: str) -> dict[str, Any]:
-    item = SHOP_ITEMS.get(item_id)
-    if not item:
-        raise ValueError("Producto no valido.")
-    if user.coins < item["price"]:
-        raise ValueError("No tienes monedas suficientes.")
 
-    user.coins -= item["price"]
-    current_value = getattr(user, item["stat"])
-    setattr(user, item["stat"], clamp_stat(current_value + item["effect"]))
-    return item
+def build_shop_catalog(product_rows: list[dict[str, Any]]) -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
+    prices = {str(row["name"]).casefold(): int(row["price"]) for row in product_rows}
+    items = [
+        {**item, "price": prices[item["database_name"].casefold()]}
+        for item in SHOP_ITEMS.values()
+        if item["database_name"].casefold() in prices
+    ]
+    pets = [
+        {**pet, "price": prices[pet["database_name"].casefold()]}
+        for pet in PET_ITEMS.values()
+        if pet["database_name"].casefold() in prices
+    ]
+    return items, pets

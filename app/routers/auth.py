@@ -66,13 +66,14 @@ async def login(request: Request, repo: DatabaseRepository = Depends(get_reposit
         )
     except RepositoryError as exc:
         raise HTTPException(status_code=status.HTTP_503_SERVICE_UNAVAILABLE, detail=str(exc)) from exc
-    except Exception as exc:
+    except Exception:
+        logger.exception("Error inesperado durante el inicio de sesión")
         return templates.TemplateResponse(
             "login.html",
             {
                 "request": request,
                 "title": "Iniciar sesión",
-                "error": f"Error en el servidor: {str(exc)}",
+                "error": "No se pudo iniciar sesión. Inténtalo de nuevo.",
                 "username": payload.get("username", ""),
             },
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
@@ -110,13 +111,14 @@ async def register(request: Request, repo: DatabaseRepository = Depends(get_repo
         )
     except RepositoryError as exc:
         raise HTTPException(status_code=status.HTTP_503_SERVICE_UNAVAILABLE, detail=str(exc)) from exc
-    except Exception as exc:
+    except Exception:
+        logger.exception("Error inesperado durante el registro")
         return templates.TemplateResponse(
             "register.html",
             {
                 "request": request,
                 "title": "Registrarse",
-                "error": f"Error en el servidor: {str(exc)}",
+                "error": "No se pudo completar el registro. Inténtalo de nuevo.",
                 "username": payload.get("username", ""),
             },
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
@@ -146,4 +148,29 @@ async def logout(
     response = RedirectResponse("/", status_code=status.HTTP_303_SEE_OTHER)
     _delete_session_cookie(response)
     logger.info("Cierre de sesión completado para usuario %s", user.username)
+    return response
+
+
+@router.post("/account/delete")
+async def delete_account(
+    request: Request,
+    user: UserRecord = Depends(get_current_user),
+    repo: DatabaseRepository = Depends(get_repository),
+):
+    await verify_csrf(request)
+    try:
+        deleted = await repo.delete_user(user.username)
+    except RepositoryError as exc:
+        raise HTTPException(
+            status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
+            detail="No se pudo eliminar la cuenta. Inténtalo de nuevo más tarde.",
+        ) from exc
+
+    if not deleted:
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="La cuenta ya no está disponible.")
+
+    response = RedirectResponse("/?account_deleted=1", status_code=status.HTTP_303_SEE_OTHER)
+    _delete_session_cookie(response)
+    response.delete_cookie(get_settings().CSRF_COOKIE_NAME)
+    logger.info("Cuenta eliminada para usuario %s", user.username)
     return response

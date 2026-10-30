@@ -14,6 +14,17 @@ STAT_FIELDS = {
     "sueño": "sleep",
 }
 
+PET_IMAGES = {
+    "pinguino": "images/pet.png",
+    "oso": "images/oso.png",
+    "zorro": "images/zorro.png",
+    "nutria": "images/nutria.png",
+}
+
+
+def pet_image_path(pet_type: Any) -> str:
+    return PET_IMAGES.get(str(pet_type or ""), PET_IMAGES["pinguino"])
+
 
 def clamp_stat(value: Any) -> int:
     try:

@@ -266,3 +266,156 @@ LEFT JOIN mascota m
     ON m.usuario_id = u.id;
 
 COMMIT;
+
+-- ============================================================
+-- CAMBIOS PARA SISTEMA DE CAMBIO DE MASCOTA
+-- ============================================================
+
+ALTER TABLE mascota
+    ADD COLUMN IF NOT EXISTS especie VARCHAR(20) NOT NULL DEFAULT 'pinguino';
+
+DO $$
+BEGIN
+    IF NOT EXISTS (
+        SELECT 1 FROM pg_constraint WHERE conname = 'chk_mascota_especie'
+    ) THEN
+        ALTER TABLE mascota
+            ADD CONSTRAINT chk_mascota_especie
+            CHECK (especie IN ('pinguino', 'oso', 'zorro'));
+    END IF;
+END $$;
+
+INSERT INTO producto (nombre, precio)
+VALUES ('Oso', 100), ('Zorro', 150)
+ON CONFLICT (nombre) DO NOTHING;
+
+-- ============================================================
+-- CAMBIOS PARA INVENTARIO Y USO DE PRODUCTOS
+-- Ejecutar las instrucciones siguientes en Neon
+-- ============================================================
+
+CREATE TABLE IF NOT EXISTS inventario (
+    usuario_id  INTEGER NOT NULL,
+    producto_id INTEGER NOT NULL,
+    cantidad    INTEGER NOT NULL DEFAULT 1,
+
+    CONSTRAINT pk_inventario PRIMARY KEY (usuario_id, producto_id),
+    CONSTRAINT fk_inventario_usuario
+        FOREIGN KEY (usuario_id)
+        REFERENCES usuario(id)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE,
+    CONSTRAINT fk_inventario_producto
+        FOREIGN KEY (producto_id)
+        REFERENCES producto(id)
+        ON DELETE RESTRICT
+        ON UPDATE CASCADE,
+    CONSTRAINT chk_inventario_cantidad CHECK (cantidad > 0)
+);
+
+CREATE INDEX IF NOT EXISTS idx_inventario_producto_id
+    ON inventario(producto_id);
+
+ALTER TABLE mascota
+    ADD COLUMN IF NOT EXISTS especie VARCHAR(20) NOT NULL DEFAULT 'pinguino';
+
+DO $$
+BEGIN
+    IF NOT EXISTS (
+        SELECT 1 FROM pg_constraint WHERE conname = 'chk_mascota_especie'
+    ) THEN
+        ALTER TABLE mascota
+            ADD CONSTRAINT chk_mascota_especie
+            CHECK (especie IN ('pinguino', 'oso', 'zorro'));
+    END IF;
+END $$;
+
+-- CAMBIOS 2
+-- Permite seleccionar nutria y restaura al pingüino inicial desde la tienda.
+DO $$
+DECLARE
+    species_constraint TEXT;
+BEGIN
+    SELECT pg_get_constraintdef(oid)
+    INTO species_constraint
+    FROM pg_constraint
+    WHERE conrelid = 'mascota'::regclass
+      AND conname = 'chk_mascota_especie';
+
+    IF species_constraint IS NULL
+       OR species_constraint NOT LIKE '%nutria%'
+       OR species_constraint LIKE '%predeterminada%' THEN
+        ALTER TABLE mascota DROP CONSTRAINT IF EXISTS chk_mascota_especie;
+        -- Older deployments used this value for the default penguin.
+        UPDATE mascota SET especie = 'pinguino' WHERE especie = 'predeterminada';
+        ALTER TABLE mascota
+            ADD CONSTRAINT chk_mascota_especie
+            CHECK (especie IN ('pinguino', 'oso', 'zorro', 'nutria'));
+    END IF;
+END $$;
+
+-- La aplicación representa precios y saldos como monedas enteras.
+DO $$
+BEGIN
+    IF NOT EXISTS (
+        SELECT 1 FROM pg_constraint
+        WHERE conrelid = 'producto'::regclass
+          AND conname = 'chk_producto_precio_entero'
+    ) THEN
+        ALTER TABLE producto
+            ADD CONSTRAINT chk_producto_precio_entero
+            CHECK (precio = trunc(precio));
+    END IF;
+
+    IF NOT EXISTS (
+        SELECT 1 FROM pg_constraint
+        WHERE conrelid = 'monedero'::regclass
+          AND conname = 'chk_monedero_saldo_entero'
+    ) THEN
+        ALTER TABLE monedero
+            ADD CONSTRAINT chk_monedero_saldo_entero
+            CHECK (saldo_plata = trunc(saldo_plata));
+    END IF;
+END $$;
+
+INSERT INTO producto (nombre, precio)
+SELECT nuevo.nombre, nuevo.precio
+FROM (VALUES ('pinguino', 0), ('nutria', 125)) AS nuevo(nombre, precio)
+WHERE NOT EXISTS (
+    SELECT 1
+    FROM producto AS existente
+    WHERE LOWER(existente.nombre) = LOWER(nuevo.nombre)
+)
+ON CONFLICT (nombre) DO NOTHING;
+
+-- Registra las mascotas desbloqueadas por usuario sin depender del historial de compras.
+CREATE TABLE IF NOT EXISTS mascota_desbloqueada (
+    usuario_id INTEGER NOT NULL,
+    especie    VARCHAR(20) NOT NULL,
+    fecha_desbloqueo TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+    CONSTRAINT pk_mascota_desbloqueada PRIMARY KEY (usuario_id, especie),
+    CONSTRAINT fk_mascota_desbloqueada_usuario
+        FOREIGN KEY (usuario_id)
+        REFERENCES usuario(id)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE,
+    CONSTRAINT chk_mascota_desbloqueada_especie
+        CHECK (especie IN ('pinguino', 'oso', 'zorro', 'nutria'))
+);
+
+-- Conserva el pingüino inicial y las mascotas ya seleccionadas en cuentas existentes.
+INSERT INTO mascota_desbloqueada (usuario_id, especie)
+SELECT m.usuario_id, m.especie
+FROM mascota AS m
+WHERE m.especie IN ('pinguino', 'oso', 'zorro', 'nutria')
+ON CONFLICT (usuario_id, especie) DO NOTHING;
+
+-- Migra a inventario las mascotas compradas antes de crear esta relación.
+INSERT INTO mascota_desbloqueada (usuario_id, especie)
+SELECT DISTINCT w.usuario_id, LOWER(p.nombre)
+FROM compra AS c
+JOIN monedero AS w ON w.id_monedero = c.monedero_id
+JOIN producto AS p ON p.id = c.producto_id
+WHERE LOWER(p.nombre) IN ('oso', 'zorro', 'nutria')
+ON CONFLICT (usuario_id, especie) DO NOTHING;
